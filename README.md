@@ -1,69 +1,78 @@
-# React + TypeScript + Vite
+# 🎮 Lootie
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+>Your Web3 Gaming Wallet • Collect • Swap • Quest
 
-Currently, two official plugins are available:
+Become part of the most exciting Web3 gaming communities. Explore, collect, swap, and earn rewards — all in one place!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🕹️ What is Lootie?
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Lootie** is a Game-first Web3 platform built on the **Saga** blockchain. It combines a **customizable wallet** with an interactive **Game Hub**, designed specifically for blockchain gamers.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+With Lootie, users can:
+- Discover and play supported blockchain games
+- Manage and showcase NFTs and in-game tokens
+- Swap tokens easily with integrated tools
+- Join quests to earn XP, NFTs, and on-chain rewards
+- Track their gaming journey and achievements
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🚀 Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Custom Wallet:** Built for Web3 gamers to manage assets
+- **Game Hub:** Discover games and view play history
+- **NFT & Token Dashboard:** See all your items in one place
+- **Quest System:** Join live quests and earn rewards
+- **Modern UX:** Fast, responsive, and mobile-ready interface
+- **Saga Native:** Optimized for Chainlet architecture
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Getting Started
+
+1. **Install dependencies:**
+  ```bash
+  pnpm install
+  # or
+  npm install
+  # or
+  yarn install
+  ```
+
+
+2. **Start the development server:**
+  ```bash
+  pnpm dev
+  # or
+  npm run dev
+  # or
+  yarn dev
+  ```
+
+3. **Open [http://localhost:5173](http://localhost:5173) on browser.**
+
+---
+
+## 📦 Tech Stack
+•	React + TypeScript + Vite
+•	TailwindCSS for styling
+•	Saga Modular Blockchain
+•	EVM-compatible wallet APIs
+•	IPFS / NFT / DeFi integration
+
+---
+## 👨‍💻 Credits
+- Made by BrianQuangDev
+
+---
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+---
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
