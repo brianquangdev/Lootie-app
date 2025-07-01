@@ -148,7 +148,12 @@ const Footer: React.FC = () => {
                 </a>
 
                 {/* X (Twitter) */}
-                <a href="#" className="group relative">
+                <a
+                  href="https://x.com/lootiewallet"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative"
+                >
                   <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-gray-700 transition-all duration-300 group-hover:scale-110">
                     <svg
                       className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors"
