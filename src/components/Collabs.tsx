@@ -19,8 +19,6 @@ interface CollabsProps {
   setFilter: (filter: string) => void;
   search: string;
   setSearch: (search: string) => void;
-  isLoading: boolean;
-  handleCollabClick: (hunter: Hunter) => void;
 }
 
 const getSkillColor = (skill: string) => {
@@ -65,8 +63,6 @@ const Collabs: React.FC<CollabsProps> = ({
   setFilter,
   search,
   setSearch,
-  isLoading,
-  handleCollabClick,
 }) => {
   // Filter hunters based on search and filter
   const filteredHunters = hunters.filter((hunter) => {
@@ -100,6 +96,17 @@ const Collabs: React.FC<CollabsProps> = ({
     }
     setIsSearchModalOpen(false);
     setModalSearch("");
+  };
+
+  // Add local loading state
+  const [isLoading, setIsLoading] = useState(false);
+  // Move handler here
+  const handleCollabClick = (hunter: Hunter) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      alert(`Collaboration request sent to ${hunter.name}! 🚀`);
+    }, 1500);
   };
 
   return (

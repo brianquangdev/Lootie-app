@@ -1,6 +1,6 @@
-import React from 'react';
-import { mockTokens } from '../data/mockTokens';
-import { mockNFTs } from '../data/mockNFTs';
+import React from "react";
+import { mockTokens } from "../data/mockTokens";
+import { mockNFTs } from "../data/mockNFTs";
 
 interface WalletMainProps {
   walletSubTab: string;
@@ -8,17 +8,24 @@ interface WalletMainProps {
   setSelectedToken: (token: string) => void;
   swapAmount: string;
   setSwapAmount: (amount: string) => void;
+  wallet?: { address: string } | null;
+  balance?: string;
 }
 
-const WalletMain: React.FC<WalletMainProps> = ({ 
-  walletSubTab, 
-  selectedToken, 
-  setSelectedToken, 
-  swapAmount, 
-  setSwapAmount 
+const WalletMain: React.FC<WalletMainProps> = ({
+  walletSubTab,
+  selectedToken,
+  setSelectedToken,
+  swapAmount,
+  setSwapAmount,
+  wallet,
+  balance,
 }) => {
   // Calculate total portfolio value
-  const totalTokenValue = mockTokens.reduce((sum, token) => sum + (token.amount * token.price), 0);
+  const totalTokenValue = mockTokens.reduce(
+    (sum, token) => sum + token.amount * token.price,
+    0
+  );
   const totalNFTValue = mockNFTs.reduce((sum, nft) => sum + nft.value, 0);
   const totalPortfolioValue = totalTokenValue + totalNFTValue;
 
@@ -27,13 +34,13 @@ const WalletMain: React.FC<WalletMainProps> = ({
   };
 
   // Wallets View
-  if (walletSubTab === 'wallets') {
+  if (walletSubTab === "wallets") {
     return (
       <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           🏠 My Wallets
         </h3>
-        
+
         <div className="space-y-4">
           <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-black rounded-xl p-4">
             <div className="flex items-center justify-between">
@@ -47,12 +54,14 @@ const WalletMain: React.FC<WalletMainProps> = ({
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-black text-xl text-green-600">${totalPortfolioValue.toFixed(2)}</p>
+                <p className="font-black text-xl text-green-600">
+                  ${totalPortfolioValue.toFixed(2)}
+                </p>
                 <p className="text-sm text-gray-600">Total Balance</p>
               </div>
             </div>
           </div>
-          
+
           <button className="w-full bg-yellow-300 hover:bg-yellow-400 border-2 border-black rounded-xl py-3 font-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#000] transition-all">
             + Add New Wallet
           </button>
@@ -62,27 +71,29 @@ const WalletMain: React.FC<WalletMainProps> = ({
   }
 
   // Receive View
-  if (walletSubTab === 'receive') {
+  if (walletSubTab === "receive") {
     return (
       <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           ⬇️ Receive Tokens
         </h3>
-        
+
         <div className="text-center space-y-6">
           <div className="bg-gray-100 border-2 border-black rounded-xl p-8">
             <div className="w-48 h-48 bg-white border-2 border-black rounded-xl mx-auto mb-4 flex items-center justify-center">
               <div className="text-6xl">📱</div>
             </div>
             <p className="font-bold text-lg mb-2">QR Code</p>
-            <p className="text-sm text-gray-600">Scan to send tokens to this wallet</p>
+            <p className="text-sm text-gray-600">
+              Scan to send tokens to this wallet
+            </p>
           </div>
-          
+
           <div className="bg-gray-50 border-2 border-black rounded-xl p-4">
             <p className="font-bold mb-2">Wallet Address:</p>
             <div className="flex items-center gap-2">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value="0x1234567890abcdef1234567890abcdef12345678"
                 readOnly
                 className="flex-1 bg-white border-2 border-black rounded-xl px-3 py-2 font-mono text-sm"
@@ -98,13 +109,13 @@ const WalletMain: React.FC<WalletMainProps> = ({
   }
 
   // Send View
-  if (walletSubTab === 'send') {
+  if (walletSubTab === "send") {
     return (
       <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           ⬆️ Send Tokens
         </h3>
-        
+
         <div className="space-y-4">
           <div className="bg-gray-50 border-2 border-black rounded-xl p-4">
             <label className="block font-bold mb-2">To Address</label>
@@ -119,7 +130,7 @@ const WalletMain: React.FC<WalletMainProps> = ({
             <label className="block font-bold mb-2">Token & Amount</label>
             <div className="flex gap-3">
               <select className="bg-white border-2 border-black rounded-xl px-3 py-2 font-bold flex-1">
-                {mockTokens.map(token => (
+                {mockTokens.map((token) => (
                   <option key={token.name} value={token.name}>
                     {token.icon} {token.name} ({token.amount})
                   </option>
@@ -142,24 +153,24 @@ const WalletMain: React.FC<WalletMainProps> = ({
   }
 
   // Swap View
-  if (walletSubTab === 'swap') {
+  if (walletSubTab === "swap") {
     return (
       <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           🔄 Swap to SAGA
         </h3>
-        
+
         <div className="space-y-4">
           {/* From Token */}
           <div className="bg-gray-50 border-2 border-black rounded-xl p-4">
             <label className="block font-bold mb-2">From</label>
             <div className="flex gap-3">
-              <select 
+              <select
                 value={selectedToken}
                 onChange={(e) => setSelectedToken(e.target.value)}
                 className="bg-white border-2 border-black rounded-xl px-3 py-2 font-bold flex-1"
               >
-                {mockTokens.map(token => (
+                {mockTokens.map((token) => (
                   <option key={token.name} value={token.name}>
                     {token.icon} {token.name} ({token.amount})
                   </option>
@@ -192,10 +203,13 @@ const WalletMain: React.FC<WalletMainProps> = ({
               </div>
               <div className="text-right">
                 <p className="font-black text-xl">
-                  {swapAmount && selectedToken ? 
-                    calculateSwapValue(swapAmount, mockTokens.find(t => t.name === selectedToken)?.price || 0) : 
-                    '0.0000'
-                  }
+                  {swapAmount && selectedToken
+                    ? calculateSwapValue(
+                        swapAmount,
+                        mockTokens.find((t) => t.name === selectedToken)
+                          ?.price || 0
+                      )
+                    : "0.0000"}
                 </p>
                 <p className="text-sm text-gray-600 font-bold">≈ 5% slippage</p>
               </div>
@@ -203,7 +217,7 @@ const WalletMain: React.FC<WalletMainProps> = ({
           </div>
 
           {/* Swap Button */}
-          <button 
+          <button
             className="w-full bg-yellow-300 hover:bg-yellow-400 border-4 border-black rounded-xl py-4 font-black text-xl shadow-[6px_6px_0px_0px_#000] hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_#000] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!swapAmount || parseFloat(swapAmount) <= 0}
           >
@@ -215,13 +229,13 @@ const WalletMain: React.FC<WalletMainProps> = ({
   }
 
   // Settings View
-  if (walletSubTab === 'settings') {
+  if (walletSubTab === "settings") {
     return (
       <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           ⚙️ Settings
         </h3>
-        
+
         <div className="space-y-6">
           <div className="bg-gray-50 border-2 border-black rounded-xl p-4">
             <h4 className="font-bold text-lg mb-3">Security</h4>
@@ -270,4 +284,4 @@ const WalletMain: React.FC<WalletMainProps> = ({
   return null;
 };
 
-export default WalletMain; 
+export default WalletMain;

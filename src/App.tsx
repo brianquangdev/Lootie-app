@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import axios from "axios";
 
 // Import components
 import Header from "./components/Header";
@@ -15,6 +16,14 @@ import QuestDetailModal from "./components/QuestDetailModal";
 import Footer from "./components/Footer";
 import Collabs from "./components/Collabs";
 import Communities from "./components/Communities";
+import { mockHunters } from "./data/mockCollabs";
+import WalletOnboardingModal from "./components/WalletOnboardingModal";
+
+type WalletType = {
+  address: string;
+  privateKey: string;
+  mnemonic?: string;
+};
 
 function App() {
   const [activeTab, setActiveTab] = useState("portfolio");
@@ -27,127 +36,19 @@ function App() {
   const [collabsFilter, setCollabsFilter] = useState("all");
   const [collabsSearch, setCollabsSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [showImportInput, setShowImportInput] = useState(false);
+  const [importPrivateKey, setImportPrivateKey] = useState("");
+  const [modalError, setModalError] = useState("");
+  const [isWalletLoading, setIsWalletLoading] = useState(false);
+  const [wallet, setWallet] = useState<WalletType | null>(null);
+  const [balance, setBalance] = useState("0");
 
-  // Mock Hunters Data for Collabs Tab
-  const mockHunters = [
-    {
-      id: 1,
-      name: "CryptoNinja",
-      avatar: "🥷",
-      totalPoints: 15420,
-      achievement: "Top 5 Loot S1",
-      skills: ["Marketing", "Community", "Content"],
-      badges: ["🔥 Top Hunter", "⭐ Active"],
-      isLookingForProject: true,
-      completedProjects: 12,
-      rating: 4.9,
-    },
-    {
-      id: 2,
-      name: "GameMaster_X",
-      avatar: "🎮",
-      totalPoints: 12850,
-      achievement: "Beta tester 8 projects",
-      skills: ["Dev", "Testing", "QA"],
-      badges: ["🛠️ Looking for project"],
-      isLookingForProject: true,
-      completedProjects: 8,
-      rating: 4.7,
-    },
-    {
-      id: 3,
-      name: "DesignWizard",
-      avatar: "🎨",
-      totalPoints: 11200,
-      achievement: "UI/UX Expert",
-      skills: ["Design", "UI/UX", "Branding"],
-      badges: ["⭐ Active"],
-      isLookingForProject: false,
-      completedProjects: 15,
-      rating: 4.8,
-    },
-    {
-      id: 4,
-      name: "TokenHunter",
-      avatar: "💎",
-      totalPoints: 18750,
-      achievement: "DeFi Specialist",
-      skills: ["DeFi", "Trading", "Analysis"],
-      badges: ["🔥 Top Hunter"],
-      isLookingForProject: true,
-      completedProjects: 20,
-      rating: 5.0,
-    },
-    {
-      id: 5,
-      name: "SocialBuzz",
-      avatar: "📱",
-      totalPoints: 9800,
-      achievement: "Community Builder",
-      skills: ["Marketing", "Social Media", "Influencer"],
-      badges: ["⭐ Active", "🛠️ Looking for project"],
-      isLookingForProject: true,
-      completedProjects: 6,
-      rating: 4.6,
-    },
-    {
-      id: 6,
-      name: "CodeWarrior",
-      avatar: "⚔️",
-      totalPoints: 14300,
-      achievement: "Smart Contract Auditor",
-      skills: ["Dev", "Security", "Blockchain"],
-      badges: ["🔥 Top Hunter"],
-      isLookingForProject: false,
-      completedProjects: 11,
-      rating: 4.9,
-    },
-    {
-      id: 7,
-      name: "MetaBuilder",
-      avatar: "🏗️",
-      totalPoints: 10500,
-      achievement: "3D Artist & Animator",
-      skills: ["Design", "3D", "Animation"],
-      badges: ["⭐ Active"],
-      isLookingForProject: true,
-      completedProjects: 7,
-      rating: 4.5,
-    },
-    {
-      id: 8,
-      name: "DataMiner",
-      avatar: "📊",
-      totalPoints: 13600,
-      achievement: "Analytics Expert",
-      skills: ["Analysis", "Data Science", "Research"],
-      badges: ["🛠️ Looking for project"],
-      isLookingForProject: true,
-      completedProjects: 9,
-      rating: 4.7,
-    },
-    {
-      id: 9,
-      name: "NFTCollector",
-      avatar: "🖼️",
-      totalPoints: 8900,
-      achievement: "NFT Curator",
-      skills: ["NFTs", "Curation", "Art"],
-      badges: ["⭐ Active"],
-      isLookingForProject: false,
-      completedProjects: 4,
-      rating: 4.4,
-    },
-  ];
-
-  // Handler for Collab button
-  const handleCollabClick = (hunter: any) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(`Collaboration request sent to ${hunter.name}! 🚀`);
-    }, 1500);
-  };
+  // Backend URL (configurable)
+  // Use (window as any) to avoid TypeScript error for custom property
+  const BACKEND_URL =
+    (window as any).REACT_APP_BACKEND_URL ||
+    window.location.origin.replace(/:\d+$/, ":3001");
 
   // Auto-slide hero every 8 seconds
   useEffect(() => {
@@ -157,15 +58,100 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Load wallet from localStorage on mount
+  useEffect(() => {
+    const saved = window.localStorage.getItem("wallet");
+    if (saved) {
+      try {
+        setWallet(JSON.parse(saved));
+      } catch {}
+    }
+  }, []);
+
+  // Fetch ETH balance when wallet changes
+  useEffect(() => {
+    if (wallet && wallet.address) {
+      axios
+        .post(`${BACKEND_URL}/api/wallet/balance`, { address: wallet.address })
+        .then((res) => setBalance(res.data.balance))
+        .catch(() => setBalance("0"));
+    } else {
+      setBalance("0");
+    }
+  }, [wallet]);
+
+  // Handler for Create Wallet button in Header
+  const handleCreateWalletClick = () => {
+    setShowWalletModal(true);
+    setShowImportInput(false);
+    setModalError("");
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    window.localStorage.removeItem("wallet");
+    setWallet(null);
+    setBalance("0");
+  };
+
+  // Create a new wallet
+  const handleCreateNewWallet = async () => {
+    setIsWalletLoading(true);
+    setModalError("");
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/wallet/create`);
+      const { address, privateKey, mnemonic } = res.data;
+      const walletData = { address, privateKey, mnemonic };
+      window.localStorage.setItem("wallet", JSON.stringify(walletData));
+      setWallet(walletData);
+      setShowWalletModal(false);
+      setActiveTab("portfolio");
+    } catch (err) {
+      setModalError("Failed to create wallet. Please try again.");
+    } finally {
+      setIsWalletLoading(false);
+    }
+  };
+
+  // Import wallet from private key
+  const handleImportWallet = async () => {
+    setIsWalletLoading(true);
+    setModalError("");
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/wallet/import`, {
+        privateKey: importPrivateKey.trim(),
+      });
+      const { address } = res.data;
+      const walletData = { address, privateKey: importPrivateKey.trim() };
+      window.localStorage.setItem("wallet", JSON.stringify(walletData));
+      setWallet(walletData);
+      setShowWalletModal(false);
+      setImportPrivateKey("");
+      setShowImportInput(false);
+      setActiveTab("portfolio");
+    } catch (err) {
+      setModalError("Invalid private key. Please check and try again.");
+    } finally {
+      setIsWalletLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 font-sans">
       {/* Header */}
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Header
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onCreateWalletClick={handleCreateWalletClick}
+        wallet={wallet}
+        handleLogout={handleLogout}
+        balance={balance}
+      />
 
       {/* Mobile Tab Navigation */}
       <MobileTabNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {/* Hero Section - Only show on Portfolio tab */}
+      {/* Hero Section - luôn hiện khi ở tab Portfolio */}
       {activeTab === "portfolio" && (
         <HeroSection heroSlide={heroSlide} setHeroSlide={setHeroSlide} />
       )}
@@ -175,16 +161,11 @@ function App() {
         {/* Portfolio Tab */}
         {activeTab === "portfolio" && (
           <div className="space-y-6">
-            {/* Portfolio Overview */}
             <PortfolioOverview
               portfolioView={portfolioView}
               setPortfolioView={setPortfolioView}
             />
-
-            {/* Tokens View */}
             {portfolioView === "tokens" && <TokenHoldings />}
-
-            {/* NFTs View */}
             {portfolioView === "nfts" && <NFTCollection />}
           </div>
         )}
@@ -192,13 +173,12 @@ function App() {
         {/* Wallet Tab */}
         {activeTab === "wallet" && (
           <div className="flex gap-6">
-            {/* Sidebar */}
             <WalletSidebar
               walletSubTab={walletSubTab}
               setWalletSubTab={setWalletSubTab}
+              wallet={wallet}
+              balance={balance}
             />
-
-            {/* Main Content */}
             <div className="flex-1">
               <WalletMain
                 walletSubTab={walletSubTab}
@@ -206,6 +186,8 @@ function App() {
                 setSelectedToken={setSelectedToken}
                 swapAmount={swapAmount}
                 setSwapAmount={setSwapAmount}
+                wallet={wallet}
+                balance={balance}
               />
             </div>
           </div>
@@ -224,8 +206,6 @@ function App() {
             setFilter={setCollabsFilter}
             search={collabsSearch}
             setSearch={setCollabsSearch}
-            isLoading={isLoading}
-            handleCollabClick={handleCollabClick}
           />
         )}
 
@@ -240,6 +220,20 @@ function App() {
       <QuestDetailModal
         selectedQuest={selectedQuest}
         setSelectedQuest={setSelectedQuest}
+      />
+
+      {/* Wallet Onboarding Modal */}
+      <WalletOnboardingModal
+        visible={showWalletModal}
+        onClose={() => setShowWalletModal(false)}
+        onCreate={handleCreateNewWallet}
+        onImport={handleImportWallet}
+        isLoading={isWalletLoading}
+        error={modalError}
+        showImportInput={showImportInput}
+        setShowImportInput={setShowImportInput}
+        importPrivateKey={importPrivateKey}
+        setImportPrivateKey={setImportPrivateKey}
       />
     </div>
   );
