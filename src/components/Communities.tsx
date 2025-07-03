@@ -292,7 +292,6 @@ const formatNumber = (num: number) => {
 
 const Communities: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all");
 
   const filtered = mockCommunities.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase())

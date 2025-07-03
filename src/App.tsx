@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 
@@ -18,6 +18,7 @@ import Collabs from "./components/Collabs";
 import Communities from "./components/Communities";
 import { mockHunters } from "./data/mockCollabs";
 import WalletOnboardingModal from "./components/WalletOnboardingModal";
+import UnlockWalletModal from "./components/UnlockWalletModal";
 
 type WalletType = {
   address: string;
@@ -28,14 +29,13 @@ type WalletType = {
 function App() {
   const [activeTab, setActiveTab] = useState("portfolio");
   const [selectedQuest, setSelectedQuest] = useState(null);
-  const [walletSubTab, setWalletSubTab] = useState("swap");
+  const [walletSubTab, setWalletSubTab] = useState("wallets");
   const [swapAmount, setSwapAmount] = useState("");
   const [selectedToken, setSelectedToken] = useState("GLD");
   const [portfolioView, setPortfolioView] = useState("tokens"); // tokens or nfts
   const [heroSlide, setHeroSlide] = useState(0);
   const [collabsFilter, setCollabsFilter] = useState("all");
   const [collabsSearch, setCollabsSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showImportInput, setShowImportInput] = useState(false);
   const [importPrivateKey, setImportPrivateKey] = useState("");
@@ -43,6 +43,8 @@ function App() {
   const [isWalletLoading, setIsWalletLoading] = useState(false);
   const [wallet, setWallet] = useState<WalletType | null>(null);
   const [balance, setBalance] = useState("0");
+  const [isLocked, setIsLocked] = useState(false);
+  const [showUnlockSeed, setShowUnlockSeed] = useState(false);
 
   // Backend URL (configurable)
   // Use (window as any) to avoid TypeScript error for custom property
@@ -80,6 +82,27 @@ function App() {
     }
   }, [wallet]);
 
+  // Inactivity timer logic
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    const resetTimer = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => setIsLocked(true), 300000); // 5 minutes
+    };
+    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("keydown", resetTimer);
+    window.addEventListener("mousedown", resetTimer);
+    window.addEventListener("touchstart", resetTimer);
+    resetTimer();
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousemove", resetTimer);
+      window.removeEventListener("keydown", resetTimer);
+      window.removeEventListener("mousedown", resetTimer);
+      window.removeEventListener("touchstart", resetTimer);
+    };
+  }, []);
+
   // Handler for Create Wallet button in Header
   const handleCreateWalletClick = () => {
     setShowWalletModal(true);
@@ -89,9 +112,12 @@ function App() {
 
   // Handle logout
   const handleLogout = () => {
+    window.localStorage.removeItem("encryptedVault");
+    window.localStorage.removeItem("currentRootAddress");
     window.localStorage.removeItem("wallet");
     setWallet(null);
     setBalance("0");
+    window.location.reload();
   };
 
   // Create a new wallet
@@ -138,6 +164,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 font-sans">
+      {/* Unlock Wallet Modal */}
+      {isLocked && (
+        <UnlockWalletModal
+          onUnlock={() => setIsLocked(false)}
+          onShowSeed={() => setShowUnlockSeed(true)}
+          showSeed={showUnlockSeed}
+          onHideSeed={() => setShowUnlockSeed(false)}
+        />
+      )}
       {/* Header */}
       <Header
         activeTab={activeTab}

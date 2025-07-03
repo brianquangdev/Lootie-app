@@ -1,32 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   onCreateWalletClick: () => void;
-  wallet?: { address: string } | null;
-  handleLogout?: () => void;
-  balance?: string;
+  wallet: { address: string; privateKey: string; mnemonic?: string } | null;
+  handleLogout: () => void;
+  balance: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
   activeTab,
   setActiveTab,
   onCreateWalletClick,
-  wallet,
+  wallet: _wallet,
   handleLogout,
-  balance,
+  balance: _balance,
 }) => {
-  const [showFullAddress, setShowFullAddress] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [walletName, setWalletName] = useState<string | null>(null);
 
-  const handleCopy = () => {
-    if (wallet?.address) {
-      navigator.clipboard.writeText(wallet.address);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
+  useEffect(() => {
+    function updateWalletName() {
+      const rootAddress = localStorage.getItem("currentRootAddress") || "";
+      if (!rootAddress) {
+        setWalletName(null);
+        return;
+      }
+      const walletsRaw = localStorage.getItem(`wallets_${rootAddress}`);
+      const idx = parseInt(
+        localStorage.getItem(`activeWalletIndex_${rootAddress}`) || "0",
+        10
+      );
+      if (walletsRaw) {
+        try {
+          const wallets = JSON.parse(walletsRaw);
+          if (
+            Array.isArray(wallets) &&
+            wallets.length > 0 &&
+            idx >= 0 &&
+            idx < wallets.length
+          ) {
+            setWalletName(wallets[idx].name);
+            return;
+          }
+        } catch {}
+      }
+      setWalletName(null);
     }
-  };
+    updateWalletName();
+    // Listen for changes in wallets, activeWalletIndex, or currentRootAddress
+    const storageListener = (e: StorageEvent) => {
+      if (
+        (e.key && e.key.startsWith("wallets_")) ||
+        (e.key && e.key.startsWith("activeWalletIndex_")) ||
+        e.key === "currentRootAddress"
+      ) {
+        updateWalletName();
+      }
+    };
+    window.addEventListener("storage", storageListener);
+    window.addEventListener("walletsUpdated", updateWalletName);
+    return () => {
+      window.removeEventListener("storage", storageListener);
+      window.removeEventListener("walletsUpdated", updateWalletName);
+    };
+  }, []);
 
   return (
     <header className="bg-white border-b-4 border-black p-4 shadow-[0px_4px_0px_0px_#000]">
@@ -60,16 +98,14 @@ const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          {wallet ? (
+          {walletName ? (
             <>
               <div
-                className="bg-blue-100 border-2 border-black rounded-xl px-3 py-2 cursor-pointer hover:bg-blue-200 transition flex items-center gap-2"
-                title="Wallet Address"
+                className="bg-blue-100 border-2 border-black rounded-xl px-3 py-2 font-bold text-black cursor-pointer hover:bg-blue-200 transition"
+                title="Wallet Name"
                 onClick={() => setActiveTab("wallet")}
               >
-                <span className="font-mono font-bold text-sm">
-                  {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
-                </span>
+                {walletName}
               </div>
               <button
                 className="ml-2 bg-red-400 hover:bg-red-500 border-2 border-black rounded-xl px-4 py-2 font-bold text-white shadow transition-all"

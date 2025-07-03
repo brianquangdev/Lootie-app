@@ -3,12 +3,14 @@ const express = require("express");
 const cors = require("cors");
 const { ethers } = require("ethers");
 require("dotenv").config();
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
 // POST /api/wallet/create - Create a new Ethereum wallet
 app.post("/api/wallet/create", (req, res) => {
@@ -56,6 +58,10 @@ app.post("/api/wallet/balance", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch balance." });
   }
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(PORT, () => {

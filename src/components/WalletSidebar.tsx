@@ -14,7 +14,7 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
   wallet,
   balance,
 }) => {
-  const [showFullAddress, setShowFullAddress] = useState(false);
+  const [_showFullAddress, _setShowFullAddress] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -31,7 +31,6 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
       {copied && (
         <div className="fixed left-1/2 top-12 z-50 -translate-x-1/2 bg-green-800 text-white text-lg font-bold flex items-center gap-3 px-6 py-3 rounded-full shadow-lg animate-fade-in">
           <span className="text-green-300 text-xl">Copied successfully!</span>
-
         </div>
       )}
       <div className="w-64 bg-white rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
