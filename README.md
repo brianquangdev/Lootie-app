@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="src/assets/Lootie-logo.png" alt="Lootie Logo" width="400"/>
+</p>
+
 # 🎮 Lootie
 
 > Your Web3 Gaming Wallet • Collect • Swap • Quest
