@@ -87,11 +87,11 @@ yarn install
 
 ## 📦 Tech Stack
 
-• React + TypeScript + Vite
-• TailwindCSS for styling
-• Saga Modular Blockchain
-• EVM-compatible wallet APIs
-• IPFS / NFT / DeFi integration
+- React + TypeScript + Vite
+- TailwindCSS for styling
+- Saga Modular Blockchain
+- EVM-compatible wallet APIs
+- IPFS / NFT / DeFi integration
 
 ---
 
@@ -101,13 +101,13 @@ yarn install
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
 
 ---
 
-## License
+## 📄 License
 
 [MIT](https://choosealicense.com/licenses/mit/)
