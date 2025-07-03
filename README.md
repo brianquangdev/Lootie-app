@@ -1,6 +1,6 @@
 # 🎮 Lootie
 
->Your Web3 Gaming Wallet • Collect • Swap • Quest
+> Your Web3 Gaming Wallet • Collect • Swap • Quest
 
 Become part of the most exciting Web3 gaming communities. Explore, collect, swap, and earn rewards — all in one place!
 
@@ -11,6 +11,7 @@ Become part of the most exciting Web3 gaming communities. Explore, collect, swap
 **Lootie** is a Game-first Web3 platform built on the **Saga** blockchain. It combines a **customizable wallet** with an interactive **Game Hub**, designed specifically for blockchain gamers.
 
 With Lootie, users can:
+
 - Discover and play supported blockchain games
 - Manage and showcase NFTs and in-game tokens
 - Swap tokens easily with integrated tools
@@ -32,38 +33,70 @@ With Lootie, users can:
 
 ## 🛠️ Getting Started
 
-1. **Install dependencies:**
+### 1. **Install dependencies**
+
+```bash
+pnpm install
+# or
+npm install
+# or
+yarn install
+```
+
+---
+
+### 2. **Run in Development Mode (hot reload)**
+
+**Open 2 terminals:**
+
+- **Terminal 1 (Backend):**
   ```bash
-  pnpm install
-  # or
-  npm install
-  # or
-  yarn install
+  cd backend
+  pnpm start
+  # or npm start
   ```
-
-
-2. **Start the development server:**
+- **Terminal 2 (Frontend):**
   ```bash
   pnpm dev
-  # or
-  npm run dev
-  # or
-  yarn dev
+  # or npm run dev
   ```
+- Open: [http://localhost:5173](http://localhost:5173) in your browser.
 
-3. **Open [http://localhost:5173](http://localhost:5173) on browser.**
+---
+
+### 3. **Run in Production Mode (single process)**
+
+- **Build the frontend:**
+  ```bash
+  pnpm build
+  # or npm run build
+  ```
+- **Copy the build output to backend:**
+  ```bash
+  cp -r dist backend/public
+  ```
+- **Start the backend server:**
+  ```bash
+  cd backend
+  pnpm start
+  # or npm start
+  ```
+- Open: [http://localhost:3001](http://localhost:3001) in your browser.
 
 ---
 
 ## 📦 Tech Stack
-•	React + TypeScript + Vite
-•	TailwindCSS for styling
-•	Saga Modular Blockchain
-•	EVM-compatible wallet APIs
-•	IPFS / NFT / DeFi integration
+
+• React + TypeScript + Vite
+• TailwindCSS for styling
+• Saga Modular Blockchain
+• EVM-compatible wallet APIs
+• IPFS / NFT / DeFi integration
 
 ---
+
 ## 👨‍💻 Credits
+
 - Made by BrianQuangDev
 
 ---
@@ -74,5 +107,7 @@ Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
 
 ---
+
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)
