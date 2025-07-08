@@ -82,18 +82,26 @@ function App() {
     }
   }, [wallet]);
 
-  // Inactivity timer logic
+  // Inactivity timer logic - chỉ chạy khi user đã có wallet
   useEffect(() => {
+    // Chỉ setup timer khi user đã có wallet
+    if (!wallet) {
+      setIsLocked(false); // Reset lock state khi không có wallet
+      return;
+    }
+
     let timer: NodeJS.Timeout;
     const resetTimer = () => {
       clearTimeout(timer);
       timer = setTimeout(() => setIsLocked(true), 300000); // 5 minutes
     };
+    
     window.addEventListener("mousemove", resetTimer);
     window.addEventListener("keydown", resetTimer);
     window.addEventListener("mousedown", resetTimer);
     window.addEventListener("touchstart", resetTimer);
     resetTimer();
+    
     return () => {
       clearTimeout(timer);
       window.removeEventListener("mousemove", resetTimer);
@@ -101,7 +109,7 @@ function App() {
       window.removeEventListener("mousedown", resetTimer);
       window.removeEventListener("touchstart", resetTimer);
     };
-  }, []);
+  }, [wallet]); // Thêm wallet làm dependency
 
   // Handler for Create Wallet button in Header
   const handleCreateWalletClick = () => {
@@ -117,6 +125,7 @@ function App() {
     window.localStorage.removeItem("wallet");
     setWallet(null);
     setBalance("0");
+    setIsLocked(false); // Reset lock state khi logout
     window.location.reload();
   };
 
@@ -164,8 +173,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 font-sans">
-      {/* Unlock Wallet Modal */}
-      {isLocked && (
+      {/* Unlock Wallet Modal - chỉ hiện khi user có wallet và bị lock */}
+      {wallet && isLocked && (
         <UnlockWalletModal
           onUnlock={() => setIsLocked(false)}
           onShowSeed={() => setShowUnlockSeed(true)}
