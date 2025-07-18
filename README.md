@@ -12,90 +12,118 @@ Become part of the most exciting Web3 gaming communities. Explore, collect, swap
 
 ## 🕹️ What is Lootie?
 
-**Lootie** is a Game-first Web3 platform built on the **Saga** blockchain. It combines a **customizable wallet** with an interactive **Game Hub**, designed specifically for blockchain gamers.
-
-With Lootie, users can:
-
-- Discover and play supported blockchain games
-- Manage and showcase NFTs and in-game tokens
-- Swap tokens easily with integrated tools
-- Join quests to earn XP, NFTs, and on-chain rewards
-- Track their gaming journey and achievements
+Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining a customizable wallet, interactive Game Hub, Quest system, and social features for blockchain gamers. It leverages Saga's chainlet infrastructure and EVM compatibility for seamless on-chain experiences.
 
 ---
 
 ## 🚀 Features
 
-- **Custom Wallet:** Built for Web3 gamers to manage assets
-- **Game Hub:** Discover games and view play history
-- **NFT & Token Dashboard:** See all your items in one place
-- **Quest System:** Join live quests and earn rewards
-- **Modern UX:** Fast, responsive, and mobile-ready interface
-- **Saga Native:** Optimized for Chainlet architecture
+- **Custom Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC integration
+- **Game Hub**: Discover, track, and play supported blockchain games
+- **NFT & Token Dashboard**: Manage, showcase, and swap in-game assets
+- **Quest System**: Join, complete, and claim on-chain/social/game quests for rewards (XP, NFT, token)
+- **Collabs & Communities**: Find partners, join teams, and grow your network
+- **Modern UX**: Responsive, mobile-ready, beautiful UI/UX
+- **Saga Native**: Optimized for Saga chainlet architecture, EVM-compatible, using Saga RPC
+- **Backend API**: Secure wallet creation/import, balance check, and Saga integration
+- **Smart Contracts**: QuestManager, Quest, and more (see lootie-contracts/)
+
+---
+
+## 🏗️ Project Structure
+
+- **src/**: Frontend (React + TypeScript)
+  - Components: Wallet, Portfolio, QuestHub, Collabs, Communities, etc.
+  - Data: mockQuests, mockCollabs, contract addresses, chainlet config
+  - Assets: Logo, images, icons
+- **backend/**: Express.js backend
+  - API: Wallet create/import, balance (Saga RPC)
+  - Static: Serves frontend build
+- **lootie-contracts/**: Smart contracts (Solidity, Foundry)
+  - Contracts: QuestManager, Quest, etc.
+  - Scripts: Deployment, test scripts
+  - Tests: Unit/security tests
+
+---
+
+## 🔗 Saga Infrastructure Usage
+
+- Uses Saga's EVM-compatible RPC for all wallet and contract interactions
+- Designed for Saga chainlet architecture (scalable, modular)
+- All on-chain features (quests, rewards, swaps) run on Saga
+- Easy to extend for custom chainlets or advanced Saga APIs
+
+---
+
+## 🧩 Main Modules
+
+- **Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC
+- **Portfolio**: Asset overview, tokens, NFTs, wallet value
+- **QuestHub**: Join, complete, claim quests (on-chain, social, in-game)
+- **Collabs**: Find, connect, and collaborate with other "hunters"
+- **Communities**: Explore game communities, projects, teams
+- **Game Hub**: Game list, play history, achievements
 
 ---
 
 ## 🛠️ Getting Started
 
-### 1. **Install dependencies**
+### 1. Install dependencies
 
 ```bash
 pnpm install
-# or
-npm install
-# or
-yarn install
+# or npm install
+# or yarn install
 ```
 
----
+### 2. Run in Development Mode
 
-### 2. **Run in Development Mode (hot reload)**
+**Terminal 1 (Backend):**
 
-**Open 2 terminals:**
+```bash
+cd backend
+pnpm start
+# or npm start
+```
 
-- **Terminal 1 (Backend):**
-  ```bash
-  cd backend
-  pnpm start
-  # or npm start
-  ```
-- **Terminal 2 (Frontend):**
-  ```bash
-  pnpm dev
-  # or npm run dev
-  ```
-- Open: [http://localhost:5173](http://localhost:5173) in your browser.
+**Terminal 2 (Frontend):**
 
----
+```bash
+pnpm dev
+# or npm run dev
+```
 
-### 3. **Run in Production Mode (single process)**
+Visit: [http://localhost:5173](http://localhost:5173)
 
-- **Build the frontend:**
-  ```bash
-  pnpm build
-  # or npm run build
-  ```
-- **Copy the build output to backend:**
-  ```bash
-  cp -r dist backend/public
-  ```
-- **Start the backend server:**
-  ```bash
-  cd backend
-  pnpm start
-  # or npm start
-  ```
-- Open: [http://localhost:3001](http://localhost:3001) in your browser.
+### 3. Run in Production Mode
+
+```bash
+pnpm build
+cp -r dist backend/public
+cd backend
+pnpm start
+```
+
+Visit: [http://localhost:3001](http://localhost:3001)
 
 ---
 
 ## 📦 Tech Stack
 
 - React + TypeScript + Vite
-- TailwindCSS for styling
-- Saga Modular Blockchain
-- EVM-compatible wallet APIs
-- IPFS / NFT / DeFi integration
+- TailwindCSS
+- Saga Modular Blockchain (EVM-compatible, chainlet)
+- Express.js backend
+- Foundry (Solidity, smart contract)
+- ethers.js, axios, Privy Auth
+
+---
+
+## 🔒 Security & Testing
+
+- All wallet operations are local & encrypted (never stored on server)
+- Unit tests & security checks for smart contracts (see lootie-contracts/test/)
+- Follows best practices for Web3 security
 
 ---
 
@@ -107,8 +135,7 @@ yarn install
 
 ## 🤝 Contributing
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ---
 
