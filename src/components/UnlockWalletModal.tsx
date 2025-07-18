@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import CryptoJS from "crypto-js";
 import * as bip39 from "bip39";
 import hideEye from "../assets/hide-eye.png";
@@ -17,16 +17,17 @@ const UnlockWalletModal: React.FC<UnlockWalletModalProps> = ({
   showSeed,
   onHideSeed,
 }) => {
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [seed, setSeed] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
-  const [seedError, setSeedError] = useState("");
-  const [resetSuccess, setResetSuccess] = useState(false);
+  const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [seed, setSeed] = React.useState("");
+  const [newPassword, setNewPassword] = React.useState("");
+  const [showNewPassword, setShowNewPassword] = React.useState(false);
+  const [confirmNewPassword, setConfirmNewPassword] = React.useState("");
+  const [showConfirmNewPassword, setShowConfirmNewPassword] =
+    React.useState(false);
+  const [seedError, setSeedError] = React.useState("");
+  const [resetSuccess, setResetSuccess] = React.useState(false);
 
   const encryptedVault = localStorage.getItem("encryptedVault") || "";
 

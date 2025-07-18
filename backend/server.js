@@ -8,6 +8,8 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const SAGA_RPC = "https://lootie-2752580283102000-1.jsonrpc.sagarpc.io";
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -48,10 +50,8 @@ app.post("/api/wallet/balance", async (req, res) => {
     return res.status(400).json({ error: "address is required." });
   }
   try {
-    // Use a public Ethereum RPC provider (for production, use process.env.ETH_RPC_URL)
-    const provider = new ethers.JsonRpcProvider(
-      "https://mainnet.infura.io/v3/8b6e6b0e2e2e4e1e8e8e8e8e8e8e8e8e"
-    );
+    // Use Saga RPC provider
+    const provider = new ethers.JsonRpcProvider(SAGA_RPC);
     const balance = await provider.getBalance(address);
     const formatted = ethers.formatEther(balance);
     res.json({ balance: formatted });

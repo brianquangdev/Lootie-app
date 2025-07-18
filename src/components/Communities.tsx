@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 
 // Mock data với 20 communities và avatar github
 const mockCommunities = [

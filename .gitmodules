@@ -1,0 +1,6 @@
+[submodule "lootie-contracts/lib/forge-std"]
+	path = lootie-contracts/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "lootie-contracts/lib/openzeppelin-contracts"]
+	path = lootie-contracts/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

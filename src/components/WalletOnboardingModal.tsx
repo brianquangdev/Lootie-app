@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import * as bip39 from "bip39";
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
@@ -31,21 +31,21 @@ const WalletOnboardingModal: React.FC<WalletOnboardingModalProps> = ({
   setImportPrivateKey: _setImportPrivateKey,
 }) => {
   // Step: 0=choose, 1=create:password, 2=create:showseed, 3=create:confirmseed, 4=create:name, 5=done, 10=import:seed, 11=import:name, 12=done
-  const [step, setStep] = useState(0);
+  const [step, setStep] = React.useState(0);
   // Common
-  const [localError, setLocalError] = useState("");
+  const [localError, setLocalError] = React.useState("");
   // Create wallet
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [mnemonic, setMnemonic] = useState("");
-  const [seedConfirm, setSeedConfirm] = useState("");
-  const [walletName, setWalletName] = useState("");
-  const [isCreating, setIsCreating] = useState(false);
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [mnemonic, setMnemonic] = React.useState("");
+  const [seedConfirm, setSeedConfirm] = React.useState("");
+  const [walletName, setWalletName] = React.useState("");
+  const [isCreating, setIsCreating] = React.useState(false);
   // Import wallet
-  const [importSeed, setImportSeed] = useState("");
-  const [isImporting, setIsImporting] = useState(false);
+  const [importSeed, setImportSeed] = React.useState("");
+  const [isImporting, setIsImporting] = React.useState(false);
 
   React.useEffect(() => {
     if (!visible) {
@@ -247,6 +247,13 @@ const WalletOnboardingModal: React.FC<WalletOnboardingModalProps> = ({
             localStorage.removeItem("activeWalletIndex");
             localStorage.removeItem("walletAddress");
             localStorage.removeItem("walletName");
+            localStorage.setItem(
+              "wallet",
+              JSON.stringify({
+                address: wallet.address,
+                privateKey: wallet.privateKey,
+              })
+            );
             window.dispatchEvent(new Event("walletsUpdated"));
             setIsCreating(false);
             setStep(5);
@@ -347,6 +354,13 @@ const WalletOnboardingModal: React.FC<WalletOnboardingModalProps> = ({
             localStorage.setItem("currentRootAddress", rootAddress);
             localStorage.removeItem("wallets");
             localStorage.removeItem("activeWalletIndex");
+            localStorage.setItem(
+              "wallet",
+              JSON.stringify({
+                address: wallet.address,
+                privateKey: wallet.privateKey,
+              })
+            );
             window.dispatchEvent(new Event("walletsUpdated"));
             setIsImporting(false);
             setStep(12);

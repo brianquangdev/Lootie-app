@@ -1,22 +1,30 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 
 interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   onCreateWalletClick: () => void;
-  wallet: { address: string; privateKey: string; mnemonic?: string } | null;
+  wallet: {
+    address: string;
+    privateKey: string;
+    mnemonic?: string;
+    name: string;
+  } | null;
   handleLogout: () => void;
   balance: string;
+  renderExtraButton?: React.ReactNode;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header = ({
   activeTab,
   setActiveTab,
   onCreateWalletClick,
-  wallet: _wallet,
+  wallet,
   handleLogout,
-  balance: _balance,
-}) => {
+  balance,
+  renderExtraButton,
+}: HeaderProps) => {
   const [walletName, setWalletName] = useState<string | null>(null);
 
   useEffect(() => {
@@ -66,6 +74,9 @@ const Header: React.FC<HeaderProps> = ({
     };
   }, []);
 
+  // Ẩn nút Create Wallet nếu đã có ví local
+  const hasWallet = !!wallet && !!wallet.address;
+
   return (
     <header className="bg-white border-b-4 border-black p-4 shadow-[0px_4px_0px_0px_#000]">
       <div className="w-full flex items-center justify-between p-4">
@@ -98,15 +109,18 @@ const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          {walletName ? (
+          {hasWallet ? (
             <>
               <div
                 className="bg-blue-100 border-2 border-black rounded-xl px-3 py-2 font-bold text-black cursor-pointer hover:bg-blue-200 transition"
                 title="Wallet Name"
                 onClick={() => setActiveTab("wallet")}
               >
-                {walletName}
+                {walletName ||
+                  wallet.name ||
+                  wallet.address.slice(0, 8) + "..."}
               </div>
+              {renderExtraButton}
               <button
                 className="ml-2 bg-red-400 hover:bg-red-500 border-2 border-black rounded-xl px-4 py-2 font-bold text-white shadow transition-all"
                 onClick={handleLogout}
@@ -122,6 +136,7 @@ const Header: React.FC<HeaderProps> = ({
               >
                 Create Wallet
               </button>
+              {renderExtraButton}
             </>
           )}
         </div>

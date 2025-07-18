@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 
 interface Hunter {
   id: number;
@@ -115,7 +116,7 @@ const Collabs: React.FC<CollabsProps> = ({
       <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 text-white rounded-3xl p-8 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
         <div className="text-center">
           <h2 className="text-4xl md:text-5xl font-black mb-4">
-            🤝 Find Your Perfect Collab Partner
+            Find Your Perfect Collab Partner
           </h2>
           <p className="text-xl font-bold text-blue-100 mb-6">
             Connect with top hunters • Build amazing projects • Grow together

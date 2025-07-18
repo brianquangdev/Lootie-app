@@ -1,0 +1,57 @@
+{
+  "abi": [
+    {
+      "type": "constructor",
+      "inputs": [
+        { "name": "_nft", "type": "address", "internalType": "address" }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "completeFollowXQuest",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "hasClaimed",
+      "inputs": [{ "name": "", "type": "address", "internalType": "address" }],
+      "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "nft",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "contract WelcomeToLootieNFT"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "event",
+      "name": "QuestCompleted",
+      "inputs": [
+        {
+          "name": "user",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "tokenId",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    }
+  ]
+}

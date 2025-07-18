@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import * as React from "react";
 import copyIcon from "../assets/—Pngtree—vector copy icon_4013516.png";
 
 interface WalletSidebarProps {
   walletSubTab: string;
   setWalletSubTab: (tab: string) => void;
-  wallet?: { address: string } | null;
+  wallet?: { address: string; type: string } | null;
   balance?: string;
 }
 
@@ -14,8 +14,8 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
   wallet,
   balance,
 }) => {
-  const [_showFullAddress, _setShowFullAddress] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [_showFullAddress, _setShowFullAddress] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
 
   const handleCopy = () => {
     if (wallet?.address) {
@@ -45,7 +45,14 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
               </span>
               <div className="relative">
                 <button
-                  className="text-gray-900 hover:text-black focus:outline-none"
+                  className="text-gray-900 hover:text-black focus:outline-none hover:shadow-[0_0_10px_2px_#fde047] hover:scale-110 transition-all duration-200"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    margin: 0,
+                    boxShadow: "none",
+                  }}
                   onClick={handleCopy}
                   title="Copy address"
                 >
@@ -60,7 +67,9 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
             </div>
             {balance && (
               <div className="font-bold text-green-700 text-base text-center w-full">
-                {parseFloat(balance).toFixed(4)} ETH
+                {wallet.type === "ETH"
+                  ? `${parseFloat(balance).toFixed(4)} ETH`
+                  : `${parseFloat(balance).toFixed(4)} SAGA`}
               </div>
             )}
           </div>
@@ -108,6 +117,18 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
             }`}
           >
             🔄 Swap
+          </button>
+
+          {/* Thêm Transaction History dưới Swap */}
+          <button
+            onClick={() => setWalletSubTab("history")}
+            className={`w-full flex items-center gap-3 p-3 rounded-xl font-bold transition-all ${
+              walletSubTab === "history"
+                ? "bg-yellow-300 text-black shadow-[2px_2px_0px_0px_#000]"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
+          >
+            📜 History
           </button>
 
           <button

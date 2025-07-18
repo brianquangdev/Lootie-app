@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
+import { ethers } from "ethers";
+import { PrivyProvider, usePrivy } from "@privy-io/react-auth";
 
 // Import components
 import Header from "./components/Header";
@@ -19,6 +21,7 @@ import Communities from "./components/Communities";
 import { mockHunters } from "./data/mockCollabs";
 import WalletOnboardingModal from "./components/WalletOnboardingModal";
 import UnlockWalletModal from "./components/UnlockWalletModal";
+import { SAGA_RPC } from "./data/contractAddresses";
 
 type WalletType = {
   address: string;
@@ -26,7 +29,7 @@ type WalletType = {
   mnemonic?: string;
 };
 
-function App() {
+function AppContent() {
   const [activeTab, setActiveTab] = useState("portfolio");
   const [selectedQuest, setSelectedQuest] = useState(null);
   const [walletSubTab, setWalletSubTab] = useState("wallets");
@@ -41,10 +44,19 @@ function App() {
   const [importPrivateKey, setImportPrivateKey] = useState("");
   const [modalError, setModalError] = useState("");
   const [isWalletLoading, setIsWalletLoading] = useState(false);
-  const [wallet, setWallet] = useState<WalletType | null>(null);
-  const [balance, setBalance] = useState("0");
+  const [wallets, setWallets] = useState<any[]>([]);
+  const [activeWalletIndex, setActiveWalletIndex] = useState<number>(0);
+  const [ethBalance, setEthBalance] = useState<string>("0");
   const [isLocked, setIsLocked] = useState(false);
   const [showUnlockSeed, setShowUnlockSeed] = useState(false);
+
+  const {
+    login: privyLogin,
+    logout: privyLogout,
+    ready: privyReady,
+    authenticated: privyAuthenticated,
+    user: privyUser,
+  } = usePrivy();
 
   // Backend URL (configurable)
   // Use (window as any) to avoid TypeScript error for custom property
@@ -60,34 +72,78 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Load wallet from localStorage on mount
-  useEffect(() => {
-    const saved = window.localStorage.getItem("wallet");
-    if (saved) {
-      try {
-        setWallet(JSON.parse(saved));
-      } catch {}
+  // Hàm load wallets từ localStorage
+  const loadWalletsFromStorage = () => {
+    const rootAddress = localStorage.getItem("currentRootAddress") || "";
+    if (!rootAddress) {
+      setWallets([]);
+      setActiveWalletIndex(0);
+      return;
     }
+    const stored = localStorage.getItem(`wallets_${rootAddress}`);
+    let idx = parseInt(
+      localStorage.getItem(`activeWalletIndex_${rootAddress}`) || "0",
+      10
+    );
+    if (stored) {
+      try {
+        const arr = JSON.parse(stored);
+        if (isNaN(idx) || idx < 0 || idx >= arr.length) {
+          idx = 0;
+          localStorage.setItem(`activeWalletIndex_${rootAddress}`, "0");
+        }
+        setWallets(arr);
+        setActiveWalletIndex(idx);
+      } catch {
+        setWallets([]);
+        setActiveWalletIndex(0);
+      }
+    } else {
+      setWallets([]);
+      setActiveWalletIndex(0);
+    }
+  };
+
+  // Load wallets và activeWalletIndex từ localStorage khi rootAddress thay đổi
+  useEffect(() => {
+    loadWalletsFromStorage();
   }, []);
 
-  // Fetch ETH balance when wallet changes
+  // Cập nhật ethBalance khi activeWallet thay đổi
   useEffect(() => {
-    if (wallet && wallet.address) {
-      axios
-        .post(`${BACKEND_URL}/api/wallet/balance`, { address: wallet.address })
-        .then((res) => setBalance(res.data.balance))
-        .catch(() => setBalance("0"));
+    const activeWallet = wallets[activeWalletIndex];
+    if (activeWallet && activeWallet.type === "ETH") {
+      async function fetchBalance() {
+        try {
+          const provider = new ethers.JsonRpcProvider(SAGA_RPC);
+          const balance = await provider.getBalance(activeWallet.address);
+          setEthBalance(ethers.formatEther(balance));
+        } catch (e) {
+          setEthBalance("0");
+        }
+      }
+      fetchBalance();
     } else {
-      setBalance("0");
+      setEthBalance("0");
     }
-  }, [wallet]);
+  }, [wallets, activeWalletIndex]);
+
+  // Log chi tiết giá trị localStorage wallet
+  console.log(
+    "DEBUG: isLocked =",
+    isLocked,
+    "wallet =",
+    wallets[activeWalletIndex],
+    "localStorage.wallet =",
+    localStorage.getItem("wallet")
+  );
 
   // Inactivity timer logic
   useEffect(() => {
     let timer: NodeJS.Timeout;
     const resetTimer = () => {
       clearTimeout(timer);
-      timer = setTimeout(() => setIsLocked(true), 300000); // 5 minutes
+      timer = setTimeout(() => setIsLocked(true), 300000); // 5 phút
     };
     window.addEventListener("mousemove", resetTimer);
     window.addEventListener("keydown", resetTimer);
@@ -103,6 +159,30 @@ function App() {
     };
   }, []);
 
+  // Add debug log to check isLocked and wallet
+  console.log(
+    "DEBUG: isLocked =",
+    isLocked,
+    "wallet =",
+    wallets[activeWalletIndex]
+  );
+
+  // Determine if user is logged in with OAuth
+  const isOAuth =
+    privyAuthenticated &&
+    privyUser &&
+    privyUser.wallet &&
+    typeof privyUser.wallet.address === "string" &&
+    privyUser.wallet.address.length > 0;
+  const oAuthWallet =
+    isOAuth && privyUser.wallet && privyUser.wallet.address
+      ? {
+          address: privyUser.wallet.address,
+          name: privyUser.email || "OAuth Wallet",
+          type: "ETH",
+        }
+      : null;
+
   // Handler for Create Wallet button in Header
   const handleCreateWalletClick = () => {
     setShowWalletModal(true);
@@ -112,11 +192,12 @@ function App() {
 
   // Handle logout
   const handleLogout = () => {
-    window.localStorage.removeItem("encryptedVault");
-    window.localStorage.removeItem("currentRootAddress");
-    window.localStorage.removeItem("wallet");
-    setWallet(null);
-    setBalance("0");
+    localStorage.removeItem("encryptedVault");
+    localStorage.removeItem("currentRootAddress");
+    localStorage.removeItem("wallet");
+    setWallets([]);
+    setActiveWalletIndex(0);
+    setEthBalance("0");
     window.location.reload();
   };
 
@@ -128,8 +209,9 @@ function App() {
       const res = await axios.post(`${BACKEND_URL}/api/wallet/create`);
       const { address, privateKey, mnemonic } = res.data;
       const walletData = { address, privateKey, mnemonic };
-      window.localStorage.setItem("wallet", JSON.stringify(walletData));
-      setWallet(walletData);
+      localStorage.setItem("wallet", JSON.stringify(walletData));
+      // Cập nhật lại danh sách ví từ localStorage
+      loadWalletsFromStorage();
       setShowWalletModal(false);
       setActiveTab("portfolio");
     } catch (err) {
@@ -149,8 +231,9 @@ function App() {
       });
       const { address } = res.data;
       const walletData = { address, privateKey: importPrivateKey.trim() };
-      window.localStorage.setItem("wallet", JSON.stringify(walletData));
-      setWallet(walletData);
+      localStorage.setItem("wallet", JSON.stringify(walletData));
+      // Cập nhật lại danh sách ví từ localStorage
+      loadWalletsFromStorage();
       setShowWalletModal(false);
       setImportPrivateKey("");
       setShowImportInput(false);
@@ -162,10 +245,18 @@ function App() {
     }
   };
 
+  // Hàm chọn ví mới
+  const handleSelectWallet = (idx: number) => {
+    setActiveWalletIndex(idx);
+    const rootAddress = localStorage.getItem("currentRootAddress") || "";
+    localStorage.setItem(`activeWalletIndex_${rootAddress}`, idx.toString());
+    window.dispatchEvent(new Event("walletsUpdated"));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 font-sans">
       {/* Unlock Wallet Modal */}
-      {isLocked && (
+      {isLocked && wallets[activeWalletIndex] && (
         <UnlockWalletModal
           onUnlock={() => setIsLocked(false)}
           onShowSeed={() => setShowUnlockSeed(true)}
@@ -178,9 +269,28 @@ function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onCreateWalletClick={handleCreateWalletClick}
-        wallet={wallet}
+        wallet={isOAuth ? oAuthWallet : wallets[activeWalletIndex]}
         handleLogout={handleLogout}
-        balance={balance}
+        balance={ethBalance}
+        renderExtraButton={
+          // Ẩn nút Sign In và Create Wallet nếu đã có ví hoặc đã đăng nhập OAuth
+          wallets.length > 0 || isOAuth ? null : !privyAuthenticated &&
+            privyReady ? (
+            <button
+              className="ml-2 bg-blue-400 hover:bg-blue-500 border-2 border-black rounded-xl px-4 py-2 font-bold text-white shadow-[2px_2px_0px_0px_#000] transition-all"
+              onClick={privyLogin}
+            >
+              Sign In
+            </button>
+          ) : privyAuthenticated ? (
+            <button
+              className="ml-2 bg-gray-400 hover:bg-gray-500 border-2 border-black rounded-xl px-4 py-2 font-bold text-white shadow-[2px_2px_0px_0px_#000] transition-all"
+              onClick={privyLogout}
+            >
+              Logout
+            </button>
+          ) : null
+        }
       />
 
       {/* Mobile Tab Navigation */}
@@ -199,20 +309,21 @@ function App() {
             <PortfolioOverview
               portfolioView={portfolioView}
               setPortfolioView={setPortfolioView}
+              wallets={wallets}
             />
-            {portfolioView === "tokens" && <TokenHoldings />}
+            {portfolioView === "tokens" && <TokenHoldings wallets={wallets} />}
             {portfolioView === "nfts" && <NFTCollection />}
           </div>
         )}
 
         {/* Wallet Tab */}
-        {activeTab === "wallet" && (
+        {activeTab === "wallet" && !isOAuth && (
           <div className="flex gap-6">
             <WalletSidebar
               walletSubTab={walletSubTab}
               setWalletSubTab={setWalletSubTab}
-              wallet={wallet}
-              balance={balance}
+              wallet={wallets[activeWalletIndex]}
+              balance={ethBalance}
             />
             <div className="flex-1">
               <WalletMain
@@ -221,8 +332,12 @@ function App() {
                 setSelectedToken={setSelectedToken}
                 swapAmount={swapAmount}
                 setSwapAmount={setSwapAmount}
-                wallet={wallet}
-                balance={balance}
+                wallet={wallets[activeWalletIndex]}
+                balance={ethBalance}
+                wallets={wallets}
+                activeWalletIndex={activeWalletIndex}
+                ethBalance={ethBalance}
+                onSelectWallet={handleSelectWallet}
               />
             </div>
           </div>
@@ -258,20 +373,37 @@ function App() {
       />
 
       {/* Wallet Onboarding Modal */}
-      <WalletOnboardingModal
-        visible={showWalletModal}
-        onClose={() => setShowWalletModal(false)}
-        onCreate={handleCreateNewWallet}
-        onImport={handleImportWallet}
-        isLoading={isWalletLoading}
-        error={modalError}
-        showImportInput={showImportInput}
-        setShowImportInput={setShowImportInput}
-        importPrivateKey={importPrivateKey}
-        setImportPrivateKey={setImportPrivateKey}
-      />
+      {!isOAuth && (
+        <WalletOnboardingModal
+          visible={showWalletModal}
+          onClose={() => setShowWalletModal(false)}
+          onCreate={handleCreateNewWallet}
+          onImport={handleImportWallet}
+          isLoading={isWalletLoading}
+          error={modalError}
+          showImportInput={showImportInput}
+          setShowImportInput={setShowImportInput}
+          importPrivateKey={importPrivateKey}
+          setImportPrivateKey={setImportPrivateKey}
+        />
+      )}
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <PrivyProvider
+      appId="cmcvugdsw01v3lf0m31a1ts0j"
+      config={{
+        loginMethods: ["google", "apple"],
+        appearance: {
+          theme: "light",
+          accentColor: "#facc15",
+        },
+      }}
+    >
+      <AppContent />
+    </PrivyProvider>
+  );
+}

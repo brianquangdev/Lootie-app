@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import copyIcon from "../assets/—Pngtree—vector copy icon_4013516.png";
 import { mockTokens } from "../data/mockTokens";
 import { mockNFTs } from "../data/mockNFTs";
+import { Wallet, HDNodeWallet } from "ethers";
 import CryptoJS from "crypto-js";
 import * as bip39 from "bip39";
+import WalletOnboardingModal from "./WalletOnboardingModal";
+
+declare module "*.png";
 
 interface WalletAccount {
   address: string;
   name: string;
-  type: "ETH" | "SAGA";
+  type: string;
   index: number;
 }
 
@@ -19,10 +23,97 @@ interface WalletMainProps {
   setSelectedToken: (token: string) => void;
   swapAmount: string;
   setSwapAmount: (amount: string) => void;
-  onWalletChange?: () => void; // callback to update header
-  wallet: { address: string; privateKey: string; mnemonic?: string } | null;
+  onWalletChange?: () => void;
+  wallet: WalletAccount | null;
   balance: string;
+  wallets: WalletAccount[];
+  activeWalletIndex: number;
+  ethBalance: string;
+  onSelectWallet: (idx: number) => void;
 }
+
+const ExportPrivateKeyModal: React.FC<{
+  visible: boolean;
+  onClose: () => void;
+  encryptedVault: string;
+  walletIndex: number;
+  wallets: WalletAccount[];
+}> = ({ visible, onClose, encryptedVault, walletIndex, wallets }) => {
+  const [password, setPassword] = React.useState("");
+  const [privateKey, setPrivateKey] = React.useState<string | null>(null);
+  const [error, setError] = React.useState("");
+
+  const handleExport = () => {
+    try {
+      const decrypted = CryptoJS.AES.decrypt(encryptedVault, password).toString(
+        CryptoJS.enc.Utf8
+      );
+      if (!decrypted || !bip39.validateMnemonic(decrypted)) {
+        setError("Wrong password or vault corrupted");
+        return;
+      }
+      // Lấy ví đúng index bằng HDNodeWallet
+      const mnemonic = decrypted;
+      const hdNode = HDNodeWallet.fromPhrase(mnemonic);
+      const child = hdNode.deriveChild(wallets[walletIndex]?.index || 0);
+      setPrivateKey(child.privateKey);
+      setError("");
+    } catch {
+      setError("Wrong password or vault corrupted");
+    }
+  };
+
+  if (!visible) return null;
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+      <div className="bg-white rounded-2xl border-4 border-black p-8 w-full max-w-md relative">
+        <button
+          className="absolute top-4 right-4 text-lg font-bold text-red-500"
+          onClick={onClose}
+        >
+          ×
+        </button>
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Export Private Key
+        </h2>
+        {!privateKey ? (
+          <>
+            <input
+              type="password"
+              className="w-full border-2 border-black rounded-xl p-3 mb-3"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && (
+              <div className="text-red-600 mb-3 text-center">{error}</div>
+            )}
+            <button
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl border-2 border-black shadow"
+              onClick={handleExport}
+            >
+              Show Private Key
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="bg-gray-100 p-4 rounded-xl mb-3 text-center select-all break-all font-mono">
+              {privateKey}
+            </div>
+            <button
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl border-2 border-black shadow"
+              onClick={() => {
+                navigator.clipboard.writeText(privateKey);
+              }}
+            >
+              Copy Private Key
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const WalletMain: React.FC<WalletMainProps> = ({
   walletSubTab,
@@ -33,177 +124,113 @@ const WalletMain: React.FC<WalletMainProps> = ({
   onWalletChange,
   wallet: _wallet,
   balance: _balance,
+  wallets,
+  activeWalletIndex,
+  ethBalance,
+  onSelectWallet,
 }) => {
-  // Get root address for current session
-  const rootAddress = localStorage.getItem("currentRootAddress") || "";
+  const [exportModalOpen, setExportModalOpen] = React.useState(false);
+  const [exportWalletIndex, setExportWalletIndex] = React.useState<
+    number | null
+  >(null);
+  const encryptedVault = localStorage.getItem("encryptedVault") || "";
+  const [onboardingOpen, setOnboardingOpen] = React.useState(false);
+  const [localWallets, setLocalWallets] =
+    React.useState<WalletAccount[]>(wallets);
 
-  // Wallets state
-  const [wallets, setWallets] = useState<WalletAccount[]>([]);
-  const [activeWalletIndex, setActiveWalletIndex] = useState<number>(0);
-  const [copied, setCopied] = useState(false);
-  const [ethBalance, setEthBalance] = useState<string>("0");
-  const [sagaBalance] = useState<string>("0.00");
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [newWalletName, setNewWalletName] = useState("");
-  const [newWalletType, setNewWalletType] = useState<"ETH" | "SAGA">("ETH");
-  const [addError, setAddError] = useState("");
-  const [_isAdding, setIsAdding] = useState(false);
+  React.useEffect(() => {
+    setLocalWallets(wallets);
+  }, [wallets]);
 
-  // Load wallets from localStorage for current rootAddress
-  useEffect(() => {
-    if (!rootAddress) {
-      setWallets([]);
-      setActiveWalletIndex(0);
-      return;
-    }
-    const stored = localStorage.getItem(`wallets_${rootAddress}`);
-    let idx = parseInt(
-      localStorage.getItem(`activeWalletIndex_${rootAddress}`) || "0",
-      10
-    );
-    if (stored) {
+  React.useEffect(() => {
+    const updateWallets = () => {
+      const rootAddress = localStorage.getItem("currentRootAddress") || "";
+      let walletsArr: WalletAccount[] = [];
       try {
-        const arr = JSON.parse(stored) as WalletAccount[];
-        if (isNaN(idx) || idx < 0 || idx >= arr.length) {
-          idx = 0;
-          localStorage.setItem(`activeWalletIndex_${rootAddress}`, "0");
-        }
-        setWallets(arr);
-        setActiveWalletIndex(idx);
-      } catch {
-        setWallets([]);
-        setActiveWalletIndex(0);
-      }
-    } else {
-      setWallets([]);
-      setActiveWalletIndex(0);
-    }
-  }, [rootAddress]);
-
-  // Update balances when active wallet changes
-  const activeWallet = wallets[activeWalletIndex];
-  useEffect(() => {
-    if (activeWallet && activeWallet.type === "ETH") {
-      async function fetchBalance() {
-        try {
-          const provider = new ethers.JsonRpcProvider();
-          const balance = await provider.getBalance(activeWallet.address);
-          setEthBalance(ethers.formatEther(balance));
-        } catch (e) {
-          setEthBalance("0");
-        }
-      }
-      fetchBalance();
-    } else {
-      setEthBalance("0");
-    }
-  }, [activeWallet]);
-
-  // Handle wallet selection
-  const handleSelectWallet = (idx: number) => {
-    setActiveWalletIndex(idx);
-    localStorage.setItem(`activeWalletIndex_${rootAddress}`, idx.toString());
-    if (onWalletChange) onWalletChange();
-    window.dispatchEvent(new Event("walletsUpdated"));
-  };
-
-  // Calculate total portfolio value (mock)
-  const totalTokenValue = mockTokens.reduce(
-    (sum, token) => sum + token.amount * token.price,
-    0
-  );
-  const totalNFTValue = mockNFTs.reduce((sum, nft) => sum + nft.value, 0);
-  const totalPortfolioValue = totalTokenValue + totalNFTValue;
-
-  const calculateSwapValue = (amount: string, tokenPrice: number) => {
-    return (parseFloat(amount) * tokenPrice * 0.95).toFixed(4); // 5% slippage
-  };
-
-  // Add new wallet logic
-  const handleAddWallet = async () => {
-    setAddError("");
-    if (!newWalletName.trim()) {
-      setAddError("Wallet name is required");
-      return;
-    }
-    setIsAdding(true);
-    try {
-      // Decrypt seed phrase from vault
-      const encryptedVault = localStorage.getItem("encryptedVault") || "";
-      const password = prompt(
-        "Enter your wallet password to add a new account:"
-      );
-      if (!password) {
-        setAddError("Password is required");
-        setIsAdding(false);
-        return;
-      }
-      const seed = CryptoJS.AES.decrypt(encryptedVault, password).toString(
-        CryptoJS.enc.Utf8
-      );
-      if (!bip39.validateMnemonic(seed)) {
-        setAddError("Failed to decrypt seed phrase. Wrong password?");
-        setIsAdding(false);
-        return;
-      }
-      // Always reload wallets from localStorage to avoid stale state
-      let currentWallets: WalletAccount[] = [];
-      try {
-        const stored = localStorage.getItem(`wallets_${rootAddress}`);
-        if (stored) currentWallets = JSON.parse(stored);
+        walletsArr =
+          JSON.parse(
+            localStorage.getItem(`wallets_${rootAddress}`) || "null"
+          ) || [];
       } catch {}
-      const nextIndex = currentWallets.length;
-      let path = "m/44'/60'/0'/0/" + nextIndex; // ETH default path
-      if (newWalletType === "SAGA") {
-        path = "m/44'/60'/0'/0/" + nextIndex;
-      }
-      const hdWallet = ethers.HDNodeWallet.fromPhrase(seed, path);
-      const newWallet = {
-        address: hdWallet.address,
-        name: newWalletName.trim(),
-        type: newWalletType,
-        index: nextIndex,
-      };
-      const updatedWallets = [...currentWallets, newWallet];
-      localStorage.setItem(
-        `wallets_${rootAddress}`,
-        JSON.stringify(updatedWallets)
-      );
-      localStorage.setItem(
-        `activeWalletIndex_${rootAddress}`,
-        nextIndex.toString()
-      );
-      setWallets(updatedWallets);
-      setActiveWalletIndex(nextIndex);
-      setShowAddModal(false);
-      setNewWalletName("");
-      setNewWalletType("ETH");
-      setIsAdding(false);
-      setTimeout(() => {
-        window.dispatchEvent(new Event("walletsUpdated"));
-      }, 0);
-    } catch (e) {
-      setAddError("Failed to add wallet. Please try again.");
-      setIsAdding(false);
-    }
-  };
+      setLocalWallets(walletsArr);
+    };
+    window.addEventListener("walletsUpdated", updateWallets);
+    return () => {
+      window.removeEventListener("walletsUpdated", updateWallets);
+    };
+  }, []);
 
   // Wallets View
   if (walletSubTab === "wallets") {
+    const handleAddNewWallet = () => {
+      const encryptedVault = localStorage.getItem("encryptedVault") || "";
+      const password = prompt("Enter your password to add a new wallet");
+      if (!password) return;
+      try {
+        const decrypted = CryptoJS.AES.decrypt(
+          encryptedVault,
+          password
+        ).toString(CryptoJS.enc.Utf8);
+        if (!decrypted || !bip39.validateMnemonic(decrypted)) {
+          alert("Wrong password or vault corrupted");
+          return;
+        }
+        const mnemonic = decrypted;
+        // Lấy rootAddress hiện tại
+        const rootAddress = localStorage.getItem("currentRootAddress") || "";
+        let walletsArr: WalletAccount[] = [];
+        try {
+          walletsArr =
+            JSON.parse(
+              localStorage.getItem(`wallets_${rootAddress}`) || "null"
+            ) || [];
+        } catch {}
+        const nextIndex =
+          walletsArr.length > 0
+            ? Math.max(...walletsArr.map((w) => w.index)) + 1
+            : 0;
+        let walletName = prompt("Enter a name for your new wallet:");
+        if (!walletName || !walletName.trim()) {
+          walletName = `Account ${nextIndex + 1}`;
+        }
+        const hdNode = HDNodeWallet.fromPhrase(mnemonic);
+        const child = hdNode.deriveChild(nextIndex);
+        const newWallet: WalletAccount = {
+          address: child.address,
+          name: walletName.trim(),
+          type: "ETH",
+          index: nextIndex,
+        };
+        walletsArr.push(newWallet);
+        localStorage.setItem(
+          `wallets_${rootAddress}`,
+          JSON.stringify(walletsArr)
+        );
+        localStorage.setItem(
+          `activeWalletIndex_${rootAddress}`,
+          walletsArr.length - 1 + ""
+        );
+        window.dispatchEvent(new Event("walletsUpdated"));
+        alert("New wallet added!");
+        window.location.reload();
+      } catch {
+        alert("Wrong password or vault corrupted");
+      }
+    };
+    const handleSelectWallet = (idx: number) => {
+      const rootAddress = localStorage.getItem("currentRootAddress") || "";
+      localStorage.setItem(`activeWalletIndex_${rootAddress}`, idx + "");
+      window.dispatchEvent(new Event("walletsUpdated"));
+      if (onSelectWallet) onSelectWallet(idx);
+    };
     return (
       <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
-        {/* Toast notification */}
-        {copied && (
-          <div className="fixed left-1/2 top-12 z-50 -translate-x-1/2 bg-green-800 text-white text-lg font-bold flex items-center gap-3 px-6 py-3 rounded-full shadow-lg animate-fade-in">
-            <span className="text-green-300 text-xl">Copied successfully!</span>
-          </div>
-        )}
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           🏠 My Wallets
         </h3>
         {/* List all wallets */}
         <div className="space-y-4 mb-4">
-          {wallets.map((w, idx) => (
+          {localWallets.map((w, idx) => (
             <div
               key={w.address}
               className={`bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-black rounded-xl p-4 flex items-center justify-between cursor-pointer ${
@@ -217,119 +244,84 @@ const WalletMain: React.FC<WalletMainProps> = ({
                 <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-black text-xl">
                   🎮
                 </div>
-                <div>
-                  <h4 className="font-black text-lg">{w.name}</h4>
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm text-gray-600 font-mono mb-0">
-                      {w.address.slice(0, 8)}...{w.address.slice(-6)}
-                    </p>
-                    <button
-                      className="text-gray-900 hover:text-black focus:outline-none"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigator.clipboard.writeText(w.address);
-                        setCopied(true);
-                        setTimeout(() => setCopied(false), 1200);
-                      }}
-                      title="Copy address"
-                    >
-                      <img
-                        src={copyIcon}
-                        alt="Copy"
-                        className="w-5 h-5 object-contain"
-                        style={{ filter: "invert(1) brightness(0.1)" }}
-                      />
-                    </button>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">Type: {w.type}</p>
+                <h4 className="font-black text-lg">{w.name}</h4>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-gray-600 font-mono mb-0">
+                    {w.address.slice(0, 8)}...{w.address.slice(-6)}
+                  </p>
+                  <button
+                    className="text-gray-900 hover:text-black focus:outline-none hover:shadow-[0_0_10px_2px_#fde047] hover:scale-110 transition-all duration-200"
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      margin: 0,
+                      boxShadow: "none",
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigator.clipboard.writeText(w.address);
+                    }}
+                    title="Copy address"
+                  >
+                    <img
+                      src={copyIcon}
+                      alt="Copy"
+                      className="w-5 h-5 object-contain"
+                      style={{ filter: "invert(1) brightness(0.1)" }}
+                    />
+                  </button>
+                  {/* Nút Export Private Key */}
+                  <button
+                    className="ml-1 text-gray-900 hover:text-black focus:outline-none border border-black rounded px-2 py-1 text-xs font-bold bg-yellow-200 hover:bg-yellow-300"
+                    style={{ background: "none", boxShadow: "none" }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setExportWalletIndex(idx);
+                      setExportModalOpen(true);
+                    }}
+                    title="Export Private Key"
+                  >
+                    🔑
+                  </button>
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Type: {w.type}</p>
               </div>
               <div className="text-right">
-                {idx === activeWalletIndex && (
-                  <>
-                    <p className="font-black text-xl text-green-600">
-                      ${totalPortfolioValue.toFixed(2)}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      ETH: {ethBalance}
-                    </p>
-                    <p className="text-xs text-gray-500">SAGA: {sagaBalance}</p>
-                  </>
-                )}
+                {/* Hiển thị số dư mock hoặc prop balance nếu cần */}
+                <p className="font-black text-lg">{_balance}</p>
               </div>
             </div>
           ))}
+          {/* Nút Add New Wallet */}
+          <button
+            className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-black border-2 border-dashed border-black bg-yellow-50 hover:bg-yellow-200 transition-all duration-200 mt-2"
+            onClick={handleAddNewWallet}
+          >
+            <span className="text-2xl">➕</span> Add New Wallet
+          </button>
         </div>
-        <button
-          className="w-full bg-yellow-300 hover:bg-yellow-400 border-2 border-black rounded-xl py-3 font-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#000] transition-all"
-          onClick={() => setShowAddModal(true)}
-        >
-          + Add New Wallet
-        </button>
-        {/* Add New Wallet Modal */}
-        {showAddModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl border-4 border-black p-8 w-full max-w-md relative">
-              <h2 className="text-2xl font-bold mb-6 text-center">
-                Add New Wallet
-              </h2>
-              <input
-                type="text"
-                className="w-full border-2 border-black rounded-xl p-3 mb-3"
-                placeholder="Enter wallet name"
-                value={newWalletName}
-                onChange={(e) => setNewWalletName(e.target.value)}
-                disabled={_isAdding}
-              />
-              <div className="flex gap-4 mb-4">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="walletType"
-                    value="ETH"
-                    checked={newWalletType === "ETH"}
-                    onChange={() => setNewWalletType("ETH")}
-                    disabled={_isAdding}
-                  />
-                  ETH
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="walletType"
-                    value="SAGA"
-                    checked={newWalletType === "SAGA"}
-                    onChange={() => setNewWalletType("SAGA")}
-                    disabled={_isAdding}
-                  />
-                  SAGA
-                </label>
-              </div>
-              {addError && (
-                <div className="text-red-600 mb-3 text-center">{addError}</div>
-              )}
-              <button
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl border-2 border-black shadow mb-2"
-                onClick={handleAddWallet}
-                disabled={_isAdding}
-              >
-                {_isAdding ? "Adding..." : "Add Wallet"}
-              </button>
-              <button
-                className="w-full bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-6 rounded-xl border-2 border-black shadow"
-                onClick={() => {
-                  setShowAddModal(false);
-                  setNewWalletName("");
-                  setNewWalletType("ETH");
-                  setAddError("");
-                }}
-                disabled={_isAdding}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Modal Export Private Key */}
+        <ExportPrivateKeyModal
+          visible={exportModalOpen}
+          onClose={() => setExportModalOpen(false)}
+          encryptedVault={encryptedVault}
+          walletIndex={exportWalletIndex ?? 0}
+          wallets={localWallets}
+        />
+        {/* Modal Onboarding (Create Wallet) */}
+        <WalletOnboardingModal
+          visible={onboardingOpen}
+          onClose={() => setOnboardingOpen(false)}
+          onCreate={async () => {}}
+          onImport={async () => {}}
+          isLoading={false}
+          error={""}
+          showImportInput={false}
+          setShowImportInput={() => {}}
+          importPrivateKey={""}
+          setImportPrivateKey={() => {}}
+        />
       </div>
     );
   }
@@ -339,11 +331,11 @@ const WalletMain: React.FC<WalletMainProps> = ({
     return (
       <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
         {/* Toast notification */}
-        {copied && (
+        {/* {copied && (
           <div className="fixed left-1/2 top-12 z-50 -translate-x-1/2 bg-green-800 text-white text-lg font-bold flex items-center gap-3 px-6 py-3 rounded-full shadow-lg animate-fade-in">
             <span className="text-green-300 text-xl">Copied successfully!</span>
           </div>
-        )}
+        )} */}
         <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
           ⬇️ Receive Tokens
         </h3>
@@ -362,25 +354,39 @@ const WalletMain: React.FC<WalletMainProps> = ({
             <div className="flex items-center gap-2">
               <input
                 type="text"
-                value={activeWallet?.address || ""}
+                value={wallets[activeWalletIndex]?.address || ""}
                 readOnly
                 className="flex-1 bg-white border-2 border-black rounded-xl px-3 py-2 font-mono text-sm"
               />
               <button
-                className="bg-yellow-300 hover:bg-yellow-400 border-2 border-black rounded-xl px-4 py-2 font-black"
+                className="bg-yellow-300 hover:bg-yellow-400 border-2 border-black rounded-xl px-4 py-2 font-black hover:shadow-[0_0_10px_2px_#fde047] hover:scale-110 transition-all duration-200"
                 onClick={() => {
-                  if (activeWallet) {
-                    navigator.clipboard.writeText(activeWallet.address);
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 1200);
+                  if (wallets[activeWalletIndex]) {
+                    navigator.clipboard.writeText(
+                      wallets[activeWalletIndex].address
+                    );
+                    // setCopied(true);
+                    // setTimeout(() => setCopied(false), 1200);
                   }
                 }}
               >
-                Copy
+                <img
+                  src={copyIcon}
+                  alt="Copy"
+                  className="w-5 h-5 object-contain text-gray-900 hover:text-black focus:outline-none hover:shadow-[0_0_10px_2px_#fde047] hover:scale-110 transition-all duration-200"
+                  style={{
+                    filter: "invert(1) brightness(0.1)",
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    margin: 0,
+                    boxShadow: "none",
+                  }}
+                />
               </button>
             </div>
             <div className="mt-2 text-xs text-gray-500">
-              ETH: {ethBalance} | SAGA: {sagaBalance}
+              ETH: {ethBalance} | SAGA: {_balance}
             </div>
           </div>
         </div>
@@ -484,11 +490,10 @@ const WalletMain: React.FC<WalletMainProps> = ({
               <div className="text-right">
                 <p className="font-black text-xl">
                   {swapAmount && selectedToken
-                    ? calculateSwapValue(
-                        swapAmount,
-                        mockTokens.find((t) => t.name === selectedToken)
-                          ?.price || 0
-                      )
+                    ? (mockTokens.find((t) => t.name === selectedToken)
+                        ?.price || 0) *
+                      parseFloat(swapAmount) *
+                      0.95
                     : "0.0000"}
                 </p>
                 <p className="text-sm text-gray-600 font-bold">≈ 5% slippage</p>
@@ -557,6 +562,62 @@ const WalletMain: React.FC<WalletMainProps> = ({
             🔒 Lock Wallet
           </button>
         </div>
+      </div>
+    );
+  }
+
+  // Transaction History View
+  if (walletSubTab === "history") {
+    // Lấy lịch sử tx từ localStorage
+    let txHistory: any[] = [];
+    try {
+      txHistory = JSON.parse(localStorage.getItem("lootie_tx_history") || "[]");
+    } catch {}
+    return (
+      <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">
+        <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
+          📜 Transaction History
+        </h3>
+        {txHistory.length === 0 ? (
+          <div className="text-gray-500 text-center font-bold py-8">
+            No transactions yet.
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {txHistory
+              .slice()
+              .reverse()
+              .map((tx, idx) => (
+                <div
+                  key={tx.hash + idx}
+                  className="border-2 border-black rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 bg-gray-50"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">
+                      {tx.type === "Mint NFT" ? "🪙" : "🔁"}
+                    </span>
+                    <div>
+                      <div className="font-bold text-lg">{tx.type}</div>
+                      <div className="text-xs text-gray-500">
+                        {tx.time || ""}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col md:items-end gap-1">
+                    <div className="font-mono text-xs text-gray-700 break-all">
+                      Hash: {tx.hash}
+                    </div>
+                    <button
+                      className="text-blue-600 text-xs underline mt-1"
+                      onClick={() => navigator.clipboard.writeText(tx.hash)}
+                    >
+                      Copy Hash
+                    </button>
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
       </div>
     );
   }
