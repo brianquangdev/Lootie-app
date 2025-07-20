@@ -46,7 +46,8 @@ function AppContent() {
   const [isWalletLoading, setIsWalletLoading] = useState(false);
   const [wallets, setWallets] = useState<any[]>([]);
   const [activeWalletIndex, setActiveWalletIndex] = useState<number>(0);
-  const [ethBalance, setEthBalance] = useState<string>("0");
+  const [lootieBalance, setLootieBalance] = useState<string>("0");
+  const [walletBalances, setWalletBalances] = useState<string[]>([]);
   const [isLocked, setIsLocked] = useState(false);
   const [showUnlockSeed, setShowUnlockSeed] = useState(false);
 
@@ -109,23 +110,68 @@ function AppContent() {
     loadWalletsFromStorage();
   }, []);
 
-  // Cập nhật ethBalance khi activeWallet thay đổi
+  // Cập nhật balance cho tất cả ví
   useEffect(() => {
-    const activeWallet = wallets[activeWalletIndex];
-    if (activeWallet && activeWallet.type === "ETH") {
-      async function fetchBalance() {
+    const fetchAllBalances = async () => {
+      if (wallets.length > 0) {
+        // First try to load from localStorage
+        const rootAddress = localStorage.getItem("currentRootAddress") || "";
+        const savedBalances = localStorage.getItem(
+          `walletBalances_${rootAddress}`
+        );
+
+        if (savedBalances) {
+          try {
+            const balances = JSON.parse(savedBalances);
+            if (balances.length === wallets.length) {
+              setWalletBalances(balances);
+              if (wallets[activeWalletIndex]) {
+                setLootieBalance(balances[activeWalletIndex] || "0");
+              }
+              return;
+            }
+          } catch (e) {
+            console.log(
+              "Failed to load saved balances, fetching from blockchain"
+            );
+          }
+        }
+
+        // If no saved balances or mismatch, fetch from blockchain
         try {
           const provider = new ethers.JsonRpcProvider(SAGA_RPC);
-          const balance = await provider.getBalance(activeWallet.address);
-          setEthBalance(ethers.formatEther(balance));
+          const balances = await Promise.all(
+            wallets.map(async (wallet) => {
+              try {
+                const balance = await provider.getBalance(wallet.address);
+                return ethers.formatEther(balance);
+              } catch (e) {
+                return "0";
+              }
+            })
+          );
+
+          // Save to localStorage
+          localStorage.setItem(
+            `walletBalances_${rootAddress}`,
+            JSON.stringify(balances)
+          );
+          setWalletBalances(balances);
+          // Cập nhật lootieBalance cho ví hiện tại
+          if (wallets[activeWalletIndex]) {
+            setLootieBalance(balances[activeWalletIndex] || "0");
+          }
         } catch (e) {
-          setEthBalance("0");
+          setWalletBalances(wallets.map(() => "0"));
+          setLootieBalance("0");
         }
+      } else {
+        setWalletBalances([]);
+        setLootieBalance("0");
       }
-      fetchBalance();
-    } else {
-      setEthBalance("0");
-    }
+    };
+
+    fetchAllBalances();
   }, [wallets, activeWalletIndex]);
 
   // Log chi tiết giá trị localStorage wallet
@@ -179,7 +225,7 @@ function AppContent() {
       ? {
           address: privyUser.wallet.address,
           name: privyUser.email || "OAuth Wallet",
-          type: "ETH",
+          type: "LOOTIE",
         }
       : null;
 
@@ -197,7 +243,7 @@ function AppContent() {
     localStorage.removeItem("wallet");
     setWallets([]);
     setActiveWalletIndex(0);
-    setEthBalance("0");
+    setLootieBalance("0");
     window.location.reload();
   };
 
@@ -271,7 +317,7 @@ function AppContent() {
         onCreateWalletClick={handleCreateWalletClick}
         wallet={isOAuth ? oAuthWallet : wallets[activeWalletIndex]}
         handleLogout={handleLogout}
-        balance={ethBalance}
+        balance={walletBalances[activeWalletIndex] || "0"}
         renderExtraButton={
           // Ẩn nút Sign In và Create Wallet nếu đã có ví hoặc đã đăng nhập OAuth
           wallets.length > 0 || isOAuth ? null : !privyAuthenticated &&
@@ -323,7 +369,7 @@ function AppContent() {
               walletSubTab={walletSubTab}
               setWalletSubTab={setWalletSubTab}
               wallet={wallets[activeWalletIndex]}
-              balance={ethBalance}
+              balance={walletBalances[activeWalletIndex] || "0"}
             />
             <div className="flex-1">
               <WalletMain
@@ -333,10 +379,10 @@ function AppContent() {
                 swapAmount={swapAmount}
                 setSwapAmount={setSwapAmount}
                 wallet={wallets[activeWalletIndex]}
-                balance={ethBalance}
+                balance={walletBalances[activeWalletIndex] || "0"}
                 wallets={wallets}
                 activeWalletIndex={activeWalletIndex}
-                ethBalance={ethBalance}
+                lootieBalance={walletBalances[activeWalletIndex] || "0"}
                 onSelectWallet={handleSelectWallet}
               />
             </div>

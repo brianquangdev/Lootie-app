@@ -234,7 +234,7 @@ const WalletOnboardingModal: React.FC<WalletOnboardingModalProps> = ({
             const walletObj = {
               address: wallet.address,
               name: walletName.trim(),
-              type: "ETH",
+              type: "LOOTIE",
               index: 0,
             };
             localStorage.setItem(
@@ -340,7 +340,7 @@ const WalletOnboardingModal: React.FC<WalletOnboardingModalProps> = ({
                 {
                   address: wallet.address,
                   name: "Account 1",
-                  type: "ETH",
+                  type: "LOOTIE",
                   index: 0,
                 },
               ];

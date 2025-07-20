@@ -48,10 +48,39 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 
 ## 🔗 Saga Infrastructure Usage
 
-- Uses Saga's EVM-compatible RPC for all wallet and contract interactions
-- Designed for Saga chainlet architecture (scalable, modular)
-- All on-chain features (quests, rewards, swaps) run on Saga
-- Easy to extend for custom chainlets or advanced Saga APIs
+### **Chainlet Architecture**
+
+- **Lootie Gaming Chainlet**: Dedicated chainlet for gaming transactions (30M gas limit, 2s block time)
+- **Quest Management Chainlet**: Specialized chainlet for quest and reward management (15M gas limit, 1s block time)
+- **NFT Collection Chainlet**: Optimized chainlet for NFT minting and trading (25M gas limit, 3s block time)
+
+### **Cross-Chain Communication**
+
+- **Cross-chain transfers** between different chainlets
+- **Bridge support** for asset movement across chainlets
+- **Multi-chain quests** spanning multiple chainlets
+- **Cross-chain NFT trading** across specialized chainlets
+
+### **Saga APIs Integration**
+
+- **Chainlet Management API**: Create, deploy, and monitor chainlets
+- **Cross-Chain API**: Handle transfers and bridge operations
+- **Quest System API**: Create, complete, and reward quests
+- **NFT Marketplace API**: Mint, trade, and manage NFTs
+
+### **Modular Blockchain Features**
+
+- **Proof of Stake Consensus**: 100 validators, 7-day staking period
+- **Scalability**: Sharding, parallel processing, 100K TPS capacity
+- **Interoperability**: Seamless cross-chain communication
+- **Custom Gas Limits**: Optimized for different use cases
+
+### **Infrastructure Dashboard**
+
+- Real-time metrics monitoring (TPS, active chainlets, transactions)
+- Chainlet selection and management interface
+- API status monitoring and health checks
+- Modular features showcase and configuration
 
 ---
 

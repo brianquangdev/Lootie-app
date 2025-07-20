@@ -149,7 +149,7 @@ const NFTCollection: React.FC = () => {
                       </p>
                     ) : (
                       <>
-                        <p className="font-black text-lg">{nft.value} SAGA</p>
+                        <p className="font-black text-lg">{nft.value} LOOTIE</p>
                         <p className="text-xs text-gray-500">
                           ≈ ${(nft.value * 1.2).toFixed(2)}
                         </p>

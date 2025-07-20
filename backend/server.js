@@ -43,7 +43,7 @@ app.post("/api/wallet/import", (req, res) => {
   }
 });
 
-// POST /api/wallet/balance - Get ETH balance for an address
+// POST /api/wallet/balance - Get LOOTIE balance for an address
 app.post("/api/wallet/balance", async (req, res) => {
   const { address } = req.body;
   if (!address) {

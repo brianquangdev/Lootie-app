@@ -67,9 +67,7 @@ const WalletSidebar: React.FC<WalletSidebarProps> = ({
             </div>
             {balance && (
               <div className="font-bold text-green-700 text-base text-center w-full">
-                {wallet.type === "ETH"
-                  ? `${parseFloat(balance).toFixed(4)} ETH`
-                  : `${parseFloat(balance).toFixed(4)} SAGA`}
+                {`${parseFloat(balance).toFixed(4)} LOOTIE`}
               </div>
             )}
           </div>
