@@ -19,13 +19,13 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 ## 🚀 Features
 
 - **Custom Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC integration
-- **Game Hub**: Discover, track, and play supported blockchain games
-- **NFT & Token Dashboard**: Manage, showcase, and swap in-game assets
-- **Quest System**: Join, complete, and claim on-chain/social/game quests for rewards (XP, NFT, token)
-- **Collabs & Communities**: Find partners, join teams, and grow your network
-- **Modern UX**: Responsive, mobile-ready, beautiful UI/UX
-- **Saga Native**: Optimized for Saga chainlet architecture, EVM-compatible, using Saga RPC
-- **Backend API**: Secure wallet creation/import, balance check, and Saga integration
+- **Onchain Send Token**: Real onchain token transfer using `ethers.Wallet` and `provider.sendTransaction` (all transactions appear on Saga Explorer)
+- **Professional UI/UX**: Copy address popup, transaction success popup, address and amount validation, security warnings
+- **Persistent Balance Management**: Always fetches balances from Saga chainlet RPC first, localStorage as cache
+- **Enhanced Transaction History**: Blockchain-like details, chainlet/cross-chain info, localStorage storage
+- **Saga Infrastructure Integration**: Modular chainlet architecture, 3 chainlets, 4 APIs, real-time dashboard
+- **Quest & NFT APIs**: Built-in quest and NFT marketplace integration
+- **Backend API**: Secure wallet creation/import, balance (Saga RPC)
 - **Smart Contracts**: QuestManager, Quest, and more (see lootie-contracts/)
 
 ---
@@ -33,16 +33,39 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 ## 🏗️ Project Structure
 
 - **src/**: Frontend (React + TypeScript)
-  - Components: Wallet, Portfolio, QuestHub, Collabs, Communities, etc.
-  - Data: mockQuests, mockCollabs, contract addresses, chainlet config
-  - Assets: Logo, images, icons
+  - **components/**: React components (Wallet, Portfolio, QuestHub, Collabs, Communities, SagaInfrastructureDashboard, ...)
+  - **data/**: Static/mock data, contract addresses, chainlet config (mockQuests, mockCollabs, contractAddresses, lootieChainletConfig, ...)
+  - **assets/**: Logo, images, icons
+  - **abis/**: ABI files for smart contracts
+  - **config/**: Blockchain, chainlet, and saga config files
+  - **hooks/**: Custom React hooks (useWallet, useVault, useTransaction, ...)
+  - **services/**: Service modules for API/blockchain (crossChainService, nftService, questService, ...)
+  - **App.tsx**: Main React App component
+  - **main.tsx**: React entry point
+  - **index.css, App.css**: CSS files
+  - **global.d.ts, vite-env.d.ts**: TypeScript global types
 - **backend/**: Express.js backend
-  - API: Wallet create/import, balance (Saga RPC)
-  - Static: Serves frontend build
+  - **api/**: API route handlers (crossChainApi, nftApi, questApi, sagaChainletApi, ...)
+  - **public/**: Static assets for backend (if served)
+  - **server.js**: Main backend server entry point
+  - **package.json, pnpm-lock.yaml**: Backend dependencies and lockfile
 - **lootie-contracts/**: Smart contracts (Solidity, Foundry)
-  - Contracts: QuestManager, Quest, etc.
-  - Scripts: Deployment, test scripts
-  - Tests: Unit/security tests
+  - **src/**: Solidity contract sources (QuestManager, Quest, WelcomeToLootieNFT, ...)
+  - **script/**: Deployment and utility scripts (DeployLootie.s.sol, ...)
+  - **test/**: Solidity contract tests (QuestManager.t.sol, ...)
+  - **broadcast/**: Foundry broadcast output (deployment logs)
+  - **lib/**: External contract libraries (forge-std, openzeppelin-contracts)
+  - **foundry.toml**: Foundry config
+  - **quest_deploy.json**: Deployment info for quests
+  - **README.md**: Docs for contracts
+- **public/**: Public static assets (frontend)
+- **.eslint.config.js, tailwind.config.cjs, postcss.config.cjs**: Linting and CSS config
+- **index.html**: Main HTML entry for frontend
+- **package.json, pnpm-lock.yaml**: Project dependencies and lockfile (root)
+- **tsconfig.json, tsconfig.app.json, tsconfig.node.json**: TypeScript config
+- **vite.config.ts**: Vite config
+- **README.md, README_update.md**: Project documentation
+- **WHITEPAPER.md**: Project whitepaper
 
 ---
 
@@ -56,7 +79,7 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 
 ### **Cross-Chain Communication**
 
-- **Cross-chain transfers** between different chainlets
+- **Cross-chain transfers** between different chainlets (see `crossChainTransfer` in `src/data/lootieChainletConfig.ts`)
 - **Bridge support** for asset movement across chainlets
 - **Multi-chain quests** spanning multiple chainlets
 - **Cross-chain NFT trading** across specialized chainlets
@@ -65,8 +88,8 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 
 - **Chainlet Management API**: Create, deploy, and monitor chainlets
 - **Cross-Chain API**: Handle transfers and bridge operations
-- **Quest System API**: Create, complete, and reward quests
-- **NFT Marketplace API**: Mint, trade, and manage NFTs
+- **Quest System API**: Create, complete, and reward quests (see `questAPI`)
+- **NFT Marketplace API**: Mint, trade, and manage NFTs (see `nftAPI`)
 
 ### **Modular Blockchain Features**
 
@@ -81,17 +104,19 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 - Chainlet selection and management interface
 - API status monitoring and health checks
 - Modular features showcase and configuration
+- See: `src/components/SagaInfrastructureDashboard.tsx`
 
 ---
 
 ## 🧩 Main Modules
 
-- **Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC
+- **Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC, onchain send (ethers.js)
 - **Portfolio**: Asset overview, tokens, NFTs, wallet value
 - **QuestHub**: Join, complete, claim quests (on-chain, social, in-game)
 - **Collabs**: Find, connect, and collaborate with other "hunters"
 - **Communities**: Explore game communities, projects, teams
 - **Game Hub**: Game list, play history, achievements
+- **SagaInfrastructureDashboard**: Real-time Saga metrics, chainlet selection, modular features, API status
 
 ---
 
@@ -151,14 +176,97 @@ Visit: [http://localhost:3001](http://localhost:3001)
 ## 🔒 Security & Testing
 
 - All wallet operations are local & encrypted (never stored on server)
+- Security warning shown when exporting private key: **"Không chia sẻ private key cho bất kỳ ai. Ai có private key sẽ kiểm soát toàn bộ tài sản của bạn!"**
 - Unit tests & security checks for smart contracts (see lootie-contracts/test/)
 - Follows best practices for Web3 security
+- Input validation: Address must start with 0x and be 42 hex characters, amount must be valid and not exceed balance
+- Detailed error logging for all transaction errors
+
+---
+
+## 🧠 Wallet Logic & Saga Chainlet Standardization
+
+- **Onchain Send**: Uses `ethers.Wallet` and `provider.sendTransaction` for real onchain transfer (see `handleSend` in `src/components/WalletMain.tsx`)
+- **Balance Management**: Always fetches from Saga chainlet RPC first, localStorage as cache/fallback (`walletBalances_${rootAddress}`)
+- **Transaction History**: Stored in localStorage, includes chainlet/cross-chain info, professional blockchain-like display
+- **UI/UX**: Copy address popup, transaction success popup, auto-close and reload, professional notifications
+- **Security**: Private key export warning, password required for sensitive actions
+- **Saga Integration**: Use `SAGA_INFRASTRUCTURE` for all blockchain operations, leverage `crossChainTransfer`, `questAPI`, `nftAPI`
+
+---
+
+## 🛠️ Backend Saga API Integration
+
+- **Express.js**: Xây dựng các endpoint RESTful cho Quest, NFT, Chainlet, Cross-chain.
+- **Axios**: Gọi các Saga APIs từ backend và frontend.
+- **Jest**: Viết unit test cho các API backend.
+- **JWT** (khuyến nghị): Xác thực người dùng khi gọi các API nhạy cảm.
+- **Error Handling**: Xử lý lỗi, fallback, log chi tiết khi Saga API gặp sự cố.
+
+### **API Endpoints**
+
+- `POST /api/quest/create` - Tạo quest mới trên Saga
+- `POST /api/quest/complete` - Hoàn thành quest
+- `POST /api/nft/mint` - Mint NFT mới trên Saga
+- `GET /api/nft/list/:address` - Lấy danh sách NFT từ Saga
+- `POST /api/crosschain/transfer` - Chuyển token/NFT cross-chain
+- `POST /api/chainlet/create` - Tạo chainlet mới
+- `GET /api/chainlet/status/:id` - Lấy trạng thái chainlet
+
+### **Saga Integration Flow**
+
+```mermaid
+sequenceDiagram
+Frontend->>Backend: Gửi request (quest, NFT, cross-chain)
+Backend->>Saga API: Gọi Saga API (axios)
+Saga API-->>Backend: Trả về kết quả
+Backend-->>Frontend: Trả về kết quả/hoặc lỗi
+```
+
+### **Testing**
+
+- Backend: `jest` cho các API Saga (xem ví dụ trong backend/api/\*.test.js)
+- Frontend: `@testing-library/react` cho UI Saga (khuyến nghị)
+
+### **Security**
+
+- Private key chỉ xử lý ở backend, không trả về frontend
+- Xác thực JWT cho các API nhạy cảm (nên triển khai khi lên production)
+
+### **Ví dụ code gọi API từ frontend**
+
+```ts
+import { createQuest } from './services/questService';
+const result = await createQuest({ title: 'Quest mới', ... });
+```
+
+---
+
+## 🗂️ File Structure Highlights
+
+- `src/components/WalletMain.tsx`: Main wallet logic, onchain send, transaction history, UI/UX
+- `src/data/lootieChainletConfig.ts`: Saga infrastructure config, chainlets, APIs, helpers
+- `src/components/SagaInfrastructureDashboard.tsx`: Real-time dashboard for Saga metrics and features
+- `src/App.tsx`: App state, persistent balance management, wallet onboarding
+
+---
+
+## 🎯 Next Development Opportunities
+
+- **Quest System Integration**: Use `questAPI` for on-chain quests
+- **NFT Marketplace**: Implement `nftAPI` for NFT trading
+- **Cross-Chain Quests**: Multi-chainlet quest completion
+- **Advanced Analytics**: Real-time chainlet performance metrics
+- **DeFi Integration**: Swap, liquidity, yield farming features
+- **Error Handling**: Enhanced error boundaries and recovery
+- **Performance Optimization**: Lazy loading, memoization
+- **Security Enhancements**: Private key encryption, transaction signing
 
 ---
 
 ## 👨‍💻 Credits
 
-- Made by BrianQuangDev
+- Made by Lootie Team
 
 ---
 

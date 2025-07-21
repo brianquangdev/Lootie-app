@@ -1,6 +1,7 @@
 import * as React from "react";
 import { mockNFTs } from "../data/mockNFTs";
 import { useState } from "react";
+import { mintNFT, listNFTs } from "../services/nftService";
 
 const NFTCollection: React.FC = () => {
   const getRarityStyle = (rarity: string) => {
@@ -35,6 +36,11 @@ const NFTCollection: React.FC = () => {
 
   const [showTooltip, setShowTooltip] = useState<number | null>(null);
   const hasLootieNFT = lootieNFTs.length > 0;
+
+  // TODO: Replace mockNFTs and localStorage with API call to backend when ready
+  // useEffect(() => {
+  //   listNFTs(address).then(setNFTs);
+  // }, [address]);
 
   return (
     <div className="bg-white w-full rounded-3xl p-6 border-4 border-black shadow-[8px_8px_0px_0px_#000]">

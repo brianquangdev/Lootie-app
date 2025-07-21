@@ -3,6 +3,7 @@ import { CONTRACT_ADDRESSES, SAGA_RPC } from "../data/contractAddresses";
 import { LOOTIE_CHAIN } from "../data/lootieChainletConfig";
 import { ethers } from "ethers";
 import QuestManagerAbi from "../abis/QuestManager.json";
+import { completeQuest } from "../services/questService";
 
 interface QuestDetailModalProps {
   selectedQuest: any;
@@ -113,6 +114,12 @@ const QuestDetailModal: React.FC<QuestDetailModalProps> = ({
       throw err;
     }
   }
+
+  // TODO: Replace direct contract call with backend API for all quest actions
+  // Sử dụng completeQuest từ questService để claim quest qua backend
+  // Ví dụ:
+  // const result = await completeQuest(selectedQuest.id, userAddress);
+  // setTxHash(result.txHash);
 
   // Trong component, khi user bấm nhận quest:
   const handleClaimQuest = async () => {

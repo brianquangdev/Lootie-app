@@ -7,6 +7,7 @@ import { Wallet, HDNodeWallet } from "ethers";
 import CryptoJS from "crypto-js";
 import * as bip39 from "bip39";
 import WalletOnboardingModal from "./WalletOnboardingModal";
+import { crossChainTransfer as crossChainTransferApi } from '../services/crossChainService';
 
 declare module "*.png";
 
@@ -76,7 +77,10 @@ const ExportPrivateKeyModal: React.FC<{
         <h2 className="text-2xl font-bold mb-4 text-center">
           Export Private Key
         </h2>
-        <div className="text-red-600 mb-3 text-center font-bold">Cảnh báo: Không chia sẻ private key cho bất kỳ ai. Ai có private key sẽ kiểm soát toàn bộ tài sản của bạn!</div>
+        <div className="text-red-600 mb-3 text-center font-bold">
+          Cảnh báo: Không chia sẻ private key cho bất kỳ ai. Ai có private key
+          sẽ kiểm soát toàn bộ tài sản của bạn!
+        </div>
         {!privateKey ? (
           <>
             <input
@@ -178,12 +182,17 @@ const WalletMain: React.FC<WalletMainProps> = ({
           );
           // Save to localStorage
           const rootAddress = localStorage.getItem("currentRootAddress") || "";
-          localStorage.setItem(`walletBalances_${rootAddress}`, JSON.stringify(balances));
+          localStorage.setItem(
+            `walletBalances_${rootAddress}`,
+            JSON.stringify(balances)
+          );
           setWalletBalances(balances);
         } catch (error) {
           // Nếu fetch từ RPC lỗi, fallback localStorage
           const rootAddress = localStorage.getItem("currentRootAddress") || "";
-          const savedBalances = localStorage.getItem(`walletBalances_${rootAddress}`);
+          const savedBalances = localStorage.getItem(
+            `walletBalances_${rootAddress}`
+          );
           if (savedBalances) {
             try {
               const balances = JSON.parse(savedBalances);
@@ -224,7 +233,9 @@ const WalletMain: React.FC<WalletMainProps> = ({
     // Validate địa chỉ nhận
     const isValidAddress = (addr: string) => /^0x[a-fA-F0-9]{40}$/.test(addr);
     if (!sendToAddress || !isValidAddress(sendToAddress)) {
-      alert("Địa chỉ nhận không hợp lệ. Địa chỉ phải bắt đầu bằng 0x và có 42 ký tự hex.");
+      alert(
+        "Địa chỉ nhận không hợp lệ. Địa chỉ phải bắt đầu bằng 0x và có 42 ký tự hex."
+      );
       return;
     }
     if (!sendAmount || parseFloat(sendAmount) <= 0) {
@@ -252,12 +263,7 @@ const WalletMain: React.FC<WalletMainProps> = ({
       let txResult;
       if (senderChainlet !== receiverChainlet) {
         // Cross-chain transfer (API, not onchain)
-        txResult = await crossChainTransfer(
-          senderChainlet,
-          receiverChainlet,
-          sendAmount,
-          sendToAddress
-        );
+        txResult = await crossChainTransferApi({ senderChainlet, receiverChainlet, amount: sendAmount, to: sendToAddress });
       } else {
         // === REAL ONCHAIN SEND LOGIC ===
         // 1. Prompt for password to decrypt vault
@@ -279,7 +285,10 @@ const WalletMain: React.FC<WalletMainProps> = ({
         );
         const privateKey = child.privateKey;
         // 3. Create ethers.Wallet and provider (set chainId explicitly)
-        const provider = new ethers.JsonRpcProvider(SAGA_RPC, { chainId: 31338, name: "lootie" });
+        const provider = new ethers.JsonRpcProvider(SAGA_RPC, {
+          chainId: 31338,
+          name: "lootie",
+        });
         const wallet = new ethers.Wallet(privateKey, provider);
         // 4. Send transaction with explicit gasLimit and gasPrice
         let tx;
@@ -288,7 +297,7 @@ const WalletMain: React.FC<WalletMainProps> = ({
             to: sendToAddress,
             value: ethers.parseEther(sendAmount),
             gasLimit: 100000, // Higher gas limit for Saga chainlet
-            gasPrice: 0       // Saga chainlet may require 0 gas price
+            gasPrice: 0, // Saga chainlet may require 0 gas price
           });
         } catch (err) {
           // If fails, try with default gasPrice (ethers may auto-detect)
@@ -296,14 +305,14 @@ const WalletMain: React.FC<WalletMainProps> = ({
             tx = await wallet.sendTransaction({
               to: sendToAddress,
               value: ethers.parseEther(sendAmount),
-              gasLimit: 100000
+              gasLimit: 100000,
             });
           } catch (err2) {
             // If still fails, try with lower gasLimit
             tx = await wallet.sendTransaction({
               to: sendToAddress,
               value: ethers.parseEther(sendAmount),
-              gasLimit: 21000
+              gasLimit: 21000,
             });
           }
         }
@@ -396,7 +405,7 @@ const WalletMain: React.FC<WalletMainProps> = ({
     } catch (error) {
       // Log lỗi chi tiết
       console.error("Transaction failed:", error);
-      alert((error && error.message) ? error.message : JSON.stringify(error));
+      alert(error && error.message ? error.message : JSON.stringify(error));
     } finally {
       setIsSending(false);
     }

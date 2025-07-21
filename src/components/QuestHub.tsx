@@ -1,6 +1,7 @@
 import * as React from "react";
 import { mockQuests } from "../data/mockQuests";
 import { useState, useEffect } from "react";
+import { createQuest, completeQuest } from "../services/questService";
 
 interface QuestHubProps {
   setSelectedQuest: (quest: any) => void;

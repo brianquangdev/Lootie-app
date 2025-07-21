@@ -1,9 +1,17 @@
-// Simple Express.js backend for wallet creation/import
+// server.js - Express backend for Lootie
+// Technologies: Express.js, Axios, Saga APIs integration
+// Purpose: Expose RESTful endpoints for chainlet, quest, NFT, cross-chain operations via Saga infrastructure
 const express = require("express");
 const cors = require("cors");
 const { ethers } = require("ethers");
 require("dotenv").config();
 const path = require("path");
+
+// Import Saga API modules (to be implemented)
+const sagaChainletApi = require("./api/sagaChainletApi");
+const questApi = require("./api/questApi");
+const nftApi = require("./api/nftApi");
+const crossChainApi = require("./api/crossChainApi");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -57,6 +65,81 @@ app.post("/api/wallet/balance", async (req, res) => {
     res.json({ balance: formatted });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch balance." });
+  }
+});
+
+// Chainlet routes
+app.post("/api/chainlet/create", async (req, res) => {
+  // Tạo chainlet mới trên Saga
+  try {
+    const result = await sagaChainletApi.createChainlet(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/api/chainlet/status/:id", async (req, res) => {
+  // Lấy trạng thái chainlet
+  try {
+    const result = await sagaChainletApi.getChainletStatus(req.params.id);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Quest routes
+app.post("/api/quest/create", async (req, res) => {
+  // Tạo quest mới trên Saga
+  try {
+    const result = await questApi.createQuest(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/api/quest/complete", async (req, res) => {
+  // Hoàn thành quest trên Saga
+  try {
+    const { questId, userAddress } = req.body;
+    const result = await questApi.completeQuest(questId, userAddress);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// NFT routes
+app.post("/api/nft/mint", async (req, res) => {
+  // Mint NFT mới trên Saga
+  try {
+    const result = await nftApi.mintNFT(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/api/nft/list/:address", async (req, res) => {
+  // Lấy danh sách NFT của address
+  try {
+    const result = await nftApi.listNFTs(req.params.address);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Cross-chain routes
+app.post("/api/crosschain/transfer", async (req, res) => {
+  // Chuyển token/NFT cross-chain trên Saga
+  try {
+    const result = await crossChainApi.crossChainTransfer(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
