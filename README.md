@@ -176,7 +176,7 @@ Visit: [http://localhost:3001](http://localhost:3001)
 ## 🔒 Security & Testing
 
 - All wallet operations are local & encrypted (never stored on server)
-- Security warning shown when exporting private key: **"Không chia sẻ private key cho bất kỳ ai. Ai có private key sẽ kiểm soát toàn bộ tài sản của bạn!"**
+- Security warning shown when exporting private key: **"Do not share your private key with anyone. Whoever has the private key will control all your assets!"**
 - Unit tests & security checks for smart contracts (see lootie-contracts/test/)
 - Follows best practices for Web3 security
 - Input validation: Address must start with 0x and be 42 hex characters, amount must be valid and not exceed balance
@@ -197,47 +197,47 @@ Visit: [http://localhost:3001](http://localhost:3001)
 
 ## 🛠️ Backend Saga API Integration
 
-- **Express.js**: Xây dựng các endpoint RESTful cho Quest, NFT, Chainlet, Cross-chain.
-- **Axios**: Gọi các Saga APIs từ backend và frontend.
-- **Jest**: Viết unit test cho các API backend.
-- **JWT** (khuyến nghị): Xác thực người dùng khi gọi các API nhạy cảm.
-- **Error Handling**: Xử lý lỗi, fallback, log chi tiết khi Saga API gặp sự cố.
+- **Express.js**: Build RESTful endpoints for Quest, NFT, Chainlet, Cross-chain.
+- **Axios**: Call Saga APIs from backend and frontend.
+- **Jest**: Write unit tests for backend APIs.
+- **JWT** (recommended): Authenticate users when calling sensitive APIs.
+- **Error Handling**: Handle errors, provide fallbacks, and detailed logging when Saga API fails.
 
 ### **API Endpoints**
 
-- `POST /api/quest/create` - Tạo quest mới trên Saga
-- `POST /api/quest/complete` - Hoàn thành quest
-- `POST /api/nft/mint` - Mint NFT mới trên Saga
-- `GET /api/nft/list/:address` - Lấy danh sách NFT từ Saga
-- `POST /api/crosschain/transfer` - Chuyển token/NFT cross-chain
-- `POST /api/chainlet/create` - Tạo chainlet mới
-- `GET /api/chainlet/status/:id` - Lấy trạng thái chainlet
+- `POST /api/quest/create` - Create a new quest on Saga
+- `POST /api/quest/complete` - Complete a quest
+- `POST /api/nft/mint` - Mint a new NFT on Saga
+- `GET /api/nft/list/:address` - Get NFT list from Saga
+- `POST /api/crosschain/transfer` - Transfer token/NFT cross-chain
+- `POST /api/chainlet/create` - Create a new chainlet
+- `GET /api/chainlet/status/:id` - Get chainlet status
 
 ### **Saga Integration Flow**
 
 ```mermaid
 sequenceDiagram
-Frontend->>Backend: Gửi request (quest, NFT, cross-chain)
-Backend->>Saga API: Gọi Saga API (axios)
-Saga API-->>Backend: Trả về kết quả
-Backend-->>Frontend: Trả về kết quả/hoặc lỗi
+Frontend->>Backend: Send request (quest, NFT, cross-chain)
+Backend->>Saga API: Call Saga API (axios)
+Saga API-->>Backend: Return result
+Backend-->>Frontend: Return result or error
 ```
 
 ### **Testing**
 
-- Backend: `jest` cho các API Saga (xem ví dụ trong backend/api/\*.test.js)
-- Frontend: `@testing-library/react` cho UI Saga (khuyến nghị)
+- Backend: Use `jest` for Saga API tests (see examples in backend/api/*.test.js)
+- Frontend: Use `@testing-library/react` for UI Saga (recommended)
 
 ### **Security**
 
-- Private key chỉ xử lý ở backend, không trả về frontend
-- Xác thực JWT cho các API nhạy cảm (nên triển khai khi lên production)
+- Private key is only handled in the backend, never returned to the frontend
+- Use JWT authentication for sensitive APIs (should be implemented for production)
 
-### **Ví dụ code gọi API từ frontend**
+### **Example code for calling API from frontend**
 
 ```ts
 import { createQuest } from './services/questService';
-const result = await createQuest({ title: 'Quest mới', ... });
+const result = await createQuest({ title: 'New Quest', ... });
 ```
 
 ---
