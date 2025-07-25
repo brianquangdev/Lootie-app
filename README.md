@@ -2,11 +2,9 @@
   <img src="src/assets/Lootie-logo.png" alt="Lootie Logo" width="400"/>
 </p>
 
-# 🎮 Lootie
+# 🎮 Lootie Hub
 
-> Your Web3 Gaming Wallet • Collect • Swap • Quest
-
-Become part of the most exciting Web3 gaming communities. Explore, collect, swap, and earn rewards — all in one place!
+> The Web3 Gaming Super Hub: Chainlet Wallet • Quest • Community • Marketplace
 
 ---
 
@@ -18,46 +16,24 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 
 ## 🚀 Features
 
-- **Custom Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC integration
-- **Onchain Send Token**: Real onchain token transfer using `ethers.Wallet` and `provider.sendTransaction` (all transactions appear on Saga Explorer)
-- **Professional UI/UX**: Copy address popup, transaction success popup, address and amount validation, security warnings
-- **Persistent Balance Management**: Always fetches balances from Saga chainlet RPC first, localStorage as cache
-- **Enhanced Transaction History**: Blockchain-like details, chainlet/cross-chain info, localStorage storage
-- **Saga Infrastructure Integration**: Modular chainlet architecture, 3 chainlets, 4 APIs, real-time dashboard
-- **Quest & NFT APIs**: Built-in quest and NFT marketplace integration
-- **Backend API**: Secure wallet creation/import, balance (Saga RPC)
-- **Smart Contracts**: QuestManager, Quest, and more (see lootie-contracts/)
+- **Chainlet-based Wallet**: Each user/game gets a dedicated chainlet for instant, low-fee transactions and maximum scalability.
+- **Custom Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC integration.
+- **Onchain Send Token**: Real onchain token transfer using `ethers.Wallet` and `provider.sendTransaction`.
+- **Professional UI/UX**: Copy address popup, transaction success popup, address and amount validation, security warnings.
+- **Persistent Balance Management**: Always fetches balances from Saga chainlet RPC first, localStorage as cache.
+- **Enhanced Transaction History**: Blockchain-like details, chainlet/cross-chain info, localStorage storage.
+- **Saga Infrastructure Integration**: Modular chainlet architecture, 3 chainlets, 4 APIs, real-time dashboard.
+- **Quest & NFT APIs**: Built-in quest and NFT marketplace integration.
+- **Backend API**: Secure wallet creation/import, balance (Saga RPC).
+- **Smart Contracts**: QuestManager, Quest, and more (see lootie-contracts/).
 
 ---
 
 ## 🏗️ Project Structure
 
 - **src/**: Frontend (React + TypeScript)
-  - **components/**: React components (Wallet, Portfolio, QuestHub, Collabs, Communities, SagaInfrastructureDashboard, ...)
-  - **data/**: Static/mock data, contract addresses, chainlet config (mockQuests, mockCollabs, contractAddresses, lootieChainletConfig, ...)
-  - **assets/**: Logo, images, icons
-  - **abis/**: ABI files for smart contracts
-  - **config/**: Blockchain, chainlet, and saga config files
-  - **hooks/**: Custom React hooks (useWallet, useVault, useTransaction, ...)
-  - **services/**: Service modules for API/blockchain (crossChainService, nftService, questService, ...)
-  - **App.tsx**: Main React App component
-  - **main.tsx**: React entry point
-  - **index.css, App.css**: CSS files
-  - **global.d.ts, vite-env.d.ts**: TypeScript global types
 - **backend/**: Express.js backend
-  - **api/**: API route handlers (crossChainApi, nftApi, questApi, sagaChainletApi, ...)
-  - **public/**: Static assets for backend (if served)
-  - **server.js**: Main backend server entry point
-  - **package.json, pnpm-lock.yaml**: Backend dependencies and lockfile
 - **lootie-contracts/**: Smart contracts (Solidity, Foundry)
-  - **src/**: Solidity contract sources (QuestManager, Quest, WelcomeToLootieNFT, ...)
-  - **script/**: Deployment and utility scripts (DeployLootie.s.sol, ...)
-  - **test/**: Solidity contract tests (QuestManager.t.sol, ...)
-  - **broadcast/**: Foundry broadcast output (deployment logs)
-  - **lib/**: External contract libraries (forge-std, openzeppelin-contracts)
-  - **foundry.toml**: Foundry config
-  - **quest_deploy.json**: Deployment info for quests
-  - **README.md**: Docs for contracts
 - **public/**: Public static assets (frontend)
 - **.eslint.config.js, tailwind.config.cjs, postcss.config.cjs**: Linting and CSS config
 - **index.html**: Main HTML entry for frontend
@@ -79,44 +55,43 @@ Lootie is a game-first Web3 platform built on the **Saga** blockchain, combining
 
 ### **Cross-Chain Communication**
 
-- **Cross-chain transfers** between different chainlets (see `crossChainTransfer` in `src/data/lootieChainletConfig.ts`)
-- **Bridge support** for asset movement across chainlets
-- **Multi-chain quests** spanning multiple chainlets
-- **Cross-chain NFT trading** across specialized chainlets
+- Cross-chain transfers between different chainlets
+- Bridge support for asset movement across chainlets
+- Multi-chain quests spanning multiple chainlets
+- Cross-chain NFT trading
 
 ### **Saga APIs Integration**
 
-- **Chainlet Management API**: Create, deploy, and monitor chainlets
-- **Cross-Chain API**: Handle transfers and bridge operations
-- **Quest System API**: Create, complete, and reward quests (see `questAPI`)
-- **NFT Marketplace API**: Mint, trade, and manage NFTs (see `nftAPI`)
+- Chainlet Management API
+- Cross-Chain API
+- Quest System API
+- NFT Marketplace API
 
 ### **Modular Blockchain Features**
 
-- **Proof of Stake Consensus**: 100 validators, 7-day staking period
-- **Scalability**: Sharding, parallel processing, 100K TPS capacity
-- **Interoperability**: Seamless cross-chain communication
-- **Custom Gas Limits**: Optimized for different use cases
+- Proof of Stake Consensus
+- Scalability: Sharding, parallel processing, 100K TPS capacity
+- Interoperability: Seamless cross-chain communication
+- Custom Gas Limits
 
 ### **Infrastructure Dashboard**
 
 - Real-time metrics monitoring (TPS, active chainlets, transactions)
 - Chainlet selection and management interface
 - API status monitoring and health checks
-- Modular features showcase and configuration
-- See: `src/components/SagaInfrastructureDashboard.tsx`
 
 ---
 
 ## 🧩 Main Modules
 
 - **Wallet**: Multi-wallet, onboarding, import/export, encrypted vault, SAGA RPC, onchain send (ethers.js)
+- **Quest System**: On-chain quests, daily/seasonal/community quests, automated rewards, smart contract verification
 - **Portfolio**: Asset overview, tokens, NFTs, wallet value
-- **QuestHub**: Join, complete, claim quests (on-chain, social, in-game)
 - **Collabs**: Find, connect, and collaborate with other "hunters"
 - **Communities**: Explore game communities, projects, teams
 - **Game Hub**: Game list, play history, achievements
 - **SagaInfrastructureDashboard**: Real-time Saga metrics, chainlet selection, modular features, API status
+- **Analytics**: User activity, quest completion, asset trading, real-time monitoring
 
 ---
 
@@ -162,111 +137,63 @@ Visit: [http://localhost:3001](http://localhost:3001)
 
 ---
 
-## 📦 Tech Stack
+## 🪙 Tokenomics
 
-- React + TypeScript + Vite
-- TailwindCSS
-- Saga Modular Blockchain (EVM-compatible, chainlet)
-- Express.js backend
-- Foundry (Solidity, smart contract)
-- ethers.js, axios, Privy Auth
+Lootie uses a dual-token system to optimize both utility and governance:
 
----
+### **LOOT Token (Native Token)**
+- Main medium of exchange in the ecosystem
+- Used for transaction fees, staking, governance
+- Deflationary mechanics: token burning from transaction fees and quest rewards
 
-## 🔒 Security & Testing
+### **QUEST Token (Utility Token)**
+- Distributed through quest completion and community activities
+- Used to purchase in-game items, unlock premium features, participate in special events
+- Can be converted to LOOT via bonding curve
 
-- All wallet operations are local & encrypted (never stored on server)
-- Security warning shown when exporting private key: **"Do not share your private key with anyone. Whoever has the private key will control all your assets!"**
-- Unit tests & security checks for smart contracts (see lootie-contracts/test/)
-- Follows best practices for Web3 security
-- Input validation: Address must start with 0x and be 42 hex characters, amount must be valid and not exceed balance
-- Detailed error logging for all transaction errors
+### **Token Use Cases**
+- Transaction fees & gas abstraction (users interact without direct gas)
+- Quest rewards & incentives (daily, seasonal, community)
+- Staking & governance (unlock perks, vote on protocol upgrades)
+- Marketplace & trading (NFTs, in-game items, loot crates)
+- Season pass & progression system
+- Creator & collab economy (custom quest packs, analytics, rewards)
+- Cross-game utility & player identity
+- Deflationary design & burn mechanics
 
----
-
-## 🧠 Wallet Logic & Saga Chainlet Standardization
-
-- **Onchain Send**: Uses `ethers.Wallet` and `provider.sendTransaction` for real onchain transfer (see `handleSend` in `src/components/WalletMain.tsx`)
-- **Balance Management**: Always fetches from Saga chainlet RPC first, localStorage as cache/fallback (`walletBalances_${rootAddress}`)
-- **Transaction History**: Stored in localStorage, includes chainlet/cross-chain info, professional blockchain-like display
-- **UI/UX**: Copy address popup, transaction success popup, auto-close and reload, professional notifications
-- **Security**: Private key export warning, password required for sensitive actions
-- **Saga Integration**: Use `SAGA_INFRASTRUCTURE` for all blockchain operations, leverage `crossChainTransfer`, `questAPI`, `nftAPI`
-
----
-
-## 🛠️ Backend Saga API Integration
-
-- **Express.js**: Build RESTful endpoints for Quest, NFT, Chainlet, Cross-chain.
-- **Axios**: Call Saga APIs from backend and frontend.
-- **Jest**: Write unit tests for backend APIs.
-- **JWT** (recommended): Authenticate users when calling sensitive APIs.
-- **Error Handling**: Handle errors, provide fallbacks, and detailed logging when Saga API fails.
-
-### **API Endpoints**
-
-- `POST /api/quest/create` - Create a new quest on Saga
-- `POST /api/quest/complete` - Complete a quest
-- `POST /api/nft/mint` - Mint a new NFT on Saga
-- `GET /api/nft/list/:address` - Get NFT list from Saga
-- `POST /api/crosschain/transfer` - Transfer token/NFT cross-chain
-- `POST /api/chainlet/create` - Create a new chainlet
-- `GET /api/chainlet/status/:id` - Get chainlet status
-
-### **Saga Integration Flow**
-
-```mermaid
-sequenceDiagram
-Frontend->>Backend: Send request (quest, NFT, cross-chain)
-Backend->>Saga API: Call Saga API (axios)
-Saga API-->>Backend: Return result
-Backend-->>Frontend: Return result or error
-```
-
-### **Testing**
-
-- Backend: Use `jest` for Saga API tests (see examples in backend/api/*.test.js)
-- Frontend: Use `@testing-library/react` for UI Saga (recommended)
-
-### **Security**
-
-- Private key is only handled in the backend, never returned to the frontend
-- Use JWT authentication for sensitive APIs (should be implemented for production)
-
-### **Example code for calling API from frontend**
-
-```ts
-import { createQuest } from './services/questService';
-const result = await createQuest({ title: 'New Quest', ... });
-```
+### **Token Allocation**
+- Ecosystem Growth: 35%
+- Team & Advisors: 20%
+- Community Treasury: 18%
+- Strategic Investors: 15%
+- Liquidity & Market Making: 7%
+- Operational Reserve: 5%
 
 ---
 
-## 🗂️ File Structure Highlights
+## 🧑‍💻 Lootie Protocol SDK
 
-- `src/components/WalletMain.tsx`: Main wallet logic, onchain send, transaction history, UI/UX
-- `src/data/lootieChainletConfig.ts`: Saga infrastructure config, chainlets, APIs, helpers
-- `src/components/SagaInfrastructureDashboard.tsx`: Real-time dashboard for Saga metrics and features
-- `src/App.tsx`: App state, persistent balance management, wallet onboarding
+Lootie is designed as modular infrastructure. Each core module (wallet, quest engine, lootbox, analytics) can be exported as SDKs or smart contract packages for other games/platforms to integrate.
 
----
+- **QuestModule.sol**: Smart contract for on-chain missions, daily/seasonal/achievement quests, reward distribution.
+- **LootBoxCore.sol**: NFT-based lootbox engine, randomized drops, rarity, composable reward logic.
+- **WalletEmbed.js**: Frontend JS module for Privy social login, embedded wallet, transaction signing, gas abstraction.
+- **ChainletDeployer.ts**: CLI tool for rapid chainlet deployment with Lootie modules.
+- **AnalyticsAPI.ts**: Backend module for player behavior, quest data, economic metrics.
 
-## 🎯 Next Development Opportunities
-
-- **Quest System Integration**: Use `questAPI` for on-chain quests
-- **NFT Marketplace**: Implement `nftAPI` for NFT trading
-- **Cross-Chain Quests**: Multi-chainlet quest completion
-- **Advanced Analytics**: Real-time chainlet performance metrics
-- **DeFi Integration**: Swap, liquidity, yield farming features
-- **Error Handling**: Enhanced error boundaries and recovery
-- **Performance Optimization**: Lazy loading, memoization
-- **Security Enhancements**: Private key encryption, transaction signing
+**Open-source License:**  
+Lootie Protocol SDK is governed under the Lootie Modular License (LML):  
+- Free to use SDK modules to build games on Saga Chainlets
+- Cannot fork/clone the full Lootie Hub or UI, or use the “Lootie” brand without permission
 
 ---
 
-## 👨‍💻 Credits
+## 👥 Team
 
-- Made by Lootie Team
+- **Brian Quang** – Founder, Product & Tech Lead  
+  Full-stack engineer, Web3 dApp builder, leads technical development and product design.
+- **Phoebe Duong** – Advisor, Product Owner & Growth Strategist  
+  Web3 product builder, community growth expert, oversees product vision and partnerships.
 
 ---
 

@@ -1,6 +1,6 @@
-Lootie Wallet Whitepaper
-Revolutionizing Web3 Gaming Through Chainlet
-Based Wallet Infrastructure
+Lootie Whitepaper
+Revolutionizing Web3 Gaming Through
+Chainlet Based Wallet Infrastructure
 Table of Contents
 1. Executive Summary
 2. Problem Statement
@@ -14,485 +14,971 @@ Table of Contents
 10. Links & Demo
 
 1. Executive Summary
-Lootie Wallet là một nền tảng ví Web3 tiên tiến được thiết kế đặc biệt để cách mạng
-hóa trải nghiệm Web3 gaming thông qua công nghệ Chainlet-based đột phá. Trong
-bối cảnh ngành công nghiệp Web3 gaming đang đối mặt với những thách thức lớn về
-trải nghiệm người dùng phức tạp, khả năng mở rộng hạn chế và tỷ lệ người chơi bỏ
-cuộc cao (60% trong tháng đầu tiên), Lootie Wallet ra đời như một giải pháp toàn diện
-để giải quyết những vấn đề cốt lõi này.
-Lootie Wallet tận dụng công nghệ Saga Chainlet để cung cấp cho mỗi người dùng
-hoặc trò chơi một blockchain riêng biệt, đảm bảo giao dịch tức thì, phí gas gần như
-bằng 0 và hiệu suất không bị ảnh hưởng bởi tắc nghẽn mạng lưới. Kết hợp với Privy
 
-để đơn giản hóa quá trình onboarding và Thirdweb để cung cấp công cụ phát triển
-mạnh mẽ, Lootie Wallet tạo ra một hệ sinh thái hoàn chỉnh cho cả game thủ và nhà
-phát triển.
-Những điểm nổi bật của Lootie Wallet bao gồm hệ thống nhiệm vụ tích hợp sâu với
-gameplay, ví Chainlet-based độc quyền, onboarding đơn giản thông qua đăng nhập
-Web2, và một cộng đồng gắn kết với các phần thưởng hấp dẫn. Dự án hướng tới việc
-trở thành cầu nối giữa Web2 và Web3 gaming, mang lại trải nghiệm quen thuộc như
-Steam nhưng với những lợi ích độc đáo của blockchain như quyền sở hữu tài sản thực
-sự và tính minh bạch.
-Với thị trường Web3 gaming dự kiến đạt 182.98 tỷ USD vào năm 2034, Lootie Wallet
-định vị mình như một người tiên phong trong việc giải quyết các rào cản hiện tại và
-mở ra một kỷ nguyên mới cho Web3 gaming với hàng triệu người dùng mới từ cộng
-đồng game thủ Web2.
+🎮 Lootie: The Super Hub for Web3 Gamers
+Lootie is a Web3 gaming super hub built to solve the biggest challenges in the space:
+confusing UX, poor player retention, and a lack of unified platforms. While 75% of
+Web3 games fail shortly after launch and 60% of players churn within the first month,
+Lootie is here to change the game.
+Powered by Saga’s Chainlet tech, each game or user gets their own dedicated chain unlocking near-zero gas, instant performance, and zero congestion.
+Onboarding is frictionless with Web2 login via Privy, and game developers get robust
 
-1.1) Tổng quan về công nghệ:
-a) Saga Chainlet
-Saga là một giao thức blockchain Layer 1 được thiết kế để giúp các nhà phát triển dễ
-dàng khởi chạy các blockchain chuyên dụng, song song và có khả năng tương tác,
-được gọi là “Chainlet”. Mỗi Chainlet là một blockchain độc lập với một module máy ảo
-(VM) chạy một hợp đồng thông minh duy nhất. Điều này mang lại hiệu suất độc quyền
-và khả năng mở rộng linh hoạt theo chiều ngang.
-Chainlet của Saga giải quyết vấn đề tắc nghẽn và phí giao dịch cao thường gặp trên
-các blockchain công cộng bằng cách cung cấp không gian khối chuyên dụng cho từng
-ứng dụng. Điều này đặc biệt có lợi cho các ứng dụng gaming, nơi yêu cầu thông lượng
-cao và độ trễ thấp. Các Chainlet được bảo mật bởi các validator của Saga, đảm bảo
-tính bảo mật và phi tập trung.
+tools via Thirdweb.
+Lootie offers:
+●​ An on-chain quest system that ties directly into gameplay​
+●​ A built-in, Chainlet-native wallet (no external connection needed)​
+●​ A game discovery hub with curated listings​
+●​ Event modules and community campaigns for engagement​
+●​ Seamless onboarding, fun retention loops, and real rewards​
 
-b) Privy và Thirdweb
-Privy là một giải pháp cơ sở hạ tầng ví giúp đơn giản hóa quá trình onboarding người
-dùng vào Web3. Privy cho phép các nhà phát triển tích hợp ví nhúng (embedded
-wallets) vào ứng dụng của họ, loại bỏ sự phức tạp của việc người dùng phải đăng ký ví
+🧩
+More than a product, Lootie is an evolving protocol. While we begin with a
+user-focused super app, our architecture is modular - allowing studios to integrate
+Lootie’s quest engine, wallet, or analytics directly into their own Chainlets.
 
-crypto bên ngoài. Với Privy, người dùng có thể đăng nhập bằng các phương thức
-Web2 quen thuộc (như email, số điện thoại, tài khoản mạng xã hội) và tự động tạo ví
-không giám sát (non-custodial wallet) một cách liền mạch. Điều này giúp giảm đáng
-kể rào cản gia nhập cho người dùng mới, đặc biệt là game thủ Web2.
-Thirdweb là một nền tảng phát triển Web3 toàn diện, cung cấp các công cụ và SDK để
-xây dựng, quản lý và phân tích các ứng dụng Web3. Thirdweb giúp các nhà phát triển
-dễ dàng triển khai các hợp đồng thông minh, tạo NFT, và tích hợp các tính năng
-blockchain vào ứng dụng của họ mà không cần kiến thức chuyên sâu về blockchain.
-Với các SDK đa ngôn ngữ (React, React Native, TypeScript, Python, Go, Unity),
-Thirdweb đẩy nhanh quá trình phát triển và cho phép Lootie Wallet tập trung vào việc
-xây dựng trải nghiệm người dùng cốt lõi.
+Think of Lootie as a “Steam for Web3” - but one where every game can become its own
+sovereign ecosystem. Our mission: onboard the next generation of gamers from Web2
+to Web3 - through play, not speculation.
+
+1.1) Technology overview:
+a) Chainlet Saga
+Saga is a Layer 1 blockchain protocol designed to make it easy for developers to
+launch dedicated, parallel, interoperable blockchains, called “Chainlets”. Each Chainlet
+is a standalone blockchain with a virtual machine (VM) module running a single smart
+contract. This provides unique performance and horizontal scalability.
+Saga's Chainlets solve the congestion and high transaction fees common on public
+blockchains by providing dedicated block space for each application. This is especially
+beneficial for gaming applications, which require high throughput and low latency.
+Chainlets are secured by Saga's validators, ensuring security and decentralization.
+
+b) Privy and Thirdweb
+Privy is a wallet infrastructure solution that simplifies user onboarding to Web3. Privy
+allows developers to integrate embedded wallets into their applications, removing the
+complexity of requiring users to register for a wallet.
+
+crypto externally. With Privy, users can log in using familiar Web2 methods (such as
+email, phone number, social media accounts) and automatically generate a
+non-custodial wallet seamlessly. This significantly reduces the barrier to entry for new
+users, especially Web2 gamers.
+Thirdweb is a comprehensive Web3 development platform that provides tools and
+SDKs for building, managing, and analyzing Web3 applications. Thirdweb makes it
+easy for developers to deploy smart contracts, create NFTs, and integrate blockchain
+features into their applications without requiring in-depth blockchain knowledge. With
+multi-language SDKs (React, React Native, TypeScript, Python, Go, Unity),
+Thirdweb speeds up development and allows Lootie Wallet to focus on building the
+core user experience.
 
 2. Problem Statement
-Ngành công nghiệp Web3 gaming đã trải qua một giai đoạn phát triển nhanh chóng
-nhưng cũng đầy biến động. Sau cơn sốt ban đầu với các mô hình Play-to-Earn (P2E),
-thị trường đã chứng kiến sự sụt giảm đáng kể về số lượng người chơi và giá trị của
-nhiều dự án. Nhiều trò chơi blockchain nổi tiếng đã "chết đột ngột", cho thấy những
-thách thức lớn trong việc duy trì sự hấp dẫn và bền vững.
-Tuy nhiên, tiềm năng của Web3 gaming vẫn rất lớn. Các dự báo cho thấy thị trường
-này sẽ tiếp tục tăng trưởng mạnh mẽ trong những năm tới, với quy mô thị trường
-toàn cầu ước tính đạt hàng trăm tỷ USD vào năm 2034. Sự tham gia của các ông lớn
-game Web2 vào không gian Web3 cũng cho thấy xu hướng dịch chuyển không thể
-tránh khỏi. Công nghệ blockchain mang lại tính minh bạch, bảo mật, và khả năng
-kiểm soát tài sản trong game cho người chơi, điều mà game truyền thống chưa làm
-được.
-Một trong những rào cản lớn nhất đối với việc tiếp cận Web3 gaming là trải nghiệm
-người dùng phức tạp, đặc biệt là trong việc onboarding ví blockchain. Người dùng mới
-thường gặp khó khăn với các khái niệm như seed phrase, gas fee, và quản lý nhiều
-loại ví khác nhau, dẫn đến tỷ lệ bỏ cuộc cao. Dữ liệu cho thấy 60% người chơi Web3
-ngừng chơi trong tháng đầu tiên, nhấn mạnh thách thức chính của ngành: tạo ra các
-trò chơi thực sự thú vị trong khi vẫn đơn giản hóa trải nghiệm người dùng.
+2.1 Market Overview
+Web3 gaming doesn’t lack products, it lacks the infrastructure for real retention and
+growth.
+Between 2018 and the end of 2024, an estimated 3,602 blockchain games were
+launched. Yet by the end of 2024, only around 1,361 of them (roughly 37.8%) still
+showed any on-chain activity - meaning over 62% had gone inactive.​
+Meanwhile, data from CoinGecko indicates that from 2018 to 2023, of the 2,817
+games launched, as many as 2,127 games (around 75–80%) failed - losing over 99%
+of their users from peak activity.
+And yet, the potential of this market remains massive. Blockchain introduces
+transparent asset ownership, open economies, and cross-game interoperability things that Web2 platforms were never built to support. Industry projections estimate
+that by 2034, the global Web3 gaming market could reach hundreds of billions of
+dollars.
+The problem isn’t about building games. It’s about growing them.
+Most Web3 games follow the same broken loop: launch a big campaign, onboard users
+through short-term incentives, then lose them the moment the rewards stop. With no
 
-Ai là người bị ảnh hưởng?
-Game thủ Web2: Những người muốn khám phá Web3 gaming nhưng bị cản
-trở bởi sự phức tạp về công nghệ và trải nghiệm người dùng.
-Game thủ Web3 hiện tại: Những người đang phải đối mặt với các vấn đề về
-hiệu suất, phí giao dịch cao và trải nghiệm ví phân mảnh.
-Các nhà phát triển game Web3: Những người gặp khó khăn trong việc thu hút
-và giữ chân người dùng do rào cản onboarding và thiếu các công cụ hiệu quả để
-xây dựng cộng đồng và tạo động lực cho người chơi.
-Các dự án game nhỏ và indie: Những dự án không có đủ nguồn lực để phát
-triển hệ thống ví và cộng đồng riêng, cần một giải pháp toàn diện và dễ tích
-hợp.
+native infrastructure for onboarding, retention, or player re-engagement, even
+promising games struggle to scale. Community becomes fragmented. Data is lost.
+Developers are forced to start over - again and again.
+Meanwhile, the potential of the Web3 gaming market is undeniable. Blockchain
+enables transparent ownership, open economies, and true interoperability - core
+features that Web2 never offered. Industry forecasts predict that this space will reach
+hundreds of billions in market size by 2034. Major gaming companies are already
+entering. But technology alone doesn’t drive growth - infrastructure does.
+This is the gap Lootie was built to fill.
+Lootie is the missing growth layer for Web3 gaming - the one thing this
+industry desperately needs but never had.
+Lootie gives every game a plug-and-play growth engine: non-custodial wallet
+onboarding, gamified quests, loot-based reward systems, social leaderboard
+mechanics, creator collaboration, and player behavior analytics - all built into one SDK.
+No smart contract changes. No technical debt. Just growth infrastructure, out of the
+box.
+2.2 Who Needs This?
+Lootie is designed for the people most affected by this growth gap:
+●​ Web3 Game Developers​
+Indie teams or studios building great games but struggling to onboard users,
+retain them, or build momentum after launch. Most lack the internal resources
+to build full growth systems from scratch.​
+●​ Ecosystem Operators & Chain Foundations​
+L1s and modular chains (like Saga) that want to support sustainable user
+acquisition across their ecosystem, but lack a unified layer for player identity,
+analytics, and engagement.​
+●​ Web2 Gamers Exploring Web3​
+Curious but discouraged by complex onboarding flows, wallet UX, seed phrases,
+and fragmented tools. Lootie abstracts all of this away with social login,
+simplified UX, and gameplay-centric incentives.​
+
+●​ Web3 Power Users​
+Players who already engage in Web3, but currently experience reward fatigue,
+high gas costs, and zero long-term retention. Lootie reintroduces a sense of
+progress, identity, and community.
+2.3 Competitive Landscape
+
+Why Not Use Existing Platforms Like Galxe, Zealy, or Steam?
+When teams hear about Lootie, a common question arises: “Why not just use Galxe,
+Zealy, or even Steam?”
+It’s a fair question, and one we’ve considered seriously. But while these platforms each
+play a role in today’s ecosystem, they were not built to support the long-term,
+gamified, user-centric growth that Web3 games truly need.
+Galxe and Zealy are campaign tools, not growth systems.​
+They are optimized for short-term participation: join a Discord server, retweet a post,
+mint an NFT, and move on. While effective at driving traffic spikes, they fail to create
+meaningful retention. Users often complete a task, claim a reward, and leave. There’s
+no sense of identity, no re
+QuestN attempts to solve this with more flexible campaign structures. It allows
+multi-step quests and deeper integration, but remains transactional at its core. There
+is still no feeling of progression, no seasonal structure, and no feedback loop that
+encourages continued play. The user journey ends with the campaign, not continues
+beyond it.
+Steam, as a Web2 platform, is an entirely different story. It is arguably the most
+successful distribution system in gaming history. However, Steam is fundamentally
+incompatible with Web3. It does not integrate wallets, does not support tokenized
+assets, and does not allow developers to build open economies or connect to on-chain
+systems. For Web3 games, Steam is closed infrastructure.
+Lootie was built to fill this gap - and go further.
+We’re not a quest tool. We’re a full-stack growth infrastructure layer for Web3 games.
+From the first user click to the 100th day of engagement, Lootie is designed to manage
+
+and optimize the entire user journey. We combine:
+●​ A native wallet for seamless onboarding​
+●​ Daily and seasonal quest systems​
+●​ Leaderboards, loot rewards, and player XP​
+●​ NFT customization and social gameplay​
+●​ Player identity that persists across games and chains​
+
+Beyond engagement, Lootie delivers something these platforms cannot: insight.​
+We provide developers with deep behavioral data - who joined, who stayed, who
+dropped off, and why. Our analytics layer gives teams the tools to test campaigns,
+segment users, and continuously improve both gameplay and retention strategies.
+In short, Galxe, Zealy, and QuestN are marketing utilities. Steam is a distribution
+channel. But Lootie is the first platform designed to be a growth engine for Web3
+gaming - modular, gamified, data-rich, and cross-chain by default.
 
 3. Solution
-Lootie Wallet ra đời để giải quyết các vấn đề cốt lõi đang cản trở sự phát triển và chấp
-nhận rộng rãi của Web3 gaming:
-1. Trải nghiệm người dùng phức tạp: Việc tạo và quản lý ví blockchain, hiểu về gas
-fee, và tương tác với các dApp là một rào cản lớn đối với người dùng phổ thông, đặc
-biệt là game thủ Web2 quen thuộc với sự đơn giản của game truyền thống. Quá
-trình onboarding hiện tại quá phức tạp, dẫn đến tỷ lệ chuyển đổi thấp và người
-dùng bỏ cuộc sớm.
-2. Khả năng mở rộng và hiệu suất: Các blockchain công cộng thường gặp vấn đề
-về khả năng mở rộng và tốc độ giao dịch, dẫn đến trải nghiệm chơi game không
-mượt mà, độ trễ cao và phí giao dịch biến động. Điều này ảnh hưởng trực tiếp đến
-gameplay và sự hài lòng của người chơi.
-3. Thiếu sự gắn kết cộng đồng và động lực chơi game: Nhiều game Web3 tập
-trung quá nhiều vào yếu tố kiếm tiền mà bỏ qua trải nghiệm giải trí và sự gắn kết
-cộng đồng. Người chơi thiếu động lực để tiếp tục tham gia nếu không có các hệ
-thống nhiệm vụ hấp dẫn, phần thưởng rõ ràng và một cộng đồng sôi nổi.
-4. Phân mảnh hệ sinh thái: Người chơi thường phải sử dụng nhiều ví và nền tảng
-khác nhau để tham gia vào các game Web3 và quản lý tài sản của họ, gây ra sự
+Lootie | A Modular Growth Layer for Web3 Gaming
+Web3 gaming is full of promise, but most games today fail not because of bad
+gameplay, but because they lack a sustainable way to onboard, engage, and retain
+users. Lootie was created to fix exactly that: become the missing growth layer that
+every Web3 game and ecosystem can plug into.
+A Cross-Chain Growth Layer for Ecosystems
 
-bất tiện và rủi ro bảo mật.
+The current Web3 gaming landscape is fragmented. Each game, each chain, each
+campaign operates in silos. There’s no unified infrastructure to support player
+onboarding, identity, and engagement across the ecosystem.
+Lootie changes that. We offer a chain-agnostic SDK that works across EVM and
+modular chains, enabling:
+●​ A persistent player identity across games and chains​
+
+●​ Unified tracking of player behavior and asset ownership​
+●​ A growth toolkit that any chain can offer to its game studios, out of the box​
+For ecosystems like Saga, Lootie becomes a ready-made growth engine - helping
+every new game onboard faster, retain longer, and measure results clearly.
+
+Lootie as a Cross-Chain Growth Gateway
+Most new chains and gaming ecosystems struggle with one critical challenge: user
+acquisition. Even with strong infrastructure and developer tools, attracting active
+players, especially from outside the ecosystem remains difficult and expensive.
+Lootie solves this by acting as a cross-chain growth gateway.
+Players from Ethereum, Solana, Arbitrum, and other major ecosystems can onboard
+into Lootie using their existing wallets. From there, they’re introduced to new games including those on emerging chains like Saga, without needing to switch wallets,
+bridge tokens, or understand new chain mechanics.
+This means:
+●​ Games on Saga can attract users from other chains effortlessly​
+●​ Lootie handles onboarding, quest design, and identity — so games don’t have to​
+●​ The entire Saga ecosystem benefits from access to a ready-made, cross-chain
+player base​
+By aggregating players, Lootie creates network effects across games and chains. A
+player might come for one campaign on Polygon, but stay to explore a Saga-based
+RPG - and earn loot along the way.
+For Indie and Small Games: Plug-and-Play Growth
+
+Building a Web3 game is already hard. Building a custom wallet, quest system, and
+analytics dashboard? Nearly impossible for small teams.
+Lootie solves this by offering a plug-and-play growth stack:
+●​ A Lootie Wallet, designed for gaming (not finance), simple to integrate and easy
+for new users​
+●​ A Quest Hub with daily tasks, seasonal challenges, loot-based progression, and
+XP​
+●​ Player profiles, NFT inventories, and cross-game achievements​
+
+●​ Event-ready infrastructure to launch quests, collabs, and campaigns in minutes​
+No need to build data pipelines. Just connect, customize, and go live.
+For Bigger Games: Better Retention, Lower CAC
+
+Even well-funded Web3 games suffer from retention fatigue. After launch, most rely on
+KOL campaigns or airdrops to keep users engaged, both expensive and ineffective in
+the long run.
+Lootie provides built-in retention mechanics:
+●​ Seasonal passes with unlockable NFT rewards​
+●​ Leaderboard competitions to encourage community activity​
+●​ Custom item collection, allowing players to personalize avatars and NFTs​
+●​ Collab Board, connecting games to creators for ongoing content and quests​
+By embedding engagement inside the gameplay experience, Lootie reduces the need
+for external ad spend and makes retention part of your core loop — not an
+afterthought.
+For Players: One Wallet, Many Worlds
+
+Lootie makes Web3 gaming feel like gaming again.
+Players use the Lootie Wallet to:
+●​ Onboard quickly with social login (no seed phrases) with Privy​
+●​ Track their assets (NFTs, tokens, XP) across multiple games​
+●​ Join daily quests, complete seasonal objectives, and earn loot​
+●​ Collect, customize, and unlock NFTs as they play​
+Instead of managing five wallets and chasing airdrops, players have a single identity
+and a unified profile - making their Web3 journey social, fun, and sticky.
+Growth Infrastructure, Not Just a Tool
+
+Lootie is not a marketing plugin. It’s not “just another quest app.” We’re building the
+growth infrastructure that Web3 gaming actually needs - and we’re making it
+accessible to every game, regardless of size or budget.
+From campaign activation to retention analytics, Lootie helps games:
+
+●​ Cut down growth costs​
+●​ Increase LTV and engagement​
+●​ Understand players deeply through first-party data​
+●​ Launch experiments, A/B test mechanics, and scale what works​
+If Steam was the distribution layer for Web2 gaming, Lootie is the growth layer
+for Web3. Not just for one game - for the entire chain.
 
 4. Architecture / Technical Design
+Lootie is a next-gen Web3 gaming hub designed to simplify the user experience
+and drive mainstream adoption.
+More than just a wallet, Lootie is an all-in-one interactive platform that blends powerful
+blockchain infrastructure with a seamless interface - making Web3 gaming more
+accessible, rewarding, and fun.
+Built on Saga’s Chainlet technology, each game or user gets a dedicated chain for
+ultra-fast performance, minimal to zero gas fees, and zero congestion. This solves the
+key pain points of scalability and cost in Web3 games.
+With Privy for frictionless Web2-style logins and Thirdweb for robust dev tools, Lootie
+offers both gamers and developers a fully integrated ecosystem - from discovery and
+onboarding to engagement and growth.
 
-Lootie Wallet là một nền tảng ví Web3 tiên tiến được thiết kế đặc biệt để đơn giản hóa
-trải nghiệm Web3 gaming và thúc đẩy sự chấp nhận rộng rãi của người dùng. Lootie
-Wallet không chỉ là một ví tiền điện tử thông thường mà còn là một trung tâm tương
-tác toàn diện, kết hợp công nghệ blockchain mạnh mẽ với giao diện người dùng thân
-thiện, mang lại trải nghiệm chơi game mượt mà và hấp dẫn.
-Lootie Wallet hoạt động dựa trên công nghệ Chainlet của Saga, cho phép mỗi người
-dùng hoặc mỗi trò chơi có một Chainlet riêng biệt. Điều này đảm bảo hiệu suất tối ưu,
-giao dịch nhanh chóng và phí gas thấp hoặc không có, giải quyết triệt để vấn đề về
-khả năng mở rộng và chi phí trong Web3 gaming. Bằng cách tận dụng Privy và
-Thirdweb, Lootie Wallet cung cấp trải nghiệm onboarding liền mạch và các công cụ
-phát triển mạnh mẽ, giúp các nhà phát triển dễ dàng tích hợp và tùy chỉnh.
+Key Features
+1. Chainlet-based Wallet (Chainlet-powered Wallet):
+● Outstanding performance:Each wallet is powered by a separate Chainlet,
+ensuring instant transactions and not being affected by general network
+congestion.
+● Minimum/no transaction fees:Reduce the cost burden on people
+use, especially important in games with many small transactions.
+● Advanced Security:Leveraging Saga Chainlet's security mechanism, providing a
+safe environment for users' assets.
+● Seamless integration:Allows users to manage in-game assets and interact with
+dApps easily.
 
-Những tính năng chính
-1. Ví Chainlet-based (Chainlet-powered Wallet):
-●​ Hiệu suất vượt trội: Mỗi ví được hỗ trợ bởi một Chainlet riêng, đảm bảo
-giao dịch tức thì và không bị ảnh hưởng bởi tắc nghẽn mạng lưới chung.
-●​ Phí giao dịch tối thiểu/không có: Giảm bớt gánh nặng chi phí cho người
-dùng, đặc biệt quan trọng trong các trò chơi có nhiều giao dịch nhỏ.
-●​ Bảo mật nâng cao: Tận dụng cơ chế bảo mật của Saga Chainlet, cung cấp
-môi trường an toàn cho tài sản của người dùng.
-●​ Tích hợp liền mạch: Cho phép người dùng quản lý tài sản trong game và
-tương tác với các dApp một cách dễ dàng.
-2. Hệ thống Nhiệm vụ (Quest System) và Phần thưởng:
-●​ Nhiệm vụ đa dạng: Cung cấp các nhiệm vụ trong game và ngoài game (ví dụ:
-tham gia cộng đồng, chia sẻ trên mạng xã hội) để người chơi hoàn thành và
-nhận thưởng.
-●​ Phần thưởng hấp dẫn: Người chơi có thể nhận được token, NFT, vật phẩm
-trong game, hoặc các ưu đãi đặc biệt khác khi hoàn thành nhiệm vụ.
-●​ Tăng cường gắn kết: Khuyến khích người chơi tương tác nhiều hơn với trò
-chơi và cộng đồng, thúc đẩy sự duy trì và lòng trung thành.
-3. Onboarding đơn giản với Privy:
-●​ Đăng nhập Web2 quen thuộc: Người dùng có thể đăng nhập bằng email,
-tài khoản Google, Discord, v.v., loại bỏ nhu cầu về seed phrase phức tạp.
-●​ Ví nhúng không giám sát: Tự động tạo ví non-custodial cho người dùng,
-đảm bảo quyền sở hữu tài sản mà không cần kiến thức chuyên sâu về
-blockchain.
-●​ Trải nghiệm người dùng mượt mà: Giảm thiểu các bước phức tạp, giúp
-người dùng mới dễ dàng tham gia vào Web3 gaming.
-4. Công cụ phát triển mạnh mẽ với Thirdweb:
-●​ SDK đa nền tảng: Cung cấp các SDK dễ sử dụng cho các nhà phát triển
-game để tích hợp Lootie Wallet vào trò chơi của họ.
-●​ Hợp đồng thông minh được kiểm toán: Giúp các nhà phát triển triển khai
-các tính năng blockchain một cách an toàn và hiệu quả.
+2. Quest System and Rewards:
 
-●​ Phân tích và quản lý: Cung cấp các công cụ để theo dõi hiệu suất, quản lý
-người dùng và tối ưu hóa trải nghiệm game.
-5. Cộng đồng và Tương tác:
-●​ Trung tâm cộng đồng: Nơi người chơi có thể kết nối, chia sẻ kinh nghiệm và
-tham gia vào các sự kiện cộng đồng.
-●​ Hệ thống phần thưởng cộng đồng: Khuyến khích sự đóng góp và tương tác
-tích cực trong cộng đồng.
+● Diverse missions: Provide in-game and out-of-game tasks (e.g. community
+participation, social sharing) for players to complete and receive rewards.
+● Attractive rewards: Players can receive tokens, NFTs, in-game items, or other
+special rewards for completing missions.
+● Enhanced engagement:Encourage players to engage more with the game
+and community, driving retention and loyalty.
+3. Simple Onboarding with Privy:
+● Familiar Web2 login:Users can log in with email, Google account, Discord,
+etc., eliminating the need for complex seed phrases.
+● Unsupervised embedded wallet: Automatically generate non-custodial
+wallets for users, Secure asset ownership without requiring in-depth
+blockchain knowledge.
+● Smooth user experience:Minimize complicated steps, making it easy for
+new users to join Web3 gaming.
 
-4.1 Sơ đồ hệ thống (System Diagram)
+4. Powerful development tools with Thirdweb:
+● Cross-platform SDK:Provide easy-to-use SDKs for game developers to
+integrate Lootie Wallet into their games.
+● Audited Smart Contracts:Helping developers deploy blockchain features
+securely and efficiently.
+● Analysis and management:Provides tools to monitor performance, manage
+users, and optimize the gaming experience.
+5. Community and Interaction:
+● Community Center:Where players can connect, share experiences and
+participate in community events.
+● Community Reward System:Encourage positive contributions and interactions
+within the community.
 
-Kiến trúc của Lootie Wallet được xây dựng trên nền tảng saga modular, tận dụng sức
-mạnh của các công nghệ blockchain tiên tiến để tạo ra một hệ sinh thái toàn diện và
-hiệu quả. Hệ thống bao gồm các thành phần chính sau:
-Layer 1: Saga Chainlet Infrastructure - Mỗi người dùng hoặc game được cấp phát
-một Chainlet riêng biệt - Shared security từ Saga validator network - Khả năng mở
-rộng vô hạn theo chiều ngang - Interoperability giữa các Chainlet thông qua IBC
-protocol
+4.1 System Diagram
 
-Layer 2: Wallet Management Layer - Privy integration cho user authentication và
-embedded wallet creation - Non-custodial wallet với social login capabilities - Multi
-chain asset management - Seamless transaction signing và gas abstraction
-Layer 3: Application Layer - Thirdweb SDK integration cho developer tools - Quest
-system engine với smart contract automation - Community features và social
-interactions - Analytics và performance monitoring
-Layer 4: User Interface Layer - Cross-platform mobile và web applications - Intuitive
-UX/UI design cho Web2 users - Real-time notifications và updates - Integrated
-marketplace cho in-game assets
+Lootie 's architecture is built on the modular saga platform, leveraging the power of
+advanced blockchain technologies to create a comprehensive and efficient ecosystem.
+The system includes the following main components:
 
-4.2 Mô tả các module chính (Wallet, Quest, Transaction, Analytics…)
-Wallet Module: Wallet Module là trái tim của Lootie Wallet, cung cấp khả năng quản
-lý tài sản số một cách an toàn và hiệu quả. Module này tích hợp Privy để tạo ra
-embedded wallets cho người dùng mà không cần họ phải hiểu về private keys hay
-seed phrases. Mỗi wallet được hỗ trợ bởi một Saga Chainlet riêng biệt, đảm bảo giao
-dịch nhanh chóng và phí thấp. Wallet Module hỗ trợ multi-chain assets, cho phép
-người dùng quản lý tokens, NFTs và các tài sản khác từ nhiều blockchain khác nhau
-trong một giao diện thống nhất.
-Quest Module: Quest Module là một trong những tính năng độc đáo nhất của Lootie
-Wallet, được thiết kế để tăng cường engagement và tạo ra giá trị cho người chơi.
-Module này cho phép các nhà phát triển game và cộng đồng tạo ra các nhiệm vụ đa
-dạng, từ các hoạt động trong game đến các tương tác xã hội. Hệ thống quest được
-tích hợp sâu với smart contracts, tự động xác minh việc hoàn thành nhiệm vụ và phân
-phối phần thưởng. Quest Module cũng hỗ trợ các loại nhiệm vụ khác nhau như daily
-quests, seasonal events, community challenges và achievement systems.
-Transaction Module: Transaction Module xử lý tất cả các giao dịch blockchain trong
-hệ sinh thái Lootie Wallet. Nhờ vào Saga Chainlet architecture, module này có thể xử
-lý hàng nghìn giao dịch mỗi giây với độ trễ cực thấp. Transaction Module cũng tích
-hợp gas abstraction, cho phép người dùng thực hiện giao dịch mà không cần lo lắng
-về gas fees. Module này hỗ trợ các loại giao dịch khác nhau bao gồm token transfers,
-NFT minting/trading, smart contract interactions và cross-chain bridges.
-Analytics Module: Analytics Module cung cấp insights chi tiết về hoạt động của người
-dùng, hiệu suất game và xu hướng thị trường. Module này thu thập và phân tích dữ
+Layer 1: Saga Chainlet Infrastructure
+●​ Each user or game is allocated a separate Chainlet​
+●​ Shared security from Saga validator network​
+●​ Infinite horizontal scalability​
+●​ Interoperability between Chainlets via IBC protocol​
+Each Chainlet runs independently, enabling scalable game-specific or user-specific
+environments powered by Lootie modules.​
+Layer 2: Wallet Management Layer
+●​ Privy integration for user authentication and embedded wallet creation​
+●​ Non-custodial wallet with social login capabilities​
+●​ Multi-chain asset management​
+●​ Seamless transaction signing and gas abstraction
 
-liệu
-từ tất cả các hoạt động trong hệ sinh thái, từ việc hoàn thành quest đến giao dịch tài
-sản. Dữ liệu này được sử dụng để tối ưu hóa trải nghiệm người dùng, cải thiện game
-mechanics và cung cấp thông tin có giá trị cho các nhà phát triển. Analytics Module
-cũng hỗ trợ real-time monitoring và alerting cho các sự kiện quan trọng.
-Community Module: Community Module tạo ra một không gian tương tác xã hội
-trong Lootie Wallet, nơi người chơi có thể kết nối, chia sẻ kinh nghiệm và tham gia vào
-các hoạt động cộng đồng. Module này bao gồm các tính năng như chat systems,
-forums, leaderboards, guild management và event organization. Community Module
-cũng tích hợp với Quest Module để tạo ra các nhiệm vụ cộng đồng và group
-challenges, khuyến khích sự hợp tác và tương tác giữa các thành viên.
+This layer can be exported as a standalone wallet module to other dApps or games running
+on their own Chainlets.​
+Layer 3: Application Layer
+●​ Thirdweb SDK integration for developer tools​
+●​ Quest system engine with smart contract automation​
+●​ Community features and social interactions​
+●​ Analytics and performance monitoring​
+Each module in this layer is composable — allowing developers to pick and integrate only
+what they need via the Lootie SDK.​
+Layer 4: User Interface Layer
+●​ Cross-platform mobile and web applications​
+
+●​ Intuitive UX/UI design for Web2 users​
+●​ Real-time notifications and updates​
+●​ Integrated marketplace for in-game assets
+
+4.2 Description of main modules (Wallet, Quest, Transaction,
+Analytics…)
+Wallet Module: The Wallet Module is the heart of the Lootie Wallet, providing secure
+and efficient digital asset management. The module integrates with Privy to create
+embedded wallets for users without requiring them to understand private keys or
+seed phrases. Each wallet is powered by a separate Saga Chainlet, ensuring fast
+transactions and low fees. The Wallet Module supports multi-chain assets, allowing
+users to manage tokens, NFTs, and other assets from multiple blockchains in a unified
+interface.
+Quest Module: Quest Module is one of the most unique features of Lootie Wallet,
+designed to increase engagement and create value for players. The module allows
+game developers and communities to create diverse quests, from in-game activities to
+social interactions. The quest system is deeply integrated with smart contracts,
+automatically verifying quest completion and distributing rewards. Quest Module also
+supports different types of quests such as daily quests, seasonal events, community
+challenges and achievement systems.
+Transaction Module: The Transaction Module handles all blockchain transactions
+within the Lootie Wallet ecosystem. Thanks to the Saga Chainlet architecture, the
+module can handle thousands of transactions per second with extremely low latency.
+The Transaction Module also integrates gas abstraction, allowing users to make
+transactions without worrying about gas fees. The module supports different types of
+transactions
+
+including
+
+token
+
+transfers,
+
+NFT
+
+minting/trading,
+
+smart
+
+contract
+
+interactions, and cross-chain bridges.
+Analytics Module: Analytics Module provides detailed insights into user activity,
+game performance and market trends. This module collects and analyzes data
+whether
+from all activities in the ecosystem, from completing quests to trading assets. This
+data is used to optimize user experience, improve game mechanics, and provide
+valuable information to developers. The Analytics Module also supports real-time
+
+monitoring and alerting for important events.
+Community Module: The Community Module creates a social space within Lootie
+Wallet where players can connect, share experiences, and participate in community
+activities. The module includes features such as chat systems, forums, leaderboards,
+guild management, and event organization. The Community Module also integrates
+with the Quest Module to create community quests and group challenges,
+encouraging collaboration and interaction between members.
+
+4.3 Transition from Product to Protocol
+Lootie is initially built as a full-featured product - a comprehensive Web3 gaming hub
+that combines wallet, quests, rewards, and community features into a seamless user
+experience. This product-first approach allows us to test, refine, and optimize the core
+Lootie modules in a real environment with actual users and games.
+However, Lootie is designed from day one to evolve beyond a standalone app. Its
+architecture is modular, extensible, and protocol-ready, making it possible to export
+individual components (wallet, quest engine, lootbox logic, analytics) as SDKs or smart
+contract packages.
+Lootie as Modular Infrastructure for the Saga Ecosystem
+Each of Lootie’s modules - from Quest System to Transaction Engine - is designed to
+be deployed independently by other games or platforms, not just within the Lootie
+hub.
+In particular, Lootie’s SDK enables external game studios to:
+●​ Deploy Lootie-powered quests, lootboxes, or wallets on their own Chainlet​
+●​ Customize reward logic via Lootie’s audited smart contracts​
+●​ Plug into Lootie’s analytics & leaderboard infrastructure​
+
+This positions Lootie not just as a product, but as an ecosystem growth engine for
+Saga, where every new integration becomes a new Chainlet, and every game becomes
+a self-contained economy powered by the Lootie Protocol.
+
+Lootie Wallet is also deployable as a standalone module on any Saga Chainlet, allowing
+external developers to embed full wallet logic into their own games or dApps.
 
 5. Tokenomics
 
-5.1 Token sử dụng: Native hay ERC20?
-Lootie Wallet sử dụng một dual-token system để tối ưu hóa cả utility và governance
-trong hệ sinh thái. Hệ thống bao gồm:
-LOOT Token (Native Token): LOOT là native token chính của Lootie Wallet ecosystem,
-được xây dựng trên Saga Chainlet infrastructure. Token này phục vụ như một medium
-of exchange chính trong hệ sinh thái, được sử dụng cho việc thanh toán phí giao dịch,
-staking để nhận rewards và tham gia governance decisions. LOOT token được thiết kế
-với deflationary mechanics thông qua token burning từ transaction fees và quest
+5.1 Token used: Native or ERC20?
+Lootie Wallet uses a dual-token system to optimize both utility and governance in
+the ecosystem. The system includes:
+LOOT Token (Native Token): LOOT is the native token of the Lootie Wallet ecosystem,
+built on the Saga Chainlet infrastructure. This token serves as the main medium of
+exchange in the ecosystem, used for paying transaction fees, staking to receive
+rewards, and participating in governance decisions. LOOT token is designed with
+deflationary mechanics through token burning from transaction fees and quest
 completion rewards.
-QUEST Token (Utility Token): QUEST là utility token được phân phối thông qua quest
-completion và community activities. Token này có thể được sử dụng để mua in-game
-items, unlock premium features, và participate trong special events. QUEST tokens có
-thể được converted thành LOOT tokens thông qua một bonding curve mechanism,
-tạo ra utility và demand cho cả hai tokens.
+QUEST Token (Utility Token): QUEST is a utility token distributed through quest
+completion and community activities. This token can be used to purchase in-game
+items, unlock premium features, and participate in special events. QUEST tokens can
+be converted to LOOT tokens through a bonding curve mechanism, creating utility
+and demand for both tokens.
 
-Các use case của token trong Lootie
-Transaction Fees và Gas Abstraction: LOOT tokens được sử dụng để thanh toán
-transaction fees trong Lootie ecosystem. Tuy nhiên, nhờ vào gas abstraction layer, end
-users không cần trực tiếp pay gas fees. Thay vào đó, hệ thống tự động deduct một
-lượng nhỏ LOOT từ user balance hoặc sponsor fees thông qua quest rewards và
-community contributions.
-Quest Rewards và Incentives: Cả LOOT và QUEST tokens được phân phối như
-rewards cho việc hoàn thành quests, tham gia community events và contribute vào
-ecosystem growth. Reward distribution được automated thông qua smart contracts
-và based trên quest difficulty, completion rate và community impact.
-Staking và Governance: LOOT token holders có thể stake tokens để nhận staking
-rewards và participate trong governance decisions. Staking mechanism cũng được sử
-dụng để secure network và validate quest completions. Governance proposals có thể
-include changes to quest mechanics, reward distributions và ecosystem upgrades.
-Marketplace và Trading: Tokens được sử dụng để trade in-game assets, NFTs và
+5.2 Use cases of tokens in Lootie
+The $LOOT token plays a central role in driving growth, incentivizing behaviors, and
+powering interactions across the Lootie ecosystem. It is designed as a
+multi-functional utility token, supporting players, developers, creators, and the
+ecosystem at large.
 
-other digital collectibles trong Lootie marketplace. Marketplace fees được collected
-trong LOOT tokens và một phần được burned để maintain token scarcity.
+●​ Transaction Fees & Gas Abstraction
 
-5.2 Cách mint/gửi nhận
-Token Minting: LOOT tokens được minted thông qua một controlled emission
-schedule, với majority được allocated cho quest rewards, community incentives và
-ecosystem development. Initial token distribution bao gồm allocations cho team,
-advisors, early investors và community treasury. QUEST tokens được minted
-dynamically based trên quest completion và community activities.
-Sending và Receiving: Token transfers trong Lootie ecosystem được simplified thông
-qua user-friendly interfaces. Users có thể send tokens bằng cách sử dụng usernames
-thay vì complex wallet addresses. Cross-chain transfers được supported thông qua
-bridge mechanisms, cho phép users move tokens giữa different blockchains trong
+Lootie integrates a gas abstraction layer that allows users to interact with on-chain
+features without directly paying gas in native tokens. Instead, $LOOT is used as the
+medium for transaction fees, either deducted from user balances, sponsored via
+quest rewards, or covered by ecosystem contributions. This lowers the barrier for
+onboarding new users, especially those unfamiliar with wallet management and chain
+mechanics.
+●​ Quest Rewards & Incentives
+
+Both $LOOT and QUEST tokens are distributed as rewards for:
+●​ Completing daily and seasonal quests​
+●​ Participating in community challenges or mini-games​
+●​ Contributing to early-stage campaigns and ecosystem growth​
+Reward logic is governed by smart contracts, considering factors like quest difficulty,
+completion rate, and user impact. This encourages authentic, repeated engagement
+and filters out low-effort behavior.
+●​ Staking & Governance
+
+Users and studios can stake $LOOT for various benefits:
+●​ Players: Unlock XP multipliers, exclusive quests, early access content​
+●​ Studios: Stake to gain promotional slots like “Spotlight Game” or feature
+banners​
+Staked token holders can also participate in platform governance - voting on protocol
+upgrades, quest logic changes, reward structures, or ecosystem grants. Over time,
+Lootie will transition toward a DAO model with more community-driven control.
+●​ Marketplace & Trading
+
+$LOOT is used as the main currency inside the Lootie marketplace:
+●​ Buying/selling NFTs, in-game items, and seasonal collectibles​
+●​ Unlocking cosmetic upgrades or customizations​
+●​ Collecting loot crates, packs, and event-based assets​
+Marketplace fees are charged in $LOOT, and a portion of these fees is burned regularly
+to support token scarcity and long-term sustainability.
+
+●​ Season Pass & Progression System
+
+Players can use $LOOT to:
+●​ Purchase Lootie Passes for each seasonal event​
+●​ Access exclusive quests, character cosmetics, and limited-time loot​
+●​ Progress through battle-pass style levels and earn rare rewards​
+This creates a familiar but powerful loop of engagement, reward, and reinvestment,
+similar to Web2 gaming models - now adapted for on-chain environments.
+●​ Creator & Collab Economy
+
+Through the Collab Board, creators can:
+●​ Design and deploy custom quest packs​
+●​ Earn $LOOT based on verified content performance​
+●​ Access analytics and creator tools for growth​
+This system enables a micro-creator economy where developers, streamers, and guilds
+are rewarded for driving engagement into the Lootie ecosystem.
+●​ Cross-Game Utility & Player Identity
+
+$LOOT acts as a unifying token across multiple games, enabling:
+●​ Cross-game NFT unlocks and customization​
+●​ Identity-linked perks and social status (e.g., badges, collectibles)​
+●​ A persistent player profile tied to $LOOT activity and reputation​
+This helps players carry value and progress across different games, reducing
+fragmentation and increasing lifetime value (LTV).
+●​ Deflationary Design & Burn Mechanics
+
+To ensure long-term token health, Lootie integrates deflationary mechanisms:
+●​ Unclaimed rewards are periodically burned​
+●​ A share of season pass fees and marketplace transactions are burned​
+●​ Optional early withdrawal penalties from staking may contribute to burn
+pool​
+
+This helps maintain supply discipline while reinforcing value for active participants.
+
+5.3 How to mint/send and receive
+Token Minting: $LOOT tokens are minted through a controlled emission schedule,
+with the majority allocated for quest rewards, community incentives and ecosystem
+development. Initial token distribution includes allocations for the team, advisors,
+early investors and community treasury. QUEST tokens are minted dynamically based
+on quest completion and community activities.
+Sending and Receiving: Token transfers in the Lootie ecosystem are simplified
+through user-friendly interfaces. Users can send tokens using usernames instead of
+complex wallet addresses. Cross-chain transfers are supported through bridge
+mechanisms, allowing users to move tokens between different blockchains in the
 ecosystem.
 Wallet Integration: Tokens được automatically managed trong Lootie Wallet
 interface, với real-time balance updates và transaction history. Users có thể easily
 track token earnings từ quests, view staking rewards và monitor portfolio
 performance thông qua integrated analytics dashboard.
 
+5.4 Tokenomics Allocation
+The $LOOT token powers the entire Lootie ecosystem from user incentives to seasonal
+passes, creator rewards, and DAO governance. We designed our tokenomics not for
+speculation, but for utility-driven growth and long-term sustainability.
+Here’s how we plan to allocate the total supply:
+1. Ecosystem Growth (35%)
+
+This is the engine for onboarding users and games.​
+We allocate 35% of the total supply to fund:
+●​ User reward pools (daily quests, seasonal loot, leaderboard prizes)​
+●​ Strategic partnerships with games, guilds, and creators​
+
+●​ Campaign grants to bootstrap early community activity​
+This ensures that the $LOOT token is constantly used to create value and
+engagement inside the platform.
+2. Team & Advisors (20%)
+
+Reserved for the core contributors building and scaling Lootie.​
+We apply a 12-month cliff and 36-month linear vesting to ensure long-term alignment.​
+This pool also includes key advisors from gaming, Web3 infra, and ecosystem
+partners.
+3. Community Treasury (18%)
+
+Governed by the Lootie DAO in the future, this treasury will be used for:
+●​ Funding user-voted features​
+●​ Supporting community-created events, quests, and mini-games​
+●​ Running hackathons or bounty programs for developer tools​
+It reflects our belief that Lootie should be community-extended — not just
+team-led.​
+
+4. Strategic Investors (15%)
+
+Allocated for pre-seed, seed, and future strategic rounds. Funds raised will be used to:
+●​ Develop core infrastructure​
+●​ Scale user acquisition​
+●​ Expand to multiple chains and onboard more games​
+We prioritize long-term partners who can bring distribution, ecosystem access,
+and deep gaming experience.​
+
+5. Liquidity & Market Making (7%)
+
+Reserved for initial DEX/CEX liquidity, staking pools, and ensuring healthy token utility
+
+across platforms. This pool enables smooth in-app usage of $LOOT and makes staking,
+swapping, and earning seamless for users.
+6. Operational Reserve (5%)
+
+A buffer for unforeseen needs, protocol maintenance, and future ecosystem initiatives.
+This pool will be managed transparently and will follow governance input over time.
+Token burns:
+
+A portion of unclaimed rewards, expired passes, and certain
+
+platform fees will be burned periodically - reinforcing a deflationary pressure that
+rewards long-term participation and staking.
+5.5 Sustainable Growth Without Dependency on Token Incentives
+Unlike many task-based platforms that rely heavily on one-time token rewards to
+attract and retain users, Lootie is designed to grow through intrinsic value loops not artificial incentives.
+At the heart of Lootie’s design is a self-sustaining engagement cycle:
+User → Takes action → Receives value → Returns → Contributes more →
+Unlocks deeper benefits
+Rather than encouraging extraction-based behavior, Lootie builds meaningful reasons
+to return, such as daily quests, seasonal progress, leaderboard competition, and
+NFT-based progression. The system rewards behavior that strengthens the ecosystem
+long-term, not just short-term participation.
+This model is supported by internal economic drivers, including:
+●​ Lootie Pass subscriptions that grant access to exclusive quests, cosmetics, and
+events​
+●​ Marketplace transaction fees, with a portion allocated to platform
+sustainability and token burn​
+●​ Staking mechanics that reward long-term commitment and unlock platform
+perks​
+●​ A growing creator economy via the Collab Board, where creators earn $LOOT
+
+for verified engagement - creating a positive-sum loop between content,
+players, and games​
+
+Through this structure, Lootie aims to gradually reduce reliance on token emissions
+while increasing the utility, demand, and retention power of $LOOT. It’s not just a
+platform that pays users to show up - it’s a system that gives them reasons to stay,
+progress, and own their journey.
+
 6. Target Users / Market
-6.1 User mục tiêu: gamer , Web2 user, dev cộng đồng, dự án nhỏ
-Game thủ Web2 chuyển đổi sang Web3: Đây là target audience chính của Lootie
-Wallet. Những game thủ này đã quen thuộc với gaming platforms như Steam, Epic
-Games Store và mobile gaming ecosystems, nhưng chưa có nhiều kinh nghiệm với
-blockchain technology. Họ đang tìm kiếm những trải nghiệm gaming mới mà không
-muốn đối mặt với complexity của traditional crypto wallets. Lootie Wallet cung cấp
-familiar user experience với added benefits của true asset ownership và play-to-earn
-mechanics.
-Game thủ Web3 hiện tại: Những early adopters của Web3 gaming đang tìm kiếm
-better tools và platforms để enhance gaming experience của họ. Họ đã familiar với
-
-concepts như NFTs, DeFi và blockchain gaming, nhưng frustrated với current
-limitations như high gas fees, slow transactions và fragmented ecosystems. Lootie
-Wallet addresses những pain points này thông qua Chainlet technology và integrated
+6.1 Target users: gamers, Web2 users, community devs, small projects
+Web2 gamers switch to Web3: This is the main target audience of Lootie Wallet.
+These gamers are familiar with gaming platforms like Steam, Epic Games Store and
+mobile gaming ecosystems, but have little experience with blockchain technology.
+They are looking for new gaming experiences without the complexity of traditional
+crypto wallets. Lootie Wallet provides a familiar user experience with the added
+benefits of true asset ownership and play-to-earn mechanics.
+Current Web3 Gamers:Early adopters of Web3 gaming are looking for better tools
+and platforms to enhance their gaming experience. They are familiar with
+concepts like NFTs, DeFi, and blockchain gaming, but frustrated with current
+limitations like high gas fees, slow transactions, and fragmented ecosystems. Lootie
+Wallet addresses these pain points through Chainlet technology and integrated
 ecosystem.
-Indie Game Developers và Small Studios: Những developers này muốn integrate
-blockchain features vào games của họ nhưng lack resources và expertise để build
-infrastructure from scratch. Lootie Wallet cung cấp comprehensive SDK và tools để
-easily add Web3 features như asset ownership, quest systems và community building.
-Điều này cho phép developers focus vào game development thay vì blockchain
+Indie Game Developers và Small Studios: These developers want to integrate
+blockchain features into their games but lack the resources and expertise to build
+infrastructure from scratch. Lootie Wallet provides comprehensive SDKs and tools to
+easily add Web3 features like asset ownership, quest systems, and community
+building. This allows developers to focus on game development instead of blockchain
 complexity.
-Community Builders và Content Creators: Những individuals và organizations đang
-build gaming communities và content around Web3 gaming. Họ cần tools để engage
-audiences, create interactive experiences và monetize content. Lootie Wallet's quest
-system và community features provide perfect platform cho những use cases này.
+Community Builders &
 
-6.2 Tình huống sử dụng (Use Cases)
-Seamless Web3 Gaming Onboarding: Một game thủ Web2 discovers một Web3
-game mà họ muốn try. Thay vì phải research wallets, buy crypto và navigate complex
-setup processes, họ có thể simply sign up cho Lootie Wallet using Google account của
-họ. Wallet được automatically created, và họ có thể immediately start playing game
-với full Web3 features enabled.
-Cross-Game Asset Management: Một player owns NFTs và tokens từ multiple Web3
-games. Thay vì manage separate wallets cho each game, họ có thể use Lootie Wallet
-để view và manage tất cả assets trong một unified interface. Họ có thể easily transfer
-assets giữa games, participate trong cross-game quests và track portfolio
+Content Creators: Individuals and organizations are
+
+building gaming communities and content around Web3 gaming. They need tools to
+
+engage audiences, create interactive experiences, and monetize content. Lootie
+Wallet's quest system and community features provide the perfect platform for these
+use cases.
+
+6.2 Use Cases
+Seamless Web3 Gaming Onboarding: A Web2 gamer discovers a Web3 game they
+want to try. Instead of having to research wallets, buy crypto, and navigate complex
+setup processes, they can simply sign up for Lootie Wallet using their Google account.
+The wallet is automatically created, and they can immediately start playing the game
+with full Web3 features enabled.
+Cross-Game Asset Management: A player owns NFTs and tokens from multiple
+Web3 games. Instead of managing separate wallets for each game, they can use
+Lootie Wallet to view and manage all assets in one unified interface. They can easily
+transfer assets between games, participate in cross-game quests, and track portfolio
 performance.
 Community-Driven Quest Creation: Một gaming community muốn create special
 events và challenges cho members. Community leaders có thể use Lootie Wallet's
 quest creation tools để design custom quests, set rewards và track participation.
 Members complete quests để earn tokens và NFTs, creating engaging community
 experiences.
-Indie Game Integration: Một small game studio wants to add Web3 features để
-differentiate game của họ và create new revenue streams. Họ integrate Lootie Wallet
-
-SDK để add features như true asset ownership, player-to-player trading và
-quest-based progression. Players có thể earn valuable assets thông qua gameplay và
-participate trong broader Lootie ecosystem.
-Developer Monetization: Game developers có thể monetize games của họ thông
-qua multiple channels trong Lootie ecosystem. Họ có thể create premium quests, sell
-exclusive NFTs, take percentage của marketplace transactions và earn revenue từ
-player engagement metrics. Điều này creates sustainable business models cho indie
+Indie Game Integration: A small game studio wants to add Web3 features to
+differentiate their game and create new revenue streams. They integrate Lootie Wallet
+SDK to add features like true asset ownership, player-to-player trading, and
+quest-based progression. Players can earn valuable assets through gameplay and
+participate in the broader Lootie ecosystem.
+Developer Monetization: Game developers can monetize their games through
+multiple channels in the Lootie ecosystem. They can create premium quests, sell
+exclusive NFTs, take percentage of marketplace transactions, and earn revenue from
+player engagement metrics. This creates sustainable business models for indie
 developers.
 
-7. Differences
-​
-
-7.1 Lootie Wallet khác gì so với Galxe, Zealy, Steam, Magic Eden,
-Space3?
+7. Differences
+7.1 How is Lootie Wallet different from Galxe, Zealy, Steam,
+Magic Eden, Space3?
 a. Galxe & Zealy
-Tập trung: Chủ yếu là nền tảng marketing, xây dựng cộng đồng, tạo nhiệm vụ để thu
-hút người dùng tham gia các chiến dịch airdrop, marketing cho dự án.
-Giới hạn: Không tích hợp sâu vào gameplay, không giải quyết trải nghiệm ví hoặc hiệu
-suất blockchain cho game thủ.
-Lootie Wallet: Không chỉ là nền tảng nhiệm vụ, Lootie tích hợp trực tiếp vào trải
-nghiệm chơi game với ví Chainlet-based độc quyền, giúp giao dịch mượt mà, phí gas
-gần như bằng 0, và hệ thống nhiệm vụ gắn liền với tài sản, hoạt động trong game.
+Focus: Mainly marketing platform, community building, creating tasks to attract users
+to participate in airdrop campaigns, marketing for the project.
+Limitations: No deep integration into gameplay, no addressing of wallet experience or
+blockchain performance for gamers.
+Lootie: More than just a quest platform, Lootie integrates directly into the gaming
+experience with its proprietary Chainlet-based wallet, enabling smooth transactions,
+near-zero gas fees, and a quest system tied to in-game assets and activities.
 
 b. Steam
-Tập trung: Nền tảng phân phối game Web2 lớn nhất, không hỗ trợ blockchain, không
-tích hợp tài sản số, hạn chế game Web3.
-Giới hạn: Không có quyền sở hữu tài sản số thực sự, không minh bạch, không hỗ trợ
-chuyển đổi sang Web3.
-Lootie Wallet: Mang lại trải nghiệm Web3 (quyền sở hữu tài sản, minh bạch, giao dịch
-onchain) nhưng vẫn giữ sự đơn giản, tiện lợi như Steam. Là cầu nối giúp game thủ
-Web2 chuyển sang Web3 dễ dàng, hướng tới trở thành “Steam của Web3 gaming”.
+Focus: Largest Web2 game distribution platform, no blockchain support, no digital
+asset integration, limited Web3 games.
+Limitations: No real ownership of digital assets, no transparency, no support for
+transition to Web3.
+Lootie: Bring Web3 experience (asset ownership, transparency, onchain transactions)
+but still keep the simplicity and convenience of Steam. Be a bridge to help Web2
+gamers switch to Web3 easily, aiming to become the "Steam of Web3 gaming".
 
 c. Magic Eden
 
-Tập trung: Thị trường NFT hàng đầu, chủ yếu phục vụ giao dịch, mua bán NFT.
-Giới hạn: Không tập trung vào trải nghiệm chơi game, không có hệ thống nhiệm vụ
-hoặc tích hợp gameplay.
-Lootie Wallet: Tích hợp quản lý NFT, tài sản số ngay trong ví, nhưng trọng tâm là ví
-gaming toàn diện, hệ thống nhiệm vụ thưởng gắn với gameplay, tạo giá trị thực cho
-người chơi.
+Focus: Leading NFT marketplace, mainly serving trading, buying and selling NFTs.
+Limitations: No focus on gameplay experience, no quest system or gameplay
+integration.
+Lootie: Integrate NFT management, digital assets right in the wallet, but the focus is
+on a comprehensive gaming wallet, a reward task system associated with gameplay,
+creating real value for players.
 
-4. Space3
-Tập trung: Nền tảng Web3 quest, gamification, giúp dự án thu hút người dùng thông
-qua nhiệm vụ, phần thưởng, NFT, token.
-Giới hạn: Chủ yếu là cầu nối marketing giữa dự án và người dùng, chưa tích hợp sâu
-vào gameplay hoặc trải nghiệm ví.
-Lootie Wallet: Vượt trội nhờ tích hợp ví Chainlet-based, nhiệm vụ gắn với gameplay
-thực tế, quản lý tài sản số, onboarding Web2 đơn giản, và bộ công cụ phát triển mạnh
-mẽ cho game studio. Lootie không chỉ là nơi làm nhiệm vụ nhận thưởng mà còn là nơi
-sử dụng, giao dịch, và kiếm tài sản số trực tiếp trong game.
+4. Space3
+Focus: Web3 quest platform, gamification, helps projects engage users through
+quests, rewards, NFTs, tokens.
+Limitations: Mainly a marketing bridge between project and users, not deeply
+integrated into gameplay or wallet experience.
+Looti: Outstanding with Chainlet-based wallet integration, real-time gameplay-based
+quests, digital asset management, simple Web2 onboarding, and a powerful
+development toolkit for game studios. Lootie is not only a place to complete quests
+and receive rewards, but also a place to use, trade, and earn digital assets directly in
+the game.
 
-7.2 Những điểm độc nhất của Lootie Wallet
-Ví Chainlet-based độc quyền
-Mỗi ví/game chạy trên chainlet riêng, loại bỏ tắc nghẽn, giao dịch tức thì, phí gas gần
-như 0.
-Trải nghiệm chơi game mượt mà, không gián đoạn – điều mà các ví blockchain truyền
-thống không làm được.
+7.2 Unique Features of Lootie Wallet
+Exclusive Chainlet-based Wallet
+Each wallet/game runs on its own chainlet, eliminating congestion, instant
+transactions, near 0 gas fees.
+Smooth, uninterrupted gaming experience – something traditional blockchain wallets
+cannot do.
 
-Onboarding đơn giản hóa
-Đăng nhập bằng tài khoản Web2 (Google, Discord, v.v.), tự động tạo ví non-custodial,
-không cần hiểu blockchain.
-Hạ thấp rào cản, giúp hàng triệu game thủ Web2 tiếp cận Web3 dễ dàng.
-Hệ thống nhiệm vụ & phần thưởng tích hợp sâu
+Onboarding made simple
+Login with Web2 account (Google, Discord, etc.), automatically generate non-custodial
+wallet, no need to understand blockchain.
+Lowering the barrier, making it easy for millions of Web2 gamers to
+access Web3. Deeply integrated quest & reward system
+Missions are linked to gameplay and in-game assets, motivating interaction,
+exploration, and contribution to the ecosystem.
 
-Nhiệm vụ gắn liền với gameplay, tài sản trong game, tạo động lực tương tác, khám
-phá, đóng góp cho hệ sinh thái.
+Comprehensive development toolkit (Thirdweb, SDK, API)
+Support developers to integrate wallets, manage assets, and deploy blockchain
 
-Bộ công cụ phát triển toàn diện (Thirdweb, SDK, API)
-Hỗ trợ nhà phát triển tích hợp ví, quản lý tài sản, triển khai tính năng blockchain dễ
-dàng.
-Tập trung vào phát triển game, không lo về hạ tầng blockchain phức tạp.
+features easily.
+Focus on game development, don't worry about complex blockchain infrastructure.
 
-Tập trung vào trải nghiệm gaming
-Mọi tính năng đều hướng tới nâng cao sự giải trí, gắn kết, giá trị cho game thủ.
-Không chạy theo DeFi, NFT đơn thuần mà ưu tiên gameplay, cộng đồng, và giá trị
-thực.
-Vòng lặp gắn kết bền vững, giá trị thực cho người chơi.
-​
+Focus on gaming experience
+Every feature is geared towards enhancing entertainment, engagement, and value for
+gamers.
+Don't follow DeFi, pure NFT but prioritize gameplay, community, and real value.
+Sustainable engagement loop, real value for players.
 
 8. Roadmap
-8.1 Giai đoạn hiện tại (POC, MVP…)
-Q3 2025 - Proof of Concept (POC) Phase: Lootie Wallet hiện đang trong giai đoạn
-POC development, focusing vào core infrastructure và basic functionality validation.
-Team đang implement Saga Chainlet integration, Privy authentication system và basic
-wallet features. Initial testing được conducted với small group của beta users để
-validate core concepts và gather feedback về user experience.
-Key deliverables cho POC phase bao gồm: - Basic wallet creation và management
-functionality - Privy integration cho social login - Simple quest creation và completion
-system - Initial Saga Chainlet deployment - Basic mobile app prototype
-Q1 2026 - MVP Development: MVP phase sẽ expand POC thành một fully functional
-product với core features ready cho public testing. Điều này bao gồm complete wallet
-functionality, comprehensive quest system, community features và developer SDK
-beta version.
+8.1 Current stage (POC, MVP…)
+Q3 2025 - Proof of Concept (POC) Phase: Lootie Wallet is currently in POC
+development, focusing on core infrastructure and basic functionality validation. The
+team is implementing Saga Chainlet integration, Privy authentication system and
+basic wallet features. Initial testing was conducted with a small group of beta users to
+validate core concepts and gather feedback on user experience.
+Key deliverables:
+- Basic wallet creation và management functionality
+- Privy integration for social login
+- Simple quest creation & completion system
+- Initial Saga Chainlet deployment
+-Basic mobile app prototype
+Q1 2026 - MVP Development: The MVP phase will expand the POC into a fully
+functional product with core features ready for public testing. This includes complete
+wallet functionality, comprehensive quest system, community features, and developer
 
-MVP features sẽ include: - Full wallet functionality với multi-chain support - Complete
-quest system với automated rewards - Community features và social interactions Developer SDK với documentation - Marketplace beta cho asset trading - Analytics
-dashboard cho users và developers
+SDK beta version.
+MVP features includes:
+- Full wallet functionality with multi-chain support
+- Complete quest system with automated rewards
+- Community features with social interactions
+- Developer SDK with documentation
+- Marketplace beta for asset trading
+- Analytics dashboard for users & developers
 
-8.2 Giai đoạn sắp tới (beta, mainnet…)
-Q3 2026 - Closed Beta Launch: Closed beta sẽ được launched với selected gaming
-communities và partner developers. Điều này sẽ allow extensive testing của all
-features trong real-world conditions, gathering feedback và iterating based trên user
-needs. Beta phase cũng sẽ include partnerships với indie game developers để
-integrate Lootie Wallet vào games của họ.
-Beta phase objectives: - Onboard 1,000+ beta users - Partner với 10+ indie game
-developers - Process 10,000+ quest completions - Validate tokenomics model Optimize performance và scalability
-Q4 2026 - Public Beta và Token Launch: Public beta sẽ open Lootie Wallet cho
-broader audience, accompanied bởi official token launch và initial DEX offerings. Điều
-này sẽ mark transition từ testing phase sang growth phase, với focus vào user
-acquisition và ecosystem expansion.
-Public beta milestones: - Launch LOOT và QUEST tokens - Open platform cho all
-developers - Implement full governance system - Launch mobile apps trên app stores
+8.2 Upcoming phases (beta, mainnet…)
+Q3 2026 - Closed Beta Launch: Closed beta will be launched with selected gaming
+communities and partner developers. This will allow extensive testing of all features
+under real-world conditions, gathering feedback and iterating based on user needs.
+The beta phase will also include partnerships with indie game developers to integrate
+Lootie Wallet into their games.
+Beta phase objectives:
+- Onboard 1,000+ beta users
+- Partner with 10+ indie game developers
+- Process 10,000+ quest completions
+- Validate tokenomics model
+- Optimize performance và scalability
+Q4 2026 - Public Beta and Token Launch:The public beta will open Lootie Wallet to a
+broader audience, accompanied by an official token launch and initial DEX offerings.
+This will mark the transition from the testing phase to the growth phase, with a focus
+on user acquisition and ecosystem expansion.
+Public beta milestones:
+- Launch LOOT và QUEST tokens
+
+- Open platform cho all developers
+- Implement full governance system
+- Launch mobile apps trên app stores
 - Begin marketing campaigns
-Q1 2027 - Mainnet Launch: Full mainnet launch với all features operational và
-ecosystem fully decentralized. Điều này sẽ include complete governance transition
-sang community, full SDK release và major partnership announcements.
+Q1 2027 - Mainnet Launch: Full mainnet launch with all features operational &
+ecosystem fully decentralized. This will include complete governance transition to
+community, full SDK release & major partnership announcements.
 
-8.3 Tương lai xa hơn (DAO, ecosystem…)
-2027-2028 - Ecosystem Expansion: Focus sẽ shift sang ecosystem expansion với
-major game studio partnerships, cross-chain integrations và advanced features như
+8.3 Further future (DAO, ecosystem…)
+2027–2028: Ecosystem Expansion & DAO Activation
 
-AI powered quest generation và predictive analytics. Lootie DAO sẽ become fully
-operational, với community governing platform development và token economics.
-Long-term expansion plans: - Partner với major game studios - Integrate với other
-blockchain ecosystems - Develop AI-powered features - Launch Lootie Gaming
-Accelerator program - Expand sang other entertainment verticals
-2028+ - Platform Evolution: Lootie Wallet sẽ evolve thành comprehensive Web3
-entertainment platform, supporting not just gaming nhưng cũng other forms của
-digital entertainment như virtual events, digital collectibles và metaverse experiences.
-Platform sẽ become self-sustaining ecosystem với thousands của integrated games và
-millions của active users.
-Vision cho future includes: - Become leading Web3 gaming platform - Support 1M+
-active users - Integrate 1000+ games và applications - Establish Lootie as standard cho
-Web3 gaming - Expand globally với localized versions
+Starting in 2027, Lootie will transition from a product-focused platform into a
+full-fledged Web3 gaming infrastructure layer, expanding its reach through
+partnerships, new chains, and community-led development.
+Key strategic directions include:
+●​ Major Game Studio Partnerships​
+Collaborate with leading Web2 and Web3 gaming studios to integrate Lootie’s
+growth layer natively into large-scale titles, bringing Lootie to mainstream
+audiences.​
+●​ Cross-Chain Expansion​
+Extend beyond the initial integration with Saga into major ecosystems like
+Ethereum L2s, Solana, Avalanche, and Modular chains - allowing players and
+games from multiple chains to join one unified gamified layer.​
+●​ AI-Powered Systems​
+Launch advanced features such as:​
+○​ AI-generated dynamic quests, tailored to user behavior​
+○​ Predictive analytics for optimizing campaign performance, player
+retention, and asset valuation​
+○​ On-chain reputation scoring and adaptive difficulty to reward meaningful
+engagement​
+●​ Lootie DAO Activation​
 
-9. Team
-Brian Quang - Product Tech Lead​
-Phoebe - Product Owner
+Governance will be progressively handed over to the community through the
+Lootie DAO, including:​
+○​ Platform development prioritization​
+○​ Ecosystem grants and creator incentives​
+○​ Treasury management and tokenomics tuning​
+●​ Lootie Gaming Accelerator​
+Establish a program to incubate and co-launch high-potential games that
+integrate Lootie SDKs - offering funding, onboarding tools, growth support, and
+access to Lootie’s playerbase.​
+●​ Ecosystem APIs & SDKs​
+Release self-serve infrastructure (SDKs, APIs, analytics) for indie developers,
+creators, and studios to plug into Lootie with minimal effort - making it a
+platform anyone can build on.​
+Lootie Chainlet Launcher: We will offer Lootie Chainlet Templates - pre-built
+game logic modules deployable via CLI or dashboard. Each studio gets a
+dedicated chainlet running:
+●​ On-chain quest contract​
+●​ Lootbox NFT minting engine​
+●​ Onboarding + analytics​
+This allows indie teams to launch a Web3 game in hours, not weeks - on their own
+chainlet.
+LootOps – Community Growth Layer: Lootie will enable players and creators to launch
+their own “micro-quests” and “user-generated loot campaigns.” These will:
+●​ Be hosted on micro chainlets​
+●​ Use QUEST/$LOOT as reward logic​
+●​ Be composable with any game SDK​
+This unlocks community-owned user acquisition - every player becomes a potential
+quest launcher, bootstrapping usage for the entire Saga ecosystem.
 
-10. Links & Demo
+2028+: Platform Evolution & Global Expansion
+
+From 2028 onward, Lootie will evolve into a comprehensive Web3 entertainment
+platform, extending beyond gaming into new forms of digital interaction and
+ownership.
+Key long-term milestones:
+●​ Lootie Wallet → Web3 Entertainment Hub​
+Expand the Lootie Wallet into a superapp that supports:​
+○​ Onboarding for games, creators, and fans​
+○​ In-app access to virtual events, livestreams, fan collectibles, and creator
+passes​
+○​ Smart portfolio tools for tracking NFTs, in-game tokens, and user
+progression across multiple chains​
+●​ Support for Other Entertainment Verticals​
+Integrate Lootie’s gamified model into other digital verticals such as:​
+○​ Virtual concerts and fan communities​
+○​ Digital fashion and avatar collectibles​
+○​ Metaverse-linked campaigns with real-world brand tie-ins​
+●​ Global Growth & Localization​
+Roll out localized versions of the Lootie platform for key gaming regions:
+Southeast Asia, Latin America, Korea, Eastern Europe, and the Middle East —
+adapting UX, quest logic, and community content for regional preferences.​
+●​ Ecosystem Goals by 2028​
+○​ Over 1 million active users across all chains​
+○​ Integration with 1,000+ games, applications, and virtual experiences​
+○​ Become the default growth layer adopted by ecosystems, gaming DAOs,
+and L2s​
+○​ Establish Lootie as the standard for user engagement in Web3 gaming​
+Long-term, Lootie will no longer be just a platform - it will become the
+invisible engine behind the next generation of interactive, gamified,
+decentralized entertainment.
+
+9. Appendix A – Lootie Protocol SDK Overview
+The Lootie Protocol SDK represents the modular infrastructure underlying the Lootie
+ecosystem. While the Lootie application operates as a full-featured Web3 gaming hub,
+each core module powering the platform is designed for composability and
+independent deployment. The SDK enables external game studios and developers to
+adopt specific components, such as quest systems, wallet modules, and analytics tools,
+and integrate them directly into their own Saga Chainlets.
+QuestModule.sol provides the core smart contract logic for creating, verifying, and
+rewarding on-chain missions. Developers can implement daily, seasonal, and
+achievement-based quests, which integrate directly with gameplay or community
+engagement layers. The module interfaces with Lootie’s reward distribution contract
+(RewardVault.sol) and can be deployed across multiple chainlets.
+LootBoxCore.sol serves as the backbone of Lootie’s NFT-based lootbox engine. It
+supports randomized item drops, rarity-based distributions, and composable reward
+logic. This contract is optimized for gas efficiency and can be adapted for both in-game
+drops and marketplace-linked box systems.
+WalletEmbed.js is a frontend JavaScript module enabling seamless onboarding
+through Privy’s social login and embedded wallet generation. It abstracts transaction
+signing and gas handling, allowing developers to provide a Web2-like onboarding
+experience while maintaining non-custodial control. The module is compatible with all
+Lootie-supported modules and native to Saga Chainlet environments.
+ChainletDeployer.ts is a developer-facing CLI tool for rapidly deploying new
+Lootie-powered Chainlets. It provisions a dedicated Chainlet via Saga CLI and initializes
+the required Lootie modules. This tool is intended to streamline developer experience
+and reduce time-to-launch for games integrating Lootie’s infrastructure.
+AnalyticsAPI.ts (beta) is an optional backend module providing access to player
+behavior, quest completion data, and economic metrics across Lootie-integrated
+Chainlets. Developers may self-host the service or opt-in to Lootie’s hosted analytics
+layer for simplified integration and aggregated reporting.
+The Lootie Protocol SDK is governed under the Lootie Modular License (LML), a
+hybrid open-source license that encourages ecosystem adoption while preserving key
+brand and business rights.
+This license allows developers to freely build with Lootie infrastructure while
+preventing direct cloning of the Lootie Hub or brand.
+By open-sourcing core SDK modules under LML, Lootie accelerates protocol adoption
+while maintaining strategic defensibility.
+
+What developers can do:
+●​ Use SDK modules to build their own games on Saga Chainlets​
+●​ Modify or extend quest/lootbox logic​
+
+●​ Launch chainlets with Lootie modules embedded​
+
+What’s restricted:
+●​ Cannot fork or clone the full Lootie Hub or UI​
+●​ Cannot use the “Lootie” brand name without express permission​
+●​ Cannot offer SDK modules as a competing service or resale​
+
+Why open-source SDK?
+Lootie’s long-term goal is to become the infra backbone of gaming on Saga. By
+allowing others to build with Lootie’s modules:
+●​ We accelerate the number of high-quality Chainlets​
+●​ We extend Lootie’s reach into games we don’t build​
+●​ We position Lootie as the unifying layer across isolated gaming economies​
+Every time a game integrates Lootie SDK, it creates a new touchpoint with
+our infrastructure — increasing Lootie’s network value, visibility, and
+adoption.
+
+Why SDK Matters for Protocolization
+Releasing SDK modules as standalone building blocks allows Lootie to evolve beyond a
+single product into a protocol-level growth layer.
+●​ Developers build games with Lootie modules → create more Chainlets​
+●​ Ecosystems adopt Lootie SDK → boost composability and user activity​
+●​ Every integration strengthens Lootie’s presence as infra, not just app​
+This aligns with Lootie's long-term vision: become the standard growth infrastructure
+for Web3 gaming.
+
+10. Team
+
+Brian Quang – Founder, Product & Tech Lead
+Brian is a full-stack engineer with hands-on experience building several Web3 dApps,
+including NFT tools and mini-games. At Lootie, he leads the technical development from smart contract integration to backend infrastructure, and oversees the design of
+Lootie’s wallet, quest modules, and growth SDKs. His focus is on building a seamless,
+scalable experience for both players and developers.
+
+Phoebe Duong – Advisor, Product Owner & Growth Strategist
+Phoebe is a Web3 product builder with a strong background in community growth
+and ecosystem design. With experience leading marketing and go-to-market
+strategies for Layer 1 protocols and large-scale hackathons, she brings a deep
+understanding of what drives real user retention in Web3. At Lootie, she oversees
+product vision, quest mechanics, UX flows, and partnerships with games and
+ecosystems.
+
+11. Links & Demo
 Github: https://github.com/brianquangdev/Lootie-app
+X: https://x.com/lootiewallet
 
-11. References
-[1] Gate.com, “Sự Sụp Đổ Của Web3 Gaming: Làm Thế Nào Chúng Ta Có Thể Thoát
-Khỏi Nghĩa Địa Mạng,” Gate Learn, [Online]. Available:
-https://www.gate.com/vi/learn/articles/the-collapse-of-web3-gaming-how-can-we-esc
-ape-the-cyber-graveyard/9277. [Accessed: Jul. 21, 2025].
-[2] Coin98, “Bức tranh tổng quan về Web3 Gaming từ 2017 đến nay,” Coin98 Insights,
+12. References
+[1] Gate.com, “The Fall of Web3 Gaming: How We Can Escape the Internet
+Graveyard,”Gate Learn, [Online]. Available:
+https://www.gate.com/vi/learn/articles/the-collapse-of-web3-gaming-how-can-we-es
+c ape-the-cyber-graveyard/9277. [Accessed: Jul. 21, 2025].
+[2] Coin98, “Overview of Web3 Gaming from 2017 to present,”Coin98 Insights,
 [Online]. Available: https://coin98.net/tong-quan-web3-gaming. [Accessed: Jul. 21,
 2025].
-
-[3] Precedence Research, “Web3 Gaming Market Size to Hit USD 182.98 Billion by
+[3] Precedence Research, “Web3 Gaming Market Size to Hit USD 182.98 Billion by
 2034,” Precedence Research, [Online]. Available:
 https://www.precedenceresearch.com/web3-gaming-market. [Accessed: Jul. 21, 2025].
 [4] Saga Foundation, “Saga Chainlets,” Saga Documentation, [Online]. Available:
-https://docs.saga.xyz/introduction/saga-overview/saga-chainlets. [Accessed: Jul. 21,
-2025].
-[5] Privy, “Wallet infrastructure, built for scale,” Privy Official Website, [Online].
-Available: https://www.privy.io/. [Accessed: Jul. 21, 2025].
-[6] Thirdweb, “The complete web3 development platform,” Thirdweb Official Website,
-[Online]. Available: https://thirdweb.com/. [Accessed: Jul. 21, 2025].
-[7] Galxe, “Your Web3 Growth Engine,” Galxe Official Website, [Online]. Available:
-https://www.galxe.com/. [Accessed: Jul. 21, 2025].
-[8] Zealy, “Community engagement platform,” Zealy Official Website, [Online]. Available:
-https://zealy.io/. [Accessed: Jul. 21, 2025].
+
+https://docs.saga.xyz/introduction/saga-overview/saga-chainlets. [Accessed: Jul.
+21, 2025].
+[5] Privy, “Wallet infrastructure, built for scale,” Privy Official Website,
+[Online]. Available: https://www.privy.io/. [Accessed: Jul. 21, 2025].
+[6] Thirdweb, “The complete web3 development platform,” Thirdweb Official
+Website, [Online]. Available: https://thirdweb.com/. [Accessed: Jul. 21, 2025].
+[7] Galxe, “Your Web3 Growth Engine,” Galxe Official Website, [Online].
+Available: https://www.galxe.com/. [Accessed: Jul. 21, 2025].
+[8] Zealy, “Community engagement platform,” Zealy Official Website, [Online].
+Available: https://zealy.io/. [Accessed: Jul. 21, 2025].
 
 
